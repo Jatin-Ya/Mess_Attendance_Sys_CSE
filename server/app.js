@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
 const path = require("path");
+const menuRouter = require("./routes/menuRoutes");
 const app = express();
 
 const AppError = require("./utils/appError");
@@ -21,6 +22,8 @@ app.use(express.static(path.join(__dirname, "/client/build")));
 app.get("/api/health", (req, res, next) => {
   res.send("Health Check is working fine!");
 });
+
+app.use("/api/v1/menu", menuRouter);
 
 app.use("/api/input", inputRouter);
 
