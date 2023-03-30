@@ -1,5 +1,7 @@
 const { google, Auth } = require("googleapis");
 
+const User = require("../models/userModel");
+
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const config = require("../utils/config");
@@ -37,16 +39,21 @@ const getResidentsFromHostel = catchAsync(async (req, res, next) => {
   values.shift();
 
   const residents = values.map((student) => {
-    return {
-      name: student[0],
-      roll: student[1],
-      email: student[2],
-      room: student[3],
-      hostel: hostel,
-    };
+    if (!student[0] || !student[1] || !student[2] || !student[3]) {
+      console.log(student);
+    } else {
+      return {
+        name: student[0],
+        rollNumber: student[1],
+        email: student[2],
+        roomNumber: student[3],
+        hostel: hostel,
+      };
+    }
   });
 
-  //TODO: await User.insertMany(residents);
+  //TODO:
+  await User.insertMany(residents);
 
   res.status(200).json({
     message: `${residents.length} users inserted successfully into ${hostel} successfully`,

@@ -8,7 +8,10 @@ const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const requestLogger = require("./utils/requestLogger");
 
+const menuRouter = require("./routes/menuRoutes");
 const inputRouter = require("./routes/inputRoutes");
+const encryptionRouter = require("./routes/encryptRoutes");
+const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const mealRouter = require("./routes/mealRoutes");
 
@@ -24,7 +27,12 @@ app.get("/api/health", (req, res, next) => {
   res.send("Health Check is working fine!");
 });
 
+app.use("/api/menu", menuRouter);
+
+app.use("/api/user", userRouter);
+
 app.use("/api/input", inputRouter);
+app.use("/api/encryption", encryptionRouter);
 
 app.use("/api/review", reviewRouter);
 app.use("/api/meal", mealRouter);
