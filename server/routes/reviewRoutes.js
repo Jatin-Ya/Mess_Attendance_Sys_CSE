@@ -7,7 +7,7 @@ const {getAReview, getAllReviews, getReviewsOfAMeal, createReview, updateAReview
 //     res.status(200)
 // });
 router.get("/", getAllReviews);
-router.get("/meal/:mealId", getReviewsOfAMeal);
+router.get("/meal", getReviewsOfAMeal);
 router.get("/:reviewId", getAReview);
 
 router.post("/", createReview);

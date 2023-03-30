@@ -7,13 +7,24 @@ const Review = require("./../models/reviewModel");
 
 exports.createReview = catchAsync(async (req, res, next) => {
   const { meal, review } = req.body;
+//   const userId = "6425de2989d7180f6c218c55";
   const userId = req.user._id;
 
-  const mealId = Meal.findOne({ date: meal.data, type: meal.type });
+  const fetchedMeal = await Meal.findOne({ date: meal.date, type: meal.type });
+
+  const existingReview = await Review.findOne({meal: fetchedMeal._id, user:userId });
+  if(existingReview) {
+    return next(
+        new AppError(
+          "You have already reviewed this meal",
+          400
+        )
+      );
+  }
 
   const newReview = await Review.create({
     user: userId,
-    meal: mealId,
+    meal: fetchedMeal._id,
     review: review,
   });
 
@@ -41,8 +52,8 @@ exports.getAReview = catchAsync(async (req, res, next) => {
 });
 
 exports.getReviewsOfAMeal = catchAsync(async (req, res, next) => {
-  const meal = req.body.meal;
-  const mealId = Meal.findOne({ date: meal.data, type: meal.type });
+  const meal = req.body.meal;   
+  const mealId = await Meal.findOne({ date: meal.date, type: meal.type });
 
   const reviews = await Review.find({ meal: mealId });
 
@@ -56,6 +67,8 @@ exports.updateAReview = catchAsync(async (req, res, next) => {
   const id = req.params.reviewId;
   const review = req.body.review;
   const user = req.user._id;
+//   const user = "6425de2989d7180f6c218c55";
+
 
   const updatedReview = await Review.findOneAndUpdate(
     { _id: id, user: user },
@@ -80,6 +93,7 @@ exports.updateAReview = catchAsync(async (req, res, next) => {
 exports.deleteReview = catchAsync(async (req, res, next) => {
   const id = req.params.reviewId;
   const user = req.user._id;
+//   const user = "6425de2989d7180f6c218c55";
 
   const deleted = await Review.deleteOne({ _id: id, user: user });
 
