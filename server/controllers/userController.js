@@ -1,5 +1,8 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const ExcelJS = require("exceljs");
+const workbook = new ExcelJS.Workbook();
+const worksheet = workbook.addWorksheet("Mess Attendance");
 
 const User = require("./../models/userModel");
 
@@ -66,6 +69,51 @@ exports.addMessBalance = catchAsync(async (req, res, next) => {
   currUser.messBalance += price;
   await currUser.save();
 
+  res.status(201).json({
+    status: "success",
+  });
+});
+
+exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
+  worksheet.columns = [
+    { header: "Name", key: "name" },
+    { header: "Email", key: "email" },
+    { header: "Hostel", key: "hostel" },
+    { header: "balance", key: "balance" },
+  ];
+
+  // Add rows
+  const dummyData = [
+    {
+      name: "John",
+      email: "abc@iitbbs.ac.in",
+      hostel: "BHR",
+      balance: 100,
+    },
+    {
+      name: "John1",
+      email: "abc1@iitbbs.ac.in",
+      hostel: "MHR",
+      balance: 1000,
+    },
+    {
+      name: "John2",
+      email: "abc2@iitbbs.ac.in",
+      hostel: "BHR",
+      balance: 200,
+    },
+  ];
+  dummyData.forEach((user) => {
+    worksheet.addRow(user);
+  });
+  workbook.xlsx
+    .writeFile("excel/mess-attendance.xlsx")
+    .then(() => {
+      console.log("Excel file generated successfully!");
+    })
+    .catch((err) => {
+      return next(new AppError("Error in generating excel", 401));
+    });
   res.status(201).json({
     status: "success",
   });
