@@ -14,26 +14,28 @@ const userSchema = new Schema(
     hostel: {
       type: String,
       enum: ["MHR", "BHR", "GHR", "RHR", "SHR"],
-      required: true
+      required: true,
     },
     rollNumber: {
       type: String,
-      required: true
+      required: true,
     },
     messBalance: {
       type: Number,
       required: true,
-      default: 0 
+      default: 0,
     },
     roomNumber: {
       type: String,
-      required: true
+      required: true,
     },
     img: String,
-    // meals: [{
-    //   type: mongoose.Schema.ObjectId,
-    //   ref: "Meal"
-    // }],
+    mealsAvailed: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Meal",
+      },
+    ],
     // reviews: [{
     //   type: mongoose.Schema.ObjectId,
     //   ref: "Review"

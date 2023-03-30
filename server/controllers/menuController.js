@@ -14,7 +14,7 @@ exports.getMenuDetails = catchAsync(async (req, res, next) => {
 
 exports.createUpdateMenu = catchAsync(async (req, res, next) => {
   //Create a new menu
-//   console.log("Creating menu", req.body);
+  //   console.log("Creating menu", req.body);
   const { day, breakfast, lunch, snacks, dinner } = req.body;
   let dayMenu = await Menu.findOne({ day });
   let msg = "Menu created successfully";

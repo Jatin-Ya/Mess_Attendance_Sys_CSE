@@ -31,30 +31,29 @@ const encryptData = catchAsync(async (req, res, next) => {
   });
 });
 
-const decryptData = catchAsync(async (req, res, next) => {
-  const data = req.body.data;
-  if (!data) {
-    return next(new AppError("No data to encrypt", 400));
+const decryptData = (data) => {
+  try {
+    const key = Buffer.from(ENCRYPTION_KEY, keyEncoding); // key must be 32 bytes for aes256
+
+    const components = data.split(":");
+    const iv_from_ciphertext = Buffer.from(components.shift(), outputEncoding);
+    const decipher = crypto.createDecipheriv(
+      algorithm,
+      key,
+      iv_from_ciphertext
+    );
+    let deciphered = decipher.update(
+      components.join(":"),
+      outputEncoding,
+      inputEncoding
+    );
+    deciphered += decipher.final(inputEncoding);
+
+    const decipheredJSON = JSON.parse(deciphered);
+    return decipheredJSON;
+  } catch (err) {
+    throw new AppError("Error in decoding the QRCode", 400);
   }
-
-  const key = Buffer.from(ENCRYPTION_KEY, keyEncoding); // key must be 32 bytes for aes256
-
-  const components = data.split(":");
-  const iv_from_ciphertext = Buffer.from(components.shift(), outputEncoding);
-  const decipher = crypto.createDecipheriv(algorithm, key, iv_from_ciphertext);
-  let deciphered = decipher.update(
-    components.join(":"),
-    outputEncoding,
-    inputEncoding
-  );
-  deciphered += decipher.final(inputEncoding);
-
-  const decipheredJSON = JSON.parse(deciphered);
-
-  res.status(200).json({
-    deciphered: decipheredJSON,
-    message: "Data deciphered successfully",
-  });
-});
+};
 
 module.exports = { encryptData, decryptData };
