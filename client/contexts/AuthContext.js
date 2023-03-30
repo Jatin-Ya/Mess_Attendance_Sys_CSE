@@ -53,7 +53,7 @@ export const AuthContextProvider = ({ children }) => {
       } catch (error) {
         Alert.alert(
           "Login Required",
-          "Existing credentials could not be loaded, please login again"
+          error.status
         );
         console.log(error);
       }
