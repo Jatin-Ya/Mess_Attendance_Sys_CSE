@@ -2,20 +2,19 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const mealSchema = new Schema({
-    date : {
-        type: Date,
-        required: true,
-        time: false,
-        trim: true
-    },
+  date: {
+    type: Date,
+    required: true,
+    time: false,
+    trim: true,
+  },
 
-    type : {
-        type : String,
-        required: true,
-        enum : ["breakfast", "lunch", "snacks", "dinner"]
-    }
-})
-
+  type: {
+    type: String,
+    required: true,
+    enum: ["breakfast", "lunch", "snacks", "dinner"],
+  },
+});
 
 const mealModel = mongoose.model("Meal", mealSchema);
 module.exports = mealModel;
