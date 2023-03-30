@@ -1,10 +1,20 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const encryptionController = require("./encryptionController");
+
 const ExcelJS = require("exceljs");
 const workbook = new ExcelJS.Workbook();
 const worksheet = workbook.addWorksheet("Mess Attendance");
 
 const User = require("./../models/userModel");
+const Meal = require("./../models/mealModel");
+
+const mealPriceMap = {
+  breakfast: 30,
+  lunch: 60,
+  snacks: 20,
+  dinner: 60,
+};
 
 exports.addMessBalance = catchAsync(async (req, res, next) => {
   const { email, price, meal } = req.body;
@@ -118,3 +128,57 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
     status: "success",
   });
 });
+
+exports.addMealToUser = catchAsync(async (req, res, next) => {
+  const { encryptedString, scanningHostel, mealId } = req.body;
+
+  if (!encryptedString || !scanningHostel || !mealId) {
+    return next(new AppError("Invalid Request", 400));
+  }
+
+  const decryptedData = encryptionController.decryptData(encryptedString);
+
+  //TODO: Include time
+  const { userId, hostel } = decryptedData;
+
+  if (!userId || !hostel) {
+    return next(new AppError("Invalid Data", 403));
+  }
+
+  if (hostel !== scanningHostel) {
+    return next(new AppError("Student does not belong to the hostel", 403));
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return next(new AppError("Student not found", 404));
+  }
+
+  if (user.mealsAvailed.includes(mealId)) {
+    return next(new AppError("Student has already availed this meal", 400));
+  }
+
+  const meal = await Meal.findById(mealId);
+
+  if (!meal) {
+    return next(new AppError("Meal does not exist", 404));
+  }
+
+  if (!meal.type) {
+    return next(new AppError("Meal price does not exist", 404));
+  }
+
+  const price = mealPriceMap[meal.type];
+
+  user.messBalance += price;
+  user.mealsAvailed.push(mealId);
+  await user.save();
+
+  res.status(201).json({
+    message: "Student billed for this meal successfully",
+  });
+});
+
+//TODO: Backend Request for user calender
+// TODO: Handle Authentication middleware

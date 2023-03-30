@@ -5,5 +5,6 @@ const Router = express.Router();
 
 Router.post("/addMessBalance", userController.addMessBalance);
 Router.get("/getAttendance", userController.generateMessAttendanceExcel);
+Router.post("/demo", userController.addMealToUser);
 
 module.exports = Router;

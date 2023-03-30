@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {createMeal} = require("./../controllers/mealController");
+const { createMeal } = require("./../controllers/mealController");
 
 router.post("/", createMeal);
 
