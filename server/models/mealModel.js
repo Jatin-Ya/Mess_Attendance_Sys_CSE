@@ -5,8 +5,7 @@ const mealSchema = new Schema({
     date : {
         type: Date,
         required: true,
-        time: false,
-        trim: true
+
     },
 
     type : {

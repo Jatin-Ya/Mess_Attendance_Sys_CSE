@@ -6,12 +6,14 @@ const Meal = require("./../models/mealModel");
 exports.createMeal = catchAsync(async(req,res, next) => {
     const {type} = req.body;
 
-    const date = Date();
+    const tempDate = new Date();
+    const date = tempDate.setHours(0,0,0,0);
+
     const meal = await Meal.findOne({date, type});
 
     if(meal) {
         res.status(400).json({
-            message: `A meal for ${type} already exists on ${date}`
+            message: `A meal for ${type} already exists on ${new Date(date)}`
         })
         return;
     }
