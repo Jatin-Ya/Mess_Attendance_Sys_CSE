@@ -10,7 +10,10 @@ const requestLogger = require("./utils/requestLogger");
 
 const menuRouter = require("./routes/menuRoutes");
 const inputRouter = require("./routes/inputRoutes");
+const encryptionRouter = require("./routes/encryptRoutes");
 const userRouter = require("./routes/userRoutes");
+const reviewRouter = require("./routes/reviewRoutes");
+const mealRouter = require("./routes/mealRoutes");
 
 app.use(express.json({ limit: "10kb" }));
 app.use(requestLogger);
@@ -18,7 +21,7 @@ app.use(requestLogger);
 app.use(cookieParser());
 app.use(mongoSanitize());
 app.enable("trust proxy");
-app.use(express.static(path.join(__dirname, "/client/build")));
+
 
 app.get("/api/health", (req, res, next) => {
   res.send("Health Check is working fine!");
@@ -29,15 +32,10 @@ app.use("/api/menu", menuRouter);
 app.use("/api/user", userRouter);
 
 app.use("/api/input", inputRouter);
+app.use("/api/encryption", encryptionRouter);
 
-app.all("*", async (req, res, next) => {
-  if (req.originalUrl.startsWith("/api")) {
-    return next(
-      new AppError(`Can't find ${req.originalUrl} on this server!`, 404)
-    );
-  }
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
-});
+app.use("/api/review", reviewRouter);
+app.use("/api/meal", mealRouter);
 
 app.use(globalErrorHandler);
 
