@@ -22,6 +22,7 @@ let JWT_COOKIE_EXPIRES_IN = process.env.JWT_COOKIE_EXPIRES_IN;
 let CLIENT_ID = process.env.CLIENT_ID;
 
 let SPREADSHEET_ID = process.env.SPREADSHEET_ID;
+let ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
 
 module.exports = {
   PORT,
@@ -36,4 +37,5 @@ module.exports = {
   EMAIL_PORT,
   CLIENT_ID,
   SPREADSHEET_ID,
+  ENCRYPTION_KEY,
 };

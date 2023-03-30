@@ -34,10 +34,10 @@ const userSchema = new Schema(
     //   type: mongoose.Schema.ObjectId,
     //   ref: "Meal"
     // }],
-    reviews: [{
-      type: mongoose.Schema.ObjectId,
-      ref: "Review"
-    }]
+    // reviews: [{
+    //   type: mongoose.Schema.ObjectId,
+    //   ref: "Review"
+    // }]
   },
   { timestamps: true }
 );
