@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "expo": "~48.0.9",
+    "expo-auth-session": "~4.0.3",
+    "expo-crypto": "~12.2.1",
+    "expo-secure-store": "^12.1.1",
     "expo-status-bar": "~1.4.4",
+    "expo-web-browser": "~12.1.1",
     "react": "18.2.0",
     "react-native": "0.71.4",
     "react-native-qrcode-svg": "^6.2.0",
