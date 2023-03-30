@@ -8,6 +8,8 @@ const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const requestLogger = require("./utils/requestLogger");
 
+const inputRouter = require("./routes/inputRoutes");
+
 app.use(express.json({ limit: "10kb" }));
 app.use(requestLogger);
 
@@ -19,6 +21,8 @@ app.use(express.static(path.join(__dirname, "/client/build")));
 app.get("/api/health", (req, res, next) => {
   res.send("Health Check is working fine!");
 });
+
+app.use("/api/input", inputRouter);
 
 app.all("*", async (req, res, next) => {
   if (req.originalUrl.startsWith("/api")) {
