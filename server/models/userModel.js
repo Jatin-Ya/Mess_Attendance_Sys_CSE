@@ -7,20 +7,37 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    firstname: {
+    name: {
       type: String,
       required: true,
     },
-    lastname: {
+    hostel: {
       type: String,
+      enum: ["MHR", "BHR", "GHR", "RHR", "SHR"],
+      required: true
+    },
+    rollNumber: {
+      type: String,
+      required: true
+    },
+    messBalance: {
+      type: Number,
       required: true,
+      default: 0 
+    },
+    roomNumber: {
+      type: String,
+      required: true
     },
     img: String,
-    role: {
-      type: String,
-      enum: ["user", "admin"],
-      default: "user",
-    },
+    // meals: [{
+    //   type: mongoose.Schema.ObjectId,
+    //   ref: "Meal"
+    // }],
+    reviews: [{
+      type: mongoose.Schema.ObjectId,
+      ref: "Review"
+    }]
   },
   { timestamps: true }
 );
