@@ -10,6 +10,7 @@ const globalErrorHandler = require("./controllers/errorController");
 const requestLogger = require("./utils/requestLogger");
 
 const inputRouter = require("./routes/inputRoutes");
+const encryptionRouter = require("./routes/encryptRoutes");
 
 app.use(express.json({ limit: "10kb" }));
 app.use(requestLogger);
@@ -26,6 +27,7 @@ app.get("/api/health", (req, res, next) => {
 app.use("/api/v1/menu", menuRouter);
 
 app.use("/api/input", inputRouter);
+app.use("/api/encryption", encryptionRouter);
 
 app.all("*", async (req, res, next) => {
   if (req.originalUrl.startsWith("/api")) {
