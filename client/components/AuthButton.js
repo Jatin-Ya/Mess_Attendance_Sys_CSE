@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
+import useAuthContext from "../hooks/useAuthContext";
+
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function AuthButton() {
   const [token, setToken] = useState("");
   const [userInfo, setUserInfo] = useState(null);
+  const {login} = useAuthContext();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "659895759042-cos8bhaqckqq0ecdjtgk14ugo5pr1qum.apps.googleusercontent.com",
@@ -18,6 +21,7 @@ export default function AuthButton() {
   useEffect(() => {
     if (response?.type === "success") {
       setToken(response.authentication.accessToken);
+      login(response.authentication.accessToken);
       getUserInfo();
     }
   }, [response, token]);
