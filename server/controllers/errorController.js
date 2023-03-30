@@ -32,7 +32,7 @@ const sendErrorDev = (err, req, res) => {
   //API
   console.log(err.message);
 
-  if (req.originalUrl.startsWith("/api/v1")) {
+  if (req.originalUrl.startsWith("/api")) {
     return res.status(err.statusCode).json({
       status: err.status,
       error: err,

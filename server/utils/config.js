@@ -21,6 +21,8 @@ let JWT_COOKIE_EXPIRES_IN = process.env.JWT_COOKIE_EXPIRES_IN;
 // Google OAuth credentials
 let CLIENT_ID = process.env.CLIENT_ID;
 
+let SPREADSHEET_ID = process.env.SPREADSHEET_ID;
+
 module.exports = {
   PORT,
   NODE_ENV,
@@ -33,4 +35,5 @@ module.exports = {
   EMAIL_HOST,
   EMAIL_PORT,
   CLIENT_ID,
+  SPREADSHEET_ID,
 };
