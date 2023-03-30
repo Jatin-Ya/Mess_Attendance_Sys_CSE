@@ -42,7 +42,6 @@ exports.getAReview = catchAsync(async (req, res, next) => {
 
 exports.getReviewsOfAMeal = catchAsync(async (req, res, next) => {
   const meal = req.body.meal;
-
   const mealId = Meal.findOne({ date: meal.data, type: meal.type });
 
   const reviews = await Review.find({ meal: mealId });
@@ -65,12 +64,12 @@ exports.updateAReview = catchAsync(async (req, res, next) => {
   );
 
   if (!updatedReview) {
-    res.status(403).json({
-      message:
-        "You either don't have permission to update or the review is missing",
-    });
-
-    return next();
+    return next(
+      new AppError(
+        "You either don't have permission or the review is missing",
+        403
+      )
+    );
   }
   res.status(200).json({
     message: "updated successfully",
@@ -85,11 +84,12 @@ exports.deleteReview = catchAsync(async (req, res, next) => {
   const deleted = await Review.deleteOne({ _id: id, user: user });
 
   if (deleted.deletedCount === 0) {
-    res.status(403).json({
-      message: "You either don't have permission or the review is missing",
-    });
-
-    return next();
+    return next(
+      new AppError(
+        "You either don't have permission or the review is missing",
+        403
+      )
+    );
   }
 
   res.status(204).json({

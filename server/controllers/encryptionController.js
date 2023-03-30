@@ -20,14 +20,10 @@ const encryptData = catchAsync(async (req, res, next) => {
   const key = Buffer.from(ENCRYPTION_KEY, keyEncoding); // key must be 32 bytes for aes256
   const iv = crypto.randomBytes(ivlength);
 
-  console.log('Ciphering "%s" with key "%s" using %s', text, key, algorithm);
-
   const cipher = crypto.createCipheriv(algorithm, key, iv);
   let ciphered = cipher.update(text, inputEncoding, outputEncoding);
   ciphered += cipher.final(outputEncoding);
   const ciphertext = iv.toString(outputEncoding) + ":" + ciphered;
-
-  console.log('Result in %s is "%s"', outputEncoding, ciphertext);
 
   res.status(200).json({
     ciphertext,
@@ -53,11 +49,7 @@ const decryptData = catchAsync(async (req, res, next) => {
   );
   deciphered += decipher.final(inputEncoding);
 
-  console.log({ deciphered });
-
   const decipheredJSON = JSON.parse(deciphered);
-
-  console.log({ decipheredJSON });
 
   res.status(200).json({
     deciphered: decipheredJSON,
