@@ -2,14 +2,15 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
 const path = require("path");
-const menuRouter = require("./routes/menuRoutes");
 const app = express();
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const requestLogger = require("./utils/requestLogger");
 
+const menuRouter = require("./routes/menuRoutes");
 const inputRouter = require("./routes/inputRoutes");
+const userRouter = require("./routes/userRoutes");
 
 app.use(express.json({ limit: "10kb" }));
 app.use(requestLogger);
@@ -23,7 +24,9 @@ app.get("/api/health", (req, res, next) => {
   res.send("Health Check is working fine!");
 });
 
-app.use("/api/v1/menu", menuRouter);
+app.use("/api/menu", menuRouter);
+
+app.use("/api/user", userRouter);
 
 app.use("/api/input", inputRouter);
 
