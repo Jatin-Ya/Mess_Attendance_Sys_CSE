@@ -6,20 +6,18 @@ const Meal = require("./../models/mealModel");
 const Review = require("./../models/reviewModel");
 
 exports.createReview = catchAsync(async (req, res, next) => {
-  const { meal, review } = req.body;
-//   const userId = "6425de2989d7180f6c218c55";
+  const { mealType, date, review } = req.body;
+  // const userId = "6425de2989d7180f6c218c55";
   const userId = req.user._id;
 
-  const fetchedMeal = await Meal.findOne({ date: meal.date, type: meal.type });
+  const fetchedMeal = await Meal.findOne({ date: date, type: mealType });
 
-  const existingReview = await Review.findOne({meal: fetchedMeal._id, user:userId });
-  if(existingReview) {
-    return next(
-        new AppError(
-          "You have already reviewed this meal",
-          400
-        )
-      );
+  const existingReview = await Review.findOne({
+    meal: fetchedMeal._id,
+    user: userId,
+  });
+  if (existingReview) {
+    return next(new AppError("You have already reviewed this meal", 400));
   }
 
   const newReview = await Review.create({
@@ -30,7 +28,9 @@ exports.createReview = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
+    // user: req.user,
     newReview,
+    // meal: fetchedMeal,
   });
 });
 
@@ -44,18 +44,40 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
 });
 
 exports.getAReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findById(req.params.reviewId).populate("user").populate("meal");
+  const review = await Review.findById(req.params.reviewId)
+    .populate("user")
+    .populate("meal");
   res.status(200).json({
     status: "success",
     review,
   });
 });
 
+exports.getSortedReview = catchAsync(async (req, res, next) => {
+  const { mealType, date } = req.params;
+  const reviews = await Review.find().populate("user").populate("meal");
+  const reviewsDetail = reviews.map((review) => {
+    if (
+      review.meal.type === mealType &&
+      review.createdAt.getMonth() === date.getMonth() &&
+      review.createdAt.getFullYear() === date.getFullYear() &&
+      review.createdAt.getDay() === date.getDay()
+    )
+      return review;
+  });
+  res.status(200).json({
+    status: "success",
+    reviews: reviewsDetail,
+  });
+});
+
 exports.getReviewsOfAMeal = catchAsync(async (req, res, next) => {
-  const meal = req.body.meal;   
+  const meal = req.body.meal;
   const mealId = await Meal.findOne({ date: meal.date, type: meal.type });
 
-  const reviews = await Review.find({ meal: mealId }).populate("user").populate("meal");
+  const reviews = await Review.find({ meal: mealId })
+    .populate("user")
+    .populate("meal");
 
   res.status(200).json({
     status: "success",
@@ -67,8 +89,7 @@ exports.updateAReview = catchAsync(async (req, res, next) => {
   const id = req.params.reviewId;
   const review = req.body.review;
   const user = req.user._id;
-//   const user = "6425de2989d7180f6c218c55";
-
+  //   const user = "6425de2989d7180f6c218c55";
 
   const updatedReview = await Review.findOneAndUpdate(
     { _id: id, user: user },
@@ -93,7 +114,7 @@ exports.updateAReview = catchAsync(async (req, res, next) => {
 exports.deleteReview = catchAsync(async (req, res, next) => {
   const id = req.params.reviewId;
   const user = req.user._id;
-//   const user = "6425de2989d7180f6c218c55";
+  //   const user = "6425de2989d7180f6c218c55";
 
   const deleted = await Review.deleteOne({ _id: id, user: user });
 

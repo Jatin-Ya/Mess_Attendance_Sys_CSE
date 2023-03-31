@@ -1,25 +1,67 @@
-import React, { Component, useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import React, { Component, useEffect, useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import Message from "../components/Message";
+import DatePicker from "../components/DatePicker";
+import DropDown from "react-native-paper-dropdown";
+import axios from "../utils/axios";
+import useAuthContext from "../hooks/useAuthContext";
 // import MaterialButtonPrimary1 from "../components/MaterialButtonPrimary1";
 
 function ReviewScreen(props) {
-  const [messageArray, setMessageArray] = useState(["abs", "gf"]);
+  const { user } = useAuthContext();
+  const [messageArray, setMessageArray] = useState([]);
   const [newReview, setNewReview] = useState("");
-
-  const onPostReview = () => {
-    setMessageArray((a) => [...a, newReview]);
+  const [mealType, setMealType] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [showDropDown, setShowDropDown] = useState(false);
+  const mealTypes = [
+    { label: "Breakfast", value: "breakfast" },
+    { label: "Lunch", value: "lunch" },
+    { label: "Snacks", value: "snacks" },
+    { label: "Dinner", value: "dinner" },
+  ];
+  useEffect(() => {
+    const getReviews = async () => {
+      const response = await axios.get("/api/review");
+      // console.log("Reviews", response.data.reviews);
+      setMessageArray(response.data.reviews);
+    };
+    getReviews();
+  }, []);
+  const onChangeDate = (currDate) => {
+    setDate(currDate);
   };
-  console.log(messageArray);
-  const messageList = messageArray.map((msgTxt) => {
-    return <Message text={msgTxt} isMyMessage={false}></Message>;
+  const onPostReview = async () => {
+    console.log({
+      review: newReview,
+      date,
+      mealType,
+    });
+    const response = await axios.post("/api/review", {
+      review: newReview,
+      date,
+      mealType,
+    });
+    // setMessageArray((a) => [...a]);
+  };
+  let messageList = messageArray.map((message) => {
+    return (
+      <Message
+        text={message.review}
+        user={message.user.name}
+        mealType={message.meal.type}
+        mealHostel={message.meal.hostel}
+        time={message.createdAt}
+        isMyMessage={user.email === message.user.email}
+      ></Message>
+    );
   });
 
   return (
     <View style={styles.ReviewContainer}>
       <View style={styles.msgContainer}>
         {messageList}
-        <Message text="HI" isMyMessage={true}></Message>
+        {/* <Message text="HI" isMyMessage={true}></Message> */}
       </View>
       <View style={styles.newReviewContainer}>
         {/* <View style={styles.rect}></View> */}
@@ -30,6 +72,19 @@ function ReviewScreen(props) {
             value={newReview}
             onChangeText={setNewReview}
           ></TextInput>
+        </View>
+        <DatePicker date={date} setDate={onChangeDate}></DatePicker>
+        <View style={styles.selectorinput}>
+          <DropDown
+            label={"Select"}
+            mode={"outlined"}
+            value={mealType}
+            setValue={setMealType}
+            list={mealTypes}
+            visible={showDropDown}
+            showDropDown={() => setShowDropDown(true)}
+            onDismiss={() => setShowDropDown(false)}
+          />
         </View>
         <Button title="Post Review" onPress={onPostReview}></Button>
       </View>
