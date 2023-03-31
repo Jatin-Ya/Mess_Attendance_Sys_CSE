@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import DropDown from "react-native-paper-dropdown";
-
+import axios from "./../utils/axios";
 // import MaterialButtonPrimary from "../components/MaterialButtonPrimary";
 
 function Dashboard() {
@@ -18,24 +18,33 @@ function Dashboard() {
     const meal  = {
       date : date,
       type : mealtype,
-      quantity : 0
+      quantity : 0,
+      hostel: "MHR"
     }
+
+    axios.post("/api/meal", meal).then(response => {
+      console.log("Meal created successfully")
+    }).catch(err => console.log(err))
   }
-  const dummyData = {
-    breakfast : 20,
-    lunch : 40,
-    snacks : 30,
-    dinner : 50,
-    date: "31-03-23"
-  }
+  // const dummyData = {
+  //   breakfast : 20,
+  //   lunch : 40,
+  //   snacks : 30,
+  //   dinner : 50,
+  //   date: "31-03-23"
+  // }
 
   useEffect(()=>{
     const currDate = new Date();
-    setBreakfastCount(dummyData.breakfast);
-    setLunchCount(dummyData.lunch);
-    setSnacksCount(dummyData.snacks);
-    setDinnerCount(dummyData.dinner);
     setDate(currDate);
+
+    axios.get("/api/meal/today-stats").then(response => {
+      setBreakfastCount(response.breakfast);
+      setLunchCount(response.lunch);
+      setSnacksCount(response.snacks);
+      setDinnerCount(response.dinner);
+    }).catch(err => console.log(err))
+    
   },[])
   return (
     <View style={styles.container}>
