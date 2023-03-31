@@ -11,7 +11,7 @@ function Dashboard() {
   const [lunchCount,setLunchCount] = useState(0);
   const [snacksCount,setSnacksCount] = useState(0);
   const [dinnerCount,setDinnerCount] = useState(0);
-  const [date,setDate] = useState("");
+  const [date,setDate] = useState(new Date());
   const mealtypes = [{label:"Breakfast",value:"Breakfast"},{label:"Lunch",value:"Lunch"},{label:"Snacks",value:"Snacks"},{label:"Dinner",value:"Dinner"}];
   const onGenerateMeal = () => {
     // console.log(mealtype);
