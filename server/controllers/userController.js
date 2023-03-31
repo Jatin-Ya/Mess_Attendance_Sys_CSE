@@ -83,6 +83,7 @@ exports.getUserRole = catchAsync(async (req, res, next) => {
     return next(new AppError("Student not found", 404));
   }
   req.user = user;
+  req.user.save();
   let role = "user";
   if (admin.includes(email)) {
     role = "admin";
@@ -94,6 +95,7 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   //get month and year
   //month is 0,1,...11
   // const {month, year} = req.body;
+  console.log("user", req.user);
   const month = 3;
   const year = 2023;
 
