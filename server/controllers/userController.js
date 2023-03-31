@@ -17,6 +17,8 @@ const mealPriceMap = {
   dinner: 60,
 };
 
+const TIME_LIMIT = 4;
+
 const getColumns = (year, month, endDate) => {
   let columns = [
     { header: "S.no", key: "serial" },
@@ -173,20 +175,31 @@ exports.addMealToUser = catchAsync(async (req, res, next) => {
   const { encryptedString, scanningHostel, mealId } = req.body;
 
   if (!encryptedString || !scanningHostel || !mealId) {
-    return next(new AppError("Invalid Request", 400));
+    return next(new AppError("Invalid Request, required Data missing", 400));
   }
 
   const decryptedData = encryptionController.decryptData(encryptedString);
 
-  //TODO: Include time
-  const { userId, hostel } = decryptedData;
+  const { userId, hostel, time } = decryptedData;
 
-  if (!userId || !hostel) {
-    return next(new AppError("Invalid Data", 403));
+  if (!userId || !hostel || !time) {
+    return next(new AppError("Invalid Data in QR Code", 403));
   }
 
   if (hostel !== scanningHostel) {
     return next(new AppError("Student does not belong to the hostel", 403));
+  }
+
+  const currentTime = Date.now();
+  const diffInHours = (currentTime - time) / (1000 * 60 * 60);
+
+  if (diffInHours > TIME_LIMIT) {
+    return next(
+      new AppError(
+        `This QR Code is older than ${TIME_LIMIT} hrs\n Please generate a new QR Code and try again`,
+        400
+      )
+    );
   }
 
   const user = await User.findById(userId);
@@ -235,9 +248,9 @@ exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
   // if (!userId || !hostel) {
   //   return next(new AppError("Invalid Data", 403));
   // }
-  const { ObjectId } = require('mongodb');
+  const { ObjectId } = require("mongodb");
 
-  let userId =  new ObjectId("6425de2989d7180f6c218c55");
+  let userId = new ObjectId("6425de2989d7180f6c218c55");
   const user = await User.findById(userId);
   console.log("user", user);
 
@@ -248,7 +261,13 @@ exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
   const tempDate = new Date();
   const date = tempDate.setHours(0, 0, 0, 0);
 
-  const newItem = await paidItemModel.create({ userId: userId, item, quantity, price, date });
+  const newItem = await paidItemModel.create({
+    userId: userId,
+    item,
+    quantity,
+    price,
+    date,
+  });
   console.log("newItem", newItem);
   user.messBalance += price * quantity;
   await user.save();
