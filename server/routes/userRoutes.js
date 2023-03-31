@@ -6,6 +6,7 @@ const Router = express.Router();
 Router.post("/addPaidMessBalance", userController.addPaidMealToUser);
 Router.get("/attendance-self", userController.getAttendanceSelf);
 Router.get("/getAttendance", userController.generateMessAttendanceExcel);
+Router.get("/getAttendanceDownloaded", userController.downloadExcel);
 Router.post("/demo", userController.addMealToUser);
 Router.get("/getRole", userController.getUserRole);
 

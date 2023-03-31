@@ -4,14 +4,16 @@ import Message from "../components/Message";
 // import MaterialButtonPrimary1 from "../components/MaterialButtonPrimary1";
 
 function ReviewScreen(props) {
-  const [messageArray, setMessageArray] = useState(["abs","gf"]);
-  const [newReview,setNewReview] = useState("");
+  const [messageArray, setMessageArray] = useState(["abs", "gf"]);
+  const [newReview, setNewReview] = useState("");
 
   const onPostReview = () => {
-    setMessageArray((a)=>[...a,newReview]);
-  }
+    setMessageArray((a) => [...a, newReview]);
+  };
   console.log(messageArray);
-  const messageList = messageArray.map((msgTxt)=>{return <Message text={msgTxt} isMyMessage={false}></Message>})
+  const messageList = messageArray.map((msgTxt) => {
+    return <Message text={msgTxt} isMyMessage={false}></Message>;
+  });
 
   return (
     <View style={styles.ReviewContainer}>
@@ -22,25 +24,25 @@ function ReviewScreen(props) {
       <View style={styles.newReviewContainer}>
         {/* <View style={styles.rect}></View> */}
         <View style={styles.inputContainer}>
-          
-        <TextInput multiline={true} style={styles.inputReview} value={newReview} onChangeText={setNewReview}></TextInput>
+          <TextInput
+            multiline={true}
+            style={styles.inputReview}
+            value={newReview}
+            onChangeText={setNewReview}
+          ></TextInput>
         </View>
-        <Button
-        title="Post Review"
-        onPress={onPostReview}
-        ></Button>
-        </View>
-      
+        <Button title="Post Review" onPress={onPostReview}></Button>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   ReviewContainer: {
-    flex: 1
+    flex: 1,
   },
-  msgContainer:{
-    height: "80%"
+  msgContainer: {
+    height: "80%",
   },
   newReviewContainer: {
     width: "100%",
@@ -49,22 +51,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "space-around",
     alignContent: "center",
-    alignItems:"center"
+    alignItems: "center",
   },
   inputContainer: {
     height: 80,
     width: "80%",
-    justifyContent:"center",
+    justifyContent: "center",
     backgroundColor: "rgba(255,255,255,1)",
     alignItems: "center",
-    borderRadius: 10
+    borderRadius: 10,
   },
   inputReview: {
     width: "90%",
     height: 64,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 0,
-    
+
     // marginTop: "5%",
     // marginLeft: "20%"
   },
@@ -72,8 +74,8 @@ const styles = StyleSheet.create({
     height: 36,
     width: 323,
     marginTop: 13,
-    marginLeft: 25
-  }
+    marginLeft: 25,
+  },
 });
 
 export default ReviewScreen;
