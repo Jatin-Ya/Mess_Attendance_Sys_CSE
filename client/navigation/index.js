@@ -16,6 +16,7 @@ import {
   ReviewScreen,
   CalenderScreen,
   ReviewScreenAdmin,
+  Menu,
 } from "../screens";
 
 export default function AppNavigator() {
@@ -56,10 +57,10 @@ export default function AppNavigator() {
     return (
       <MainTabs.Navigator
         sceneContainerStyle={{ backgroundColor: "white" }}
-        screenOptions={{
-          // tabBarActiveTintColor: COLORS.blue,
-          headerRight: LogoutButton,
-        }}
+        // screenOptions={{
+        //   // tabBarActiveTintColor: COLORS.blue,
+        //   headerRight: LogoutButton,
+        // }}
       >
         <AuthStack.Screen
           name="AdminReview"
@@ -108,6 +109,14 @@ export default function AppNavigator() {
           component={CalenderScreen}
           options={{
             title: "Calender Screen",
+          }}
+        />
+
+        <AuthStack.Screen
+          name="Menu"
+          component={Menu}
+          options={{
+            title: "Menu",
           }}
         />
       </MainTabs.Navigator>

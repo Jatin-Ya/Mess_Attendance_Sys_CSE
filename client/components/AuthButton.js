@@ -7,7 +7,7 @@ import useAuthContext from "../hooks/useAuthContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function AuthButton() {
+export default function AuthButton({ style }) {
   const [token, setToken] = useState("");
   // const [userInfo, setUserInfo] = useState(null);
   const { login } = useAuthContext();
@@ -88,12 +88,11 @@ export default function AuthButton() {
   return (
     <View>
       <Button
+        style={style}
         title="Sign in with Google"
         disabled={!request}
         onPress={() => {
-          // getUserInfo();
           promptAsync();
-          // setDummyData();
         }}
       />
     </View>
@@ -110,5 +109,23 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  button: {
+    position: "absolute",
+    left: "0%",
+    right: "0%",
+    top: "0%",
+    bottom: "0%",
+  },
+  link: {
+    fontFamily: "'Maven Pro'",
+    fontStyle: "normal",
+    fontWeight: "500",
+    fontSize: "12px",
+    lineHeight: "14px",
+    display: "flex",
+    alignItems: "center",
+    textAlign: "center",
+    color: "#FFFFFF",
   },
 });

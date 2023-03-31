@@ -9,8 +9,14 @@ exports.createReview = catchAsync(async (req, res, next) => {
   const { mealType, date, review } = req.body;
   // const userId = "6425de2989d7180f6c218c55";
   const userId = req.user._id;
+  const newDate = new Date(date);
+  newDate.setHours(0, 0, 0, 0);
 
-  const fetchedMeal = await Meal.findOne({ date: date, type: mealType });
+  const fetchedMeal = await Meal.findOne({ date: newDate, type: mealType });
+
+  if (!fetchedMeal) {
+    return next(new AppError("Meal not found", 400));
+  }
 
   const existingReview = await Review.findOne({
     meal: fetchedMeal._id,

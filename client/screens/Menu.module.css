@@ -1,0 +1,155 @@
+.welcome {
+    /* Welcome Shri */
+
+
+position: absolute;
+width: 130px;
+height: 24px;
+left: 18px;
+top: 64px;
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 24px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+
+/* Black */
+
+color: #000000;
+}
+
+.rect {
+    box-sizing: border-box;
+
+position: absolute;
+width: 332px;
+height: 190px;
+left: 22px;
+top: 106px;
+
+background: #FFFFFF;
+border-radius: 12px;
+}
+
+.upcoming {
+    /* Upcoming Meal */
+
+
+position: absolute;
+width: 102px;
+height: 20px;
+left: 46px;
+top: 122px;
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+
+
+color: #1C1C1C;
+}
+
+.vec {
+    position: absolute;
+left: 8.33%;
+right: 8.33%;
+top: 8.33%;
+bottom: 8.33%;
+
+/* background: #000000; */
+}
+
+.items {
+    width: 161px;
+height: 28px;
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+letter-spacing: 0.300349px;
+
+color: #000000;
+flex:none;
+}
+
+.khana {
+    position: absolute;
+width: 224px;
+height: 95px;
+left: 346px;
+top: 175px;
+
+
+/* transform: matrix(-1, 0, 0, 1, 0, 0); */
+}
+
+.fullMenu {
+    width: 89px;
+height: 18px;
+
+/* font-family: 'Poppins'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 18px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+
+color: #000000;
+}
+
+.optionBox {
+    position: absolute;
+width: 96px;
+height: 96px;
+left: 22px;
+top: 328px;
+
+/* Neutral/Neutral 100 */
+
+background: #FFFFFF;
+/* Shadow 0-8-24 */
+
+box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
+border-radius: 8px;
+}
+
+.optionName {
+    position: absolute;
+height: 14px;
+left: 8.8%;
+right: 71.2%;
+/* top: calc(50% - 14px/2 + 3px); */
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+letter-spacing: 0.266977px;
+
+color: #222B45;
+
+}
+
+.optionImage {
+    position: absolute;
+width: 64px;
+height: 65px;
+left: 38px;
+top: 333px;
+}
+
