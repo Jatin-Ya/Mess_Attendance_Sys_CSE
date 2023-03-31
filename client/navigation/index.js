@@ -1,15 +1,18 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { Icon } from '@rneui/base';
 
-import useAuthContext from '../hooks/useAuthContext';
+import useAuthContext from "../hooks/useAuthContext";
 // import Wrapper from "../utils/Wrapper";
 // import COLORS from "../assets/colors/colors";
-import LogoutButton from '../components/LogoutButton';
-import LoginScreen from '../screens/LoginScreen';
-import HomeScreen from '../screens/HomeSreen';
+import LogoutButton from "../components/LogoutButton";
+import {
+  LoginScreen,
+  HomeScreen,
+  QRCodeGenerate,
+  QRCodeScanner,
+} from "../screens";
 
 export default function AppNavigator() {
   const { user } = useAuthContext();
@@ -20,19 +23,26 @@ export default function AppNavigator() {
       <AuthStack.Navigator
         screenOptions={{
           headerShown: false,
-          animation: 'none',
+          animation: "none",
           contentStyle: {
-            backgroundColor: 'white',
+            backgroundColor: "white",
           },
         }}
       >
         <AuthStack.Screen
-          name='Home'
+          name="Home"
           component={LoginScreen}
           options={{
-            title: 'Login Screen',
+            title: "Login Screen",
           }}
         />
+        {/* <AuthStack.Screen
+          name="Home"
+          component={QRCodeGenerate}
+          options={{
+            title: "Login Screen",
+          }}
+        /> */}
       </AuthStack.Navigator>
     );
   };
@@ -41,17 +51,31 @@ export default function AppNavigator() {
   const MainTabsNavigator = () => {
     return (
       <MainTabs.Navigator
-        sceneContainerStyle={{ backgroundColor: 'white' }}
+        sceneContainerStyle={{ backgroundColor: "white" }}
         screenOptions={{
           // tabBarActiveTintColor: COLORS.blue,
           headerRight: LogoutButton,
         }}
       >
         <AuthStack.Screen
-          name='Home'
+          name="Home"
           component={HomeScreen}
           options={{
-            title: 'Home Screen',
+            title: "Home Screen",
+          }}
+        />
+        <AuthStack.Screen
+          name="My QR"
+          component={QRCodeGenerate}
+          options={{
+            title: "My QR Code",
+          }}
+        />
+        <AuthStack.Screen
+          name="My QR Scanner"
+          component={QRCodeScanner}
+          options={{
+            title: "My QR Code Scanner",
           }}
         />
       </MainTabs.Navigator>
@@ -59,9 +83,9 @@ export default function AppNavigator() {
   };
 
   let content = <AuthStackNavigator />;
-  // if (user) {
-  //   content = <MainTabsNavigator />;
-  // }
+  if (user) {
+    content = <MainTabsNavigator />;
+  }
 
   return <NavigationContainer>{content}</NavigationContainer>;
 }
