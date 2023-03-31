@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import { Button, StyleSheet, TextInput, View, Text } from "react-native";
 import Message from "../components/Message";
 import DatePicker from "../components/DatePicker";
 import DropDown from "react-native-paper-dropdown";
@@ -25,7 +25,9 @@ function ReviewScreenAdmin(props) {
   return (
     <View style={styles.ReviewContainer}>
       <View style={styles.selectorContainer}>
+        
       <DatePicker date={date} setDate={onChangeDate}></DatePicker>
+      <Text>Select Meal</Text>
       <View style={styles.selectorinput}>
           <DropDown
             label={"Select"}
