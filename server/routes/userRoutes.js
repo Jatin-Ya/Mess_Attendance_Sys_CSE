@@ -12,6 +12,7 @@ Router.get(
   userController.getAttendanceSelf
 );
 Router.get("/getAttendance", userController.generateMessAttendanceExcel);
+Router.get("/getAttendanceDownloaded", userController.downloadExcel);
 Router.post("/demo", userController.addMealToUser);
 Router.get("/getRole", userController.getUserRole);
 

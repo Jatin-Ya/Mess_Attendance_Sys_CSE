@@ -15,6 +15,7 @@ import {
   Dashboard,
   ReviewScreen,
   CalenderScreen,
+  ReviewScreenAdmin,
 } from "../screens";
 
 export default function AppNavigator() {
@@ -60,6 +61,13 @@ export default function AppNavigator() {
           headerRight: LogoutButton,
         }}
       >
+        <AuthStack.Screen
+          name="AdminReview"
+          component={ReviewScreenAdmin}
+          options={{
+            title: "Reviews",
+          }}
+        />
         <AuthStack.Screen
           name="Review"
           component={ReviewScreen}

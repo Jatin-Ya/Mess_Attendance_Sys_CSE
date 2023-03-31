@@ -5,6 +5,7 @@ import QRCodeGenerate from "./QRCodeGenerate";
 import QRCodeScanner from "./QRCodeScanner";
 import ReviewScreen from "./ReviewScreen";
 import CalenderScreen from "./Agenda";
+import ReviewScreenAdmin from "./ReviewScreenAdmin";
 
 export {
   HomeScreen,
@@ -14,4 +15,5 @@ export {
   Dashboard,
   ReviewScreen,
   CalenderScreen,
+  ReviewScreenAdmin,
 };
