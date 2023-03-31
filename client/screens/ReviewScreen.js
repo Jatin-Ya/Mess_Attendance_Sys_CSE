@@ -23,7 +23,7 @@ function ReviewScreen(props) {
         {/* <View style={styles.rect}></View> */}
         <View style={styles.inputContainer}>
           
-        <TextInput style={styles.inputReview} value={newReview} onChangeText={setNewReview}></TextInput>
+        <TextInput multiline={true} style={styles.inputReview} value={newReview} onChangeText={setNewReview}></TextInput>
         </View>
         <Button
         title="Post Review"
