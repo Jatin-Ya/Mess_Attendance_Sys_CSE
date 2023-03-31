@@ -10,12 +10,11 @@ const User = require("./../models/userModel");
 const Meal = require("./../models/mealModel");
 const paidItemModel = require("../models/paidItemModel");
 
-<<<<<<< HEAD
 const path = require('path');
 
-=======
+const fs = require("fs");
+
 const admin = ["20cs01029@iitbbs.ac.in", "21cs02007@iitbbs.ac.in"];
->>>>>>> 49ceeb7e61b5290d20154e803e0c18e49dee6eca
 const mealPriceMap = {
   breakfast: 30,
   lunch: 60,
@@ -127,7 +126,7 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   //get month and year
   //month is 0,1,...11
   // const {month, year} = req.body;
-  console.log("user", req.user);
+  // console.log("user", req.user);
   const month = 3;
   const year = 2023;
 
@@ -216,22 +215,41 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
       return next(new AppError("Error in generating excel", 401));
     });
 
-  const file = __dirname + "/../excel/mess-attendance.xlsx"
+  const filePath = path.join(__dirname, "..", "excel", "mess-attendance.xlsx")
+  const fileName = "attendance.xlsx";
+  // console.log(file);
 
+  // res.download(file, function(err) {
+  //   console.log(err);
+  // })
   res.status(201).json({
     status: "success",
   })
-  // const options = {
-  //   root: path.join(__dirname, "..", "excel")
-  // };
-  // const fileName = `mess-attendance.xlsx`;
-  // res.sendFile(fileName, options, function (err) {
-  //   if (err) {
-  //       next(err);
+
+  // res.download(filePath, (err) => {
+  //   if(err) {
+  //     console.log(err)
   //   } else {
-  //       console.log('Sent:', fileName);
+  //     console.log("Downloaded successfully")
   //   }
   // })
+  // const file = fs.createReadStream(filePath);
+  // file.on('error', (err) => {
+  //   console.error(err);
+  //   res.status(500).send('Server Error');
+  // });
+  
+  // res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  // res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+  
+  // file.pipe(res);
+  
+  // res.on('abort', () => {
+  //   console.log('Request aborted by client');
+  // });
+
+  
+  // res.status(200)
 
 
   //S.no, Name, Roll No, 1, 2,3,4,.....30, Total days, total cost
