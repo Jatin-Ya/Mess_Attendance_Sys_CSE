@@ -11,11 +11,9 @@ const Meal = require("./../models/mealModel");
 const paidItemModel = require("../models/paidItemModel");
 const path = require("path");
 
-const path = require('path');
-
 const fs = require("fs");
 
-const admin = ["20cs01029@iitbbs.ac.in", "21cs02007@iitbbs.ac.in"];
+const admin = ["20cs01029@iitbbs.ac.in", "21cs02007@iitbbs.ac.in","20CS01029@iitbbs.ac.in", "21CS02007@iitbbs.ac.in"];
 const mealPriceMap = {
   breakfast: 30,
   lunch: 60,
