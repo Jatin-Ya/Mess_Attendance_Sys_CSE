@@ -14,6 +14,6 @@ Router.get(
 Router.get("/getAttendance", userController.generateMessAttendanceExcel);
 Router.get("/getAttendanceDownloaded", userController.downloadExcel);
 Router.post("/demo", userController.addMealToUser);
-Router.get("/getRole", userController.getUserRole);
+Router.post("/getRole", userController.getUserRole);
 
 module.exports = Router;

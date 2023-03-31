@@ -10,9 +10,6 @@ const User = require("./../models/userModel");
 const Meal = require("./../models/mealModel");
 const paidItemModel = require("../models/paidItemModel");
 const path = require("path");
-
-const path = require("path");
-
 const fs = require("fs");
 
 const admin = ["20cs01029@iitbbs.ac.in", "21cs02007@iitbbs.ac.in"];
