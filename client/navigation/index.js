@@ -14,6 +14,7 @@ import {
   QRCodeScanner,
   Dashboard,
   ReviewScreen,
+  CalenderScreen,
 } from "../screens";
 
 export default function AppNavigator() {
@@ -92,6 +93,13 @@ export default function AppNavigator() {
           component={QRCodeScanner}
           options={{
             title: "My QR Code Scanner",
+          }}
+        />
+        <AuthStack.Screen
+          name="Calender Screen"
+          component={CalenderScreen}
+          options={{
+            title: "Calender Screen",
           }}
         />
       </MainTabs.Navigator>
