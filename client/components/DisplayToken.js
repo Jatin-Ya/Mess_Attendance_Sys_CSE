@@ -5,7 +5,7 @@ const DisplayToken = () => {
   const {user} = useAuthContext();
   return (
     <View>
-      {user?<Text>{user}</Text>:<Text>Not in storage</Text>}
+      {user?<Text>{user.name}</Text>:<Text>Not in storage</Text>}
     </View>
   )
 }
