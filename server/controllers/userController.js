@@ -90,120 +90,148 @@ const getColumns = (year, month, endDate) => {
     { header: "Name", key: "name" },
     { header: "Roll Number", key: "rollno" },
     { header: "Email", key: "email" },
-    { header: "Hostel", key: "hostel" }
+    { header: "Hostel", key: "hostel" },
   ];
 
-  for(let i = 1; i<=endDate.getDate(); i++) {
+  for (let i = 1; i <= endDate.getDate(); i++) {
     columns.push({
-      header : `${i} - breakfast`,
-      key :  `${i}_breakfast`
+      header: `${i} - breakfast`,
+      key: `${i}_breakfast`,
     });
     columns.push({
-      header : `${i} - lunch`,
-      key :  `${i}_lunch`
+      header: `${i} - lunch`,
+      key: `${i}_lunch`,
     });
     columns.push({
-      header : `${i} - snacks`,
-      key :  `${i}_snacks`
+      header: `${i} - snacks`,
+      key: `${i}_snacks`,
     });
     columns.push({
-      header : `${i} - dinner`,
-      key :  `${i}_dinner`
+      header: `${i} - dinner`,
+      key: `${i}_dinner`,
     });
   }
 
   columns.push({
     header: "balance",
-    key : "balance"
-  })
+    key: "messBalance",
+  });
 
   return columns;
-}
+};
 
-const getDefaultRow = (user, serial, endDate) => {
+const getDefaultRow = (user, serial, attendance, endDate) => {
   let name = user.name;
   let email = user.email;
-  let serial = serial;
+  let sno = serial;
   let rollno = user.rollNumber;
+  let messBalance = user.messBalance;
   let hostel = user.hostel;
+  let row = { name, email, serial: sno, rollno, hostel, messBalance };
+  const meal = {};
+  for (let i = 0; i < attendance.length; i++) {
+    meal[`${i + 1}_breakfast`] = Number(attendance[i].breakfast);
+    meal[`${i + 1}_lunch`] = Number(attendance[i].lunch);
+    meal[`${i + 1}_snacks`] = Number(attendance[i].snacks);
+    meal[`${i + 1}_dinner`] = Number(attendance[i].dinner);
+  }
 
-  let row = {name, email, serial, rollno, hostel};
-}
+  return { ...row, ...meal };
+};
 exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   //get month and year
   //month is 0,1,...11
   // const {month, year} = req.body;
   const month = 3;
-  const year  = 2023;
+  const year = 2023;
 
   const startDate = new Date(year, month, 1);
-  const endDate = new Date(year, month,0);
+  const endDate = new Date(year, month, 0);
 
-  startDate.setHours(0,0,0,0);
-  endDate.setHours(0,0,0,0);
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
 
-  const users = await User.find().populate("mealsAvailed");
-  console.log(users);
+  // const users = await User.find().populate("mealsAvailed");
+  //Dummy data
+
+  const users = [
+    {
+      email: "user1@example.com",
+      name: "User 1",
+      hostel: "MHR",
+      rollNumber: "111",
+      messBalance: 500,
+      roomNumber: "A101",
+      img: "https://example.com/user1.jpg",
+      mealsAvailed: [],
+    },
+    {
+      email: "user2@example.com",
+      name: "User 2",
+      hostel: "BHR",
+      rollNumber: "222",
+      messBalance: 500,
+      roomNumber: "B202",
+      img: "https://example.com/user2.jpg",
+      mealsAvailed: [],
+    },
+  ];
+
+  // Add meals to each user's mealsAvailed array
+  for (const user of users) {
+    for (let i = 1; i <= 31; i++) {
+      const breakfast = new Meal({
+        date: new Date(`2023-03-${i}`),
+        type: "breakfast",
+        quantity: 1,
+      });
+      const lunch = new Meal({
+        date: new Date(`2023-03-${i}`),
+        type: "lunch",
+        quantity: 1,
+      });
+      const snacks = new Meal({
+        date: new Date(`2023-03-${i}`),
+        type: "snacks",
+        quantity: 1,
+      });
+      const dinner = new Meal({
+        date: new Date(`2023-03-${i}`),
+        type: "dinner",
+        quantity: 1,
+      });
+      user.mealsAvailed.push(breakfast, lunch, snacks, dinner);
+    }
+  }
+
+  // console.log(users);
   // console.log(endDate.getDate())
-  
+
   const columns = getColumns(year, month, endDate);
-  console.log(columns);
+  // console.log(columns);
 
   worksheet.columns = columns;
 
   let i = 1;
-  for(user in users) {
+  users.forEach((user) => {
     const mealsAvailed = user.mealsAvailed;
-    const row = {name : user.name, email: user.email, serial:i, rollno : user.rollNumber, hostel: user.hostel}
-
-    
+    let attendance = formatAttendance(mealsAvailed);
+    let row = getDefaultRow(user, i, attendance, endDate);
+    worksheet.addRow(row);
     i++;
-  }
-  // worksheet.columns = [
-  //   { header: "S.no", key: "serial" },
-  //   { header: "Name", key: "name" },
-  //   { header: "Roll Number", key: "rollno" },
-  //   { header: "Email", key: "email" },
-  //   { header: "Hostel", key: "hostel" },
-  //   { header: "balance", key: "balance" },
-  // ];
+  });
 
-  // // Add rows
-  // const dummyData = [
-  //   {
-  //     name: "John",
-  //     email: "abc@iitbbs.ac.in",
-  //     hostel: "BHR",
-  //     balance: 100,
-  //   },
-  //   {
-  //     name: "John1",
-  //     email: "abc1@iitbbs.ac.in",
-  //     hostel: "MHR",
-  //     balance: 1000,
-  //   },
-  //   {
-  //     name: "John2",
-  //     email: "abc2@iitbbs.ac.in",
-  //     hostel: "BHR",
-  //     balance: 200,
-  //   },
-  // ];
-  // dummyData.forEach((user) => {
-  //   worksheet.addRow(user);
-  // });
-  // workbook.xlsx
-  //   .writeFile("excel/mess-attendance.xlsx")
-  //   .then(() => {
-  //     console.log("Excel file generated successfully!");
-  //   })
-  //   .catch((err) => {
-  //     return next(new AppError("Error in generating excel", 401));
-  //   });
-  // res.status(201).json({
-  //   status: "success",
-  // });
-
+  workbook.xlsx
+    .writeFile("excel/mess-attendance.xlsx")
+    .then(() => {
+      console.log("Excel file generated successfully!");
+    })
+    .catch((err) => {
+      return next(new AppError("Error in generating excel", 401));
+    });
+  res.status(201).json({
+    status: "success",
+  });
 
   //S.no, Name, Roll No, 1, 2,3,4,.....30, Total days, total cost
 });
@@ -259,19 +287,53 @@ exports.addMealToUser = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
+  const { encryptedString, scanningHostel, quantity, price } = req.body;
+
+  if (!encryptedString || !scanningHostel || !quantity || !price) {
+    return next(new AppError("Invalid Request", 400));
+  }
+
+  const decryptedData = encryptionController.decryptData(encryptedString);
+
+  //TODO: Include time
+  const { userId, hostel } = decryptedData;
+
+  if (!userId || !hostel) {
+    return next(new AppError("Invalid Data", 403));
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return next(new AppError("Student not found", 404));
+  }
+
+  user.messBalance += price * quantity;
+  await user.save();
+
+  res.status(201).json({
+    message: "Student billed for this paid meal successfully",
+  });
+});
 
 const formatAttendance = (mealsAvailed) => {
   let i = 0;
   let n = mealsAvailed.length;
 
   let attendance = [];
-  while(i < n) {
-    let currDateMeals = {date : "", breakfast: false, lunch: false, snacks:false, dinner:false};
+  while (i < n) {
+    let currDateMeals = {
+      date: "",
+      breakfast: false,
+      lunch: false,
+      snacks: false,
+      dinner: false,
+    };
     let currDate = mealsAvailed[i].date;
     currDateMeals["date"] = currDate;
-    
-    while(i<n) {
-      if(mealsAvailed[i].date === currDate) {
+    while (i < n) {
+      if (mealsAvailed[i].date.toString() === currDate.toString()) {
         let type = mealsAvailed[i].type;
         currDateMeals[type] = true;
         i++;
@@ -282,41 +344,29 @@ const formatAttendance = (mealsAvailed) => {
 
     attendance.push(currDateMeals);
   }
-
   return attendance;
-}
-exports.getAttendanceSelf = catchAsync(async(req,res,next) => {
+};
+exports.getAttendanceSelf = catchAsync(async (req, res, next) => {
   const id = req.user._id;
   // const id = "6425de2989d7180f6c218c69";
   // const {startDate, endDate} = req.query;
 
   const user = await User.findById(id).populate("mealsAvailed").sort("date");
 
-  if(!user) {
-    return next(new AppError("User not found", 401))
+  if (!user) {
+    return next(new AppError("User not found", 401));
   }
 
   let mealsAvailed = user.mealsAvailed;
-
-  // let mealsAvailed = [
-  //   {date: "2023-03-30T18:30:00.000+00:00", type: "breakfast"},
-  //   {date: "2023-03-30T18:30:00.000+00:00", type: "lunch"},
-  //   {date: "2023-03-30T18:30:00.000+00:00", type: "dinner"},
-  //   {date: "2023-04-30T18:30:00.000+00:00", type: "lunch"},
-  //   {date: "2023-04-30T18:30:00.000+00:00", type: "dinner"},
-  //   {date: "2023-04-30T18:30:00.000+00:00", type: "snacks"},
-  // ]
-
+  
   const attendance = formatAttendance(mealsAvailed);
-
 
   // console.log(attendance)
   res.status(200).json({
-    status : "success",
-    attendance
-  })
-})
-
+    status: "success",
+    attendance,
+  });
+});
 
 //TODO: Backend Request for user calender
 // TODO: Handle Authentication middleware
