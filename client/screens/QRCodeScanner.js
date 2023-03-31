@@ -6,6 +6,7 @@ import axios from "../utils/axios";
 export default function QRCodeScanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [meal, setMeal] = useState({ type: "dinner", date: "20-03-23" });
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -58,9 +59,14 @@ export default function QRCodeScanner() {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Text>
+          Scanning for Meal: {meal.type} on Date: {meal.date}
+        </Text>
+      </View>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
+        style={{ width: "80%", height: "80%" }}
       />
       {scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
