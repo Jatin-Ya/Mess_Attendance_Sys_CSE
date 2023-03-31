@@ -12,6 +12,7 @@ import {
   HomeScreen,
   QRCodeGenerate,
   QRCodeScanner,
+  Dashboard,
 } from "../screens";
 
 export default function AppNavigator() {
@@ -57,6 +58,13 @@ export default function AppNavigator() {
           headerRight: LogoutButton,
         }}
       >
+        <AuthStack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{
+            title: "Dashboard",
+          }}
+        />
         <AuthStack.Screen
           name="Home"
           component={HomeScreen}
