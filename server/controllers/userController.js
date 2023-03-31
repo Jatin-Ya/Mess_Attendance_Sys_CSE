@@ -10,6 +10,7 @@ const User = require("./../models/userModel");
 const Meal = require("./../models/mealModel");
 const paidItemModel = require("../models/paidItemModel");
 
+const admin = ["20cs01029@iitbbs.ac.in", "21cs02007@iitbbs.ac.in"];
 const mealPriceMap = {
   breakfast: 30,
   lunch: 60,
@@ -71,6 +72,24 @@ const getDefaultRow = (user, serial, attendance, endDate) => {
 
   return { ...row, ...meal };
 };
+
+exports.getUserRole = catchAsync(async (req, res, next) => {
+  const email = req.body.email;
+  if (!email) {
+    return next(new AppError("Invalid data", 404));
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new AppError("Student not found", 404));
+  }
+  req.user = user;
+  let role = "user";
+  if (admin.includes(email)) {
+    role = "admin";
+  }
+  res.status(200).json({ status: "success", role });
+});
+
 exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   //get month and year
   //month is 0,1,...11
@@ -221,36 +240,45 @@ exports.addMealToUser = catchAsync(async (req, res, next) => {
 });
 
 exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
-  const { encryptedString, scanningHostel, quantity, price, item } = req.body;
+  const { encryptedString, scanningHostel, items } = req.body;
 
-  // if (!encryptedString || !scanningHostel || !quantity || !price || !item) {
-  //   return next(new AppError("Invalid Request", 400));
-  // }
+  if (!encryptedString || !scanningHostel || !items.length <= 0) {
+    return next(new AppError("Invalid Request", 400));
+  }
 
-  // const decryptedData = encryptionController.decryptData(encryptedString);
+  const decryptedData = encryptionController.decryptData(encryptedString);
 
   // //TODO: Include time
-  // const { userId, hostel } = decryptedData;
+  const { userId, hostel } = decryptedData;
 
-  // if (!userId || !hostel) {
-  //   return next(new AppError("Invalid Data", 403));
-  // }
-  const { ObjectId } = require('mongodb');
+  if (!userId || !hostel) {
+    return next(new AppError("Invalid Data", 403));
+  }
+  // const { ObjectId } = require("mongodb");
+  // let userId = new ObjectId("6425de2989d7180f6c218c4d");
 
-  let userId =  new ObjectId("6425de2989d7180f6c218c55");
   const user = await User.findById(userId);
-  console.log("user", user);
+  // console.log("user", user);
 
   if (!user) {
     return next(new AppError("Student not found", 404));
   }
 
-  const tempDate = new Date();
-  const date = tempDate.setHours(0, 0, 0, 0);
+  const date = new Date();
 
-  const newItem = await paidItemModel.create({ userId: userId, item, quantity, price, date });
-  console.log("newItem", newItem);
-  user.messBalance += price * quantity;
+  let totalPrice = 0;
+  for (const item of items) {
+    totalPrice += item.price * item.quantity;
+  }
+
+  await paidItemModel.create({
+    userId: userId,
+    items,
+    date,
+    totalPrice,
+  });
+  // console.log("newItem total Price", totalPrice);
+  user.messBalance += totalPrice;
   await user.save();
 
   res.status(201).json({
