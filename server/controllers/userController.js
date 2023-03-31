@@ -180,5 +180,64 @@ exports.addMealToUser = catchAsync(async (req, res, next) => {
   });
 });
 
+
+const formatAttendance = (mealsAvailed) => {
+  let i = 0;
+  let n = mealsAvailed.length;
+
+  let attendance = [];
+  while(i < n) {
+    let currDateMeals = {date : "", breakfast: false, lunch: false, snacks:false, dinner:false};
+    let currDate = mealsAvailed[i].date;
+    currDateMeals["date"] = currDate;
+    
+    while(i<n) {
+      if(mealsAvailed[i].date === currDate) {
+        let type = mealsAvailed[i].type;
+        currDateMeals[type] = true;
+        i++;
+      } else {
+        break;
+      }
+    }
+
+    attendance.push(currDateMeals);
+  }
+
+  return attendance;
+}
+exports.getAttendanceSelf = catchAsync(async(req,res,next) => {
+  const id = req.user._id;
+  // const id = "6425de2989d7180f6c218c69";
+  const {startDate, endDate} = req.query;
+
+  const user = await User.findById(id).populate("mealsAvailed").sort("date");
+
+  if(!user) {
+    return next(new AppError("User not found", 401))
+  }
+
+  let mealsAvailed = user.mealsAvailed;
+
+  // let mealsAvailed = [
+  //   {date: "2023-03-30T18:30:00.000+00:00", type: "breakfast"},
+  //   {date: "2023-03-30T18:30:00.000+00:00", type: "lunch"},
+  //   {date: "2023-03-30T18:30:00.000+00:00", type: "dinner"},
+  //   {date: "2023-04-30T18:30:00.000+00:00", type: "lunch"},
+  //   {date: "2023-04-30T18:30:00.000+00:00", type: "dinner"},
+  //   {date: "2023-04-30T18:30:00.000+00:00", type: "snacks"},
+  // ]
+
+  const attendance = formatAttendance(mealsAvailed);
+
+
+  // console.log(attendance)
+  res.status(200).json({
+    status : "success",
+    attendance
+  })
+})
+
+
 //TODO: Backend Request for user calender
 // TODO: Handle Authentication middleware

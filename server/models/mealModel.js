@@ -12,6 +12,11 @@ const mealSchema = new Schema({
     required: true,
     enum: ["breakfast", "lunch", "snacks", "dinner"],
   },
+
+  quantity: {
+    type: Number,
+    default : 0
+  }
 });
 
 const mealModel = mongoose.model("Meal", mealSchema);
