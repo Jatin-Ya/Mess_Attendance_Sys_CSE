@@ -1,12 +1,12 @@
 const { OAuth2Client } = require("google-auth-library");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
+
 const User = require("../models/userModel");
 const config = require("../utils/config");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
-
-const client = new OAuth2Client(config.CLIENT_ID);
 
 const createToken = (id, role) => {
   const jwtToken = jwt.sign({ id, role }, config.JWT_SECRET, {
@@ -14,6 +14,50 @@ const createToken = (id, role) => {
   });
   return jwtToken;
 };
+
+exports.login = catchAsync(async (req, res, next) => {
+  const { token } = req.body;
+  if (!token) {
+    return next(new AppError("No token found", 400));
+  }
+
+  const response = await axios.get(
+    `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    }
+  );
+
+  console.log(response?.data);
+  const { name, email, picture } = response?.data;
+
+  let currUser = await User.findOne({ email });
+
+  if (!currUser) {
+    return next(new AppError("User not found", 401));
+  }
+
+  const userInfo = {
+    name,
+    email,
+    picture,
+    roomNumber: currUser.roomNumber,
+    rollNumber: currUser.rollNumber,
+    hostel: currUser.hostel,
+    _id: currUser._id,
+  };
+
+  const jwtToken = createToken(currUser._id, "student");
+
+  res.status(200).json({
+    user: userInfo,
+    jwt: jwtToken,
+    message: "Logged Successfully",
+  });
+});
 
 exports.verifyJwtToken = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
@@ -57,55 +101,6 @@ exports.restrictTo = (...roles) => {
         new AppError("You do not have permission to perform this action", 403)
       );
     }
-
     next();
   };
 };
-
-exports.login = catchAsync(async (req, res, next) => {
-  const { token } = req.body;
-
-  if (!token) return next(new AppError("User not logged in.", 403));
-
-  let data = await client.verifyIdToken({
-    idToken: token,
-    audience: config.CLIENT_ID,
-  });
-
-  const { given_name, family_name, email, picture } = data.payload;
-
-  let user = await User.findOne({ email });
-
-  if (!user) {
-    user = await User.create({
-      email,
-      firstname: given_name,
-      lastname: family_name,
-      img: picture,
-    });
-  }
-
-  const jwtToken = createToken(user._id, user.role);
-  const expireAt = new Date(
-    Date.now() + config.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-  );
-  const cookieOptions = {
-    expires: expireAt,
-    httpOnly: true,
-    secure: config.NODE_ENV === "production",
-  };
-
-  res.cookie("jwt", jwtToken, cookieOptions);
-  res.send(user);
-});
-
-exports.logout = catchAsync(async (req, res, next) => {
-  res.clearCookie("jwt", {
-    path: "/",
-  });
-
-  res.status(200).json({
-    status: "success",
-    message: "Logged out successfully",
-  });
-});
