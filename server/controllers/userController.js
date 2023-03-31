@@ -9,13 +9,9 @@ const worksheet = workbook.addWorksheet("Mess Attendance");
 const User = require("./../models/userModel");
 const Meal = require("./../models/mealModel");
 const paidItemModel = require("../models/paidItemModel");
+const path = require("path");
 
-<<<<<<< HEAD
-const path = require('path');
-
-=======
 const admin = ["20cs01029@iitbbs.ac.in", "21cs02007@iitbbs.ac.in"];
->>>>>>> 49ceeb7e61b5290d20154e803e0c18e49dee6eca
 const mealPriceMap = {
   breakfast: 30,
   lunch: 60,
@@ -68,7 +64,7 @@ const getDefaultRow = (user, serial, attendance, endDate) => {
   let rollno = user.rollNumber;
   let messBalance = user.messBalance;
   let hostel = user.hostel;
-  let row = { name, email, serial: sno, rollno, hostel, messCharges : 0 };
+  let row = { name, email, serial: sno, rollno, hostel, messCharges: 0 };
   const meal = {};
   // for (let i = 0; i < attendance.length; i++) {
   //   meal[`${i + 1}_breakfast`] = Number(attendance[i].breakfast);
@@ -79,30 +75,29 @@ const getDefaultRow = (user, serial, attendance, endDate) => {
 
   let lastDay = endDate.getDate();
 
-  for(let i = 0; i<lastDay; i++) {
-    row[`${i+1}_breakfast`] = 0;
-    row[`${i+1}_lunch`] = 0;
-    row[`${i+1}_snacks`] = 0;
-    row[`${i+1}_dinner`] = 0;
+  for (let i = 0; i < lastDay; i++) {
+    row[`${i + 1}_breakfast`] = 0;
+    row[`${i + 1}_lunch`] = 0;
+    row[`${i + 1}_snacks`] = 0;
+    row[`${i + 1}_dinner`] = 0;
   }
 
-
   let messCharges = 0;
-  for(let i = 0; i<attendance.length; i++) {
+  for (let i = 0; i < attendance.length; i++) {
     const date = attendance[i].date.getDate();
-    row[`${date}_breakfast`] = (attendance[i].breakfast ? 1 : 0);
-    row[`${date}_lunch`] = (attendance[i].lunch ? 1 : 0);
-    row[`${date}_snacks`] = (attendance[i].snacks ? 1 : 0);
-    row[`${date}_dinner`] = (attendance[i].dinner ? 1 : 0);
+    row[`${date}_breakfast`] = attendance[i].breakfast ? 1 : 0;
+    row[`${date}_lunch`] = attendance[i].lunch ? 1 : 0;
+    row[`${date}_snacks`] = attendance[i].snacks ? 1 : 0;
+    row[`${date}_dinner`] = attendance[i].dinner ? 1 : 0;
 
-    if(attendance[i].breakfast) messCharges+=mealPriceMap.breakfast;
-    if(attendance[i].lunch) messCharges+=mealPriceMap.lunch;
-    if(attendance[i].snacks) messCharges+=mealPriceMap.snacks;
-    if(attendance[i].dinner) messCharges+=mealPriceMap.dinner;
+    if (attendance[i].breakfast) messCharges += mealPriceMap.breakfast;
+    if (attendance[i].lunch) messCharges += mealPriceMap.lunch;
+    if (attendance[i].snacks) messCharges += mealPriceMap.snacks;
+    if (attendance[i].dinner) messCharges += mealPriceMap.dinner;
   }
 
   row.messCharges = messCharges;
-  return { ...row};
+  return { ...row };
 };
 
 exports.getUserRole = catchAsync(async (req, res, next) => {
@@ -127,7 +122,6 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   //get month and year
   //month is 0,1,...11
   // const {month, year} = req.body;
-  console.log("user", req.user);
   const month = 3;
   const year = 2023;
 
@@ -216,11 +210,13 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
       return next(new AppError("Error in generating excel", 401));
     });
 
-  const file = __dirname + "/../excel/mess-attendance.xlsx"
+  // const fileName = __dirname + "../excel/mess-attendance.xlsx";
+  // console.log(fileName);
 
   res.status(201).json({
     status: "success",
-  })
+    link:"https://docs.google.com/spreadsheets/d/1mKg13i7CHDU_wZkTYVWphq7j7FZ7h4kT/edit?usp=sharing&ouid=102795312776152309797&rtpof=true&sd=true"
+  });
   // const options = {
   //   root: path.join(__dirname, "..", "excel")
   // };
@@ -233,8 +229,19 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   //   }
   // })
 
-
   //S.no, Name, Roll No, 1, 2,3,4,.....30, Total days, total cost
+});
+
+exports.downloadExcel = catchAsync(async (req, res, next) => {
+  const filePath = path.join(__dirname, "..", "excel", "mess-attendance.xlsx");
+  const fileName = "mess-attendance.xlsx";
+  res.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+
+  res.sendFile(filePath);
 });
 
 exports.addMealToUser = catchAsync(async (req, res, next) => {
