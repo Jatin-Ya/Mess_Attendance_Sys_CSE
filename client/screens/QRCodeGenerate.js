@@ -13,6 +13,7 @@ const QRCodeGenerate = () => {
       const obj = {
         userId: user._id,
         hostel: user.hostel,
+        time: Date.now(),
       };
 
       const res = await axios.post("/api/encryption/encrypt", { data: obj });

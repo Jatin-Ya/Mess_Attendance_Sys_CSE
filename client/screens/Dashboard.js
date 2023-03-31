@@ -7,42 +7,52 @@ import DropDown from "react-native-paper-dropdown";
 function Dashboard() {
   const [mealtype, setMealtype] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
-  const [breakfastCount,setBreakfastCount] = useState(0);
-  const [lunchCount,setLunchCount] = useState(0);
-  const [snacksCount,setSnacksCount] = useState(0);
-  const [dinnerCount,setDinnerCount] = useState(0);
-  const [date,setDate] = useState(new Date());
-  const mealtypes = [{label:"Breakfast",value:"Breakfast"},{label:"Lunch",value:"Lunch"},{label:"Snacks",value:"Snacks"},{label:"Dinner",value:"Dinner"}];
+  const [breakfastCount, setBreakfastCount] = useState(0);
+  const [lunchCount, setLunchCount] = useState(0);
+  const [snacksCount, setSnacksCount] = useState(0);
+  const [dinnerCount, setDinnerCount] = useState(0);
+  const [date, setDate] = useState(new Date());
+  const mealtypes = [
+    { label: "Breakfast", value: "Breakfast" },
+    { label: "Lunch", value: "Lunch" },
+    { label: "Snacks", value: "Snacks" },
+    { label: "Dinner", value: "Dinner" },
+  ];
   const onGenerateMeal = () => {
     // console.log(mealtype);
-    const meal  = {
-      date : date,
-      type : mealtype,
-      quantity : 0
-    }
-  }
+    const meal = {
+      date: date,
+      type: mealtype,
+      quantity: 0,
+    };
+  };
   const dummyData = {
-    breakfast : 20,
-    lunch : 40,
-    snacks : 30,
-    dinner : 50,
-    date: "31-03-23"
-  }
+    breakfast: 20,
+    lunch: 40,
+    snacks: 30,
+    dinner: 50,
+    date: "31-03-23",
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     const currDate = new Date();
     setBreakfastCount(dummyData.breakfast);
     setLunchCount(dummyData.lunch);
     setSnacksCount(dummyData.snacks);
     setDinnerCount(dummyData.dinner);
     setDate(currDate);
-  },[])
+  }, []);
   return (
     <View style={styles.container}>
       <Text style={styles.dashboard}>Dashboard</Text>
       <View style={styles.detailscontainer}>
-      <Text style={styles.datetxt}>Date : {`${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`}</Text>
-        <Text style={styles.breakfasttxt}>Breakfast : {breakfastCount} people</Text>
+        <Text style={styles.datetxt}>
+          Date :{" "}
+          {`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}
+        </Text>
+        <Text style={styles.breakfasttxt}>
+          Breakfast : {breakfastCount} people
+        </Text>
         <Text style={styles.lunchtxt}>Lunch : {lunchCount} people</Text>
         <Text style={styles.snackstxt}>Snacks : {snacksCount} people</Text>
         <Text style={styles.dinnertxt}>Dinner : {dinnerCount} people</Text>
@@ -75,7 +85,7 @@ function Dashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignContent:"center"
+    alignContent: "center",
   },
   dashboard: {
     // fontFamily: "roboto-regular",
