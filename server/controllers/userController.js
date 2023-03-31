@@ -10,6 +10,12 @@ const User = require("./../models/userModel");
 const Meal = require("./../models/mealModel");
 const paidItemModel = require("../models/paidItemModel");
 
+<<<<<<< HEAD
+const path = require('path');
+
+=======
+const admin = ["20cs01029@iitbbs.ac.in", "21cs02007@iitbbs.ac.in"];
+>>>>>>> 49ceeb7e61b5290d20154e803e0c18e49dee6eca
 const mealPriceMap = {
   breakfast: 30,
   lunch: 60,
@@ -48,8 +54,8 @@ const getColumns = (year, month, endDate) => {
   }
 
   columns.push({
-    header: "balance",
-    key: "messBalance",
+    header: "charges",
+    key: "messCharges",
   });
 
   return columns;
@@ -62,21 +68,66 @@ const getDefaultRow = (user, serial, attendance, endDate) => {
   let rollno = user.rollNumber;
   let messBalance = user.messBalance;
   let hostel = user.hostel;
-  let row = { name, email, serial: sno, rollno, hostel, messBalance };
+  let row = { name, email, serial: sno, rollno, hostel, messCharges : 0 };
   const meal = {};
-  for (let i = 0; i < attendance.length; i++) {
-    meal[`${i + 1}_breakfast`] = Number(attendance[i].breakfast);
-    meal[`${i + 1}_lunch`] = Number(attendance[i].lunch);
-    meal[`${i + 1}_snacks`] = Number(attendance[i].snacks);
-    meal[`${i + 1}_dinner`] = Number(attendance[i].dinner);
+  // for (let i = 0; i < attendance.length; i++) {
+  //   meal[`${i + 1}_breakfast`] = Number(attendance[i].breakfast);
+  //   meal[`${i + 1}_lunch`] = Number(attendance[i].lunch);
+  //   meal[`${i + 1}_snacks`] = Number(attendance[i].snacks);
+  //   meal[`${i + 1}_dinner`] = Number(attendance[i].dinner);
+  // }
+
+  let lastDay = endDate.getDate();
+
+  for(let i = 0; i<lastDay; i++) {
+    row[`${i+1}_breakfast`] = 0;
+    row[`${i+1}_lunch`] = 0;
+    row[`${i+1}_snacks`] = 0;
+    row[`${i+1}_dinner`] = 0;
   }
 
-  return { ...row, ...meal };
+
+  let messCharges = 0;
+  for(let i = 0; i<attendance.length; i++) {
+    const date = attendance[i].date.getDate();
+    row[`${date}_breakfast`] = (attendance[i].breakfast ? 1 : 0);
+    row[`${date}_lunch`] = (attendance[i].lunch ? 1 : 0);
+    row[`${date}_snacks`] = (attendance[i].snacks ? 1 : 0);
+    row[`${date}_dinner`] = (attendance[i].dinner ? 1 : 0);
+
+    if(attendance[i].breakfast) messCharges+=mealPriceMap.breakfast;
+    if(attendance[i].lunch) messCharges+=mealPriceMap.lunch;
+    if(attendance[i].snacks) messCharges+=mealPriceMap.snacks;
+    if(attendance[i].dinner) messCharges+=mealPriceMap.dinner;
+  }
+
+  row.messCharges = messCharges;
+  return { ...row};
 };
+
+exports.getUserRole = catchAsync(async (req, res, next) => {
+  const email = req.body.email;
+  if (!email) {
+    return next(new AppError("Invalid data", 404));
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new AppError("Student not found", 404));
+  }
+  req.user = user;
+  req.user.save();
+  let role = "user";
+  if (admin.includes(email)) {
+    role = "admin";
+  }
+  res.status(200).json({ status: "success", role });
+});
+
 exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   //get month and year
   //month is 0,1,...11
   // const {month, year} = req.body;
+  console.log("user", req.user);
   const month = 3;
   const year = 2023;
 
@@ -164,9 +215,24 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
     .catch((err) => {
       return next(new AppError("Error in generating excel", 401));
     });
+
+  const file = __dirname + "/../excel/mess-attendance.xlsx"
+
   res.status(201).json({
     status: "success",
-  });
+  })
+  // const options = {
+  //   root: path.join(__dirname, "..", "excel")
+  // };
+  // const fileName = `mess-attendance.xlsx`;
+  // res.sendFile(fileName, options, function (err) {
+  //   if (err) {
+  //       next(err);
+  //   } else {
+  //       console.log('Sent:', fileName);
+  //   }
+  // })
+
 
   //S.no, Name, Roll No, 1, 2,3,4,.....30, Total days, total cost
 });
@@ -234,42 +300,49 @@ exports.addMealToUser = catchAsync(async (req, res, next) => {
 });
 
 exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
-  const { encryptedString, scanningHostel, quantity, price, item } = req.body;
+  const { encryptedString, scanningHostel, items } = req.body;
 
-  // if (!encryptedString || !scanningHostel || !quantity || !price || !item) {
-  //   return next(new AppError("Invalid Request", 400));
-  // }
+  if (!encryptedString || !scanningHostel || !items.length <= 0) {
+    return next(new AppError("Invalid Request", 400));
+  }
 
-  // const decryptedData = encryptionController.decryptData(encryptedString);
+  const decryptedData = encryptionController.decryptData(encryptedString);
 
   // //TODO: Include time
-  // const { userId, hostel } = decryptedData;
+  const { userId, hostel } = decryptedData;
 
-  // if (!userId || !hostel) {
-  //   return next(new AppError("Invalid Data", 403));
-  // }
-  const { ObjectId } = require("mongodb");
+  if (!userId || !hostel) {
+    return next(new AppError("Invalid Data", 403));
+  }
+  // const { ObjectId } = require("mongodb");
+  // let userId = new ObjectId("6425de2989d7180f6c218c4d");
 
-  let userId = new ObjectId("6425de2989d7180f6c218c55");
+  if (!userId || !hostel) {
+    return next(new AppError("Invalid Data", 403));
+  }
+
   const user = await User.findById(userId);
-  console.log("user", user);
+  // console.log("user", user);
 
   if (!user) {
     return next(new AppError("Student not found", 404));
   }
 
-  const tempDate = new Date();
-  const date = tempDate.setHours(0, 0, 0, 0);
+  const date = new Date();
 
-  const newItem = await paidItemModel.create({
+  let totalPrice = 0;
+  for (const item of items) {
+    totalPrice += item.price * item.quantity;
+  }
+
+  await paidItemModel.create({
     userId: userId,
-    item,
-    quantity,
-    price,
+    items,
     date,
+    totalPrice,
   });
-  console.log("newItem", newItem);
-  user.messBalance += price * quantity;
+  // console.log("newItem total Price", totalPrice);
+  user.messBalance += totalPrice;
   await user.save();
 
   res.status(201).json({
