@@ -13,24 +13,27 @@ function Dashboard() {
   const [dinnerCount, setDinnerCount] = useState(0);
   const [date, setDate] = useState(new Date());
   const mealtypes = [
-    { label: "Breakfast", value: "Breakfast" },
-    { label: "Lunch", value: "Lunch" },
-    { label: "Snacks", value: "Snacks" },
-    { label: "Dinner", value: "Dinner" },
+    { label: "Breakfast", value: "breakfast" },
+    { label: "Lunch", value: "lunch" },
+    { label: "Snacks", value: "snacks" },
+    { label: "Dinner", value: "dinner" },
   ];
   const onGenerateMeal = () => {
-    // console.log(mealtype);
-    const meal  = {
-      date : date,
-      type : mealtype,
-      quantity : 0,
-      hostel: "MHR"
-    }
-
-    axios.post("/api/meal", meal).then(response => {
-      console.log("Meal created successfully")
-    }).catch(err => console.log(err))
-  }
+    const meal = {
+      date: date,
+      type: mealtype,
+      quantity: 0,
+      hostel: "MHR",
+    };
+    
+    console.log(meal);
+    axios
+      .post("/api/meal", meal)
+      .then((response) => {
+        console.log("Meal created successfully");
+      })
+      .catch((err) => console.log(err));
+  };
   // const dummyData = {
   //   breakfast : 20,
   //   lunch : 40,
@@ -43,14 +46,16 @@ function Dashboard() {
     const currDate = new Date();
     setDate(currDate);
 
-    axios.get("/api/meal/today-stats").then(response => {
-      setBreakfastCount(response.breakfast);
-      setLunchCount(response.lunch);
-      setSnacksCount(response.snacks);
-      setDinnerCount(response.dinner);
-    }).catch(err => console.log(err))
-    
-  },[])
+    axios
+      .get("/api/meal/today-stats")
+      .then((response) => {
+        setBreakfastCount(response.data.breakfast);
+        setLunchCount(response.data.lunch);
+        setSnacksCount(response.data.snacks);
+        setDinnerCount(response.data.dinner);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <View style={styles.container}>
       <Text style={styles.dashboard}>Dashboard</Text>
