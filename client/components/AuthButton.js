@@ -1,32 +1,45 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import axios from 'axios';
-import useAuthContext from '../hooks/useAuthContext';
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import axios from "../utils/axios";
+import useAuthContext from "../hooks/useAuthContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function AuthButton() {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const [userInfo, setUserInfo] = useState(null);
   const { login } = useAuthContext();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId:
-      '659895759042-cos8bhaqckqq0ecdjtgk14ugo5pr1qum.apps.googleusercontent.com',
+      "659895759042-cos8bhaqckqq0ecdjtgk14ugo5pr1qum.apps.googleusercontent.com",
     expoClientId:
-      '659895759042-m6m8f3qik452isp4t160vcilg0mojb1e.apps.googleusercontent.com',
+      "659895759042-m6m8f3qik452isp4t160vcilg0mojb1e.apps.googleusercontent.com",
   });
 
   useEffect(() => {
     // console.log({ response });
-    if (response?.type === 'success') {
+    if (response?.type === "success") {
       setToken(response.authentication.accessToken);
-      // login(response.authentication.accessToken);
-      getUserInfo(response.authentication.accessToken);
+      getUserInformation(response.authentication.accessToken);
     }
   }, [response, token]);
+
+  const getUserInformation = async (token) => {
+    try {
+      const loginResponse = await axios.post("/api/auth/login", { token });
+      const data = loginResponse.data.user;
+      console.log({ data });
+
+      setUserInfo(data);
+      login(data);
+    } catch (error) {
+      console.log(error);
+      // Add your own error handler here
+    }
+  };
 
   const getUserInfo = async (token) => {
     try {
@@ -39,7 +52,7 @@ export default function AuthButton() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
+            Accept: "application/json",
           },
         }
       );
@@ -62,12 +75,12 @@ export default function AuthButton() {
 
   const setDummyData = () => {
     const data = {
-      email: 'dsp13@iitbbs.ac.in',
-      _id: '6425de2989d7180f6c218c69',
-      name: 'Shrirang Deshmukh',
-      hostel: 'MHR',
-      roomNumber: 'A-622',
-      rollNumber: '19CS01065',
+      email: "dsp13@iitbbs.ac.in",
+      _id: "6425de2989d7180f6c218c69",
+      name: "Shrirang Deshmukh",
+      hostel: "MHR",
+      roomNumber: "A-622",
+      rollNumber: "19CS01065",
     };
 
     login(data);
@@ -76,7 +89,7 @@ export default function AuthButton() {
   return (
     <View>
       <Button
-        title='Sign in with Google'
+        title="Sign in with Google"
         disabled={!request}
         onPress={() => {
           // getUserInfo();
@@ -91,12 +104,12 @@ export default function AuthButton() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
