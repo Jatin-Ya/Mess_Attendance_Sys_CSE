@@ -1,0 +1,134 @@
+.name {
+width: 198px;
+height: 30px;
+
+
+/* font-family: 'Inter'; */
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 30px;
+/* identical to box height, or 125% */
+
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.25px;
+
+/* Neutral/Neutral */
+
+color: #00164E;
+
+
+/* Inside auto layout */
+
+flex: none;
+flex-grow: 0;
+}
+
+.meal {
+    /* Breakfast */
+width: 95px;
+height: 30px;
+
+
+/* font-family: 'Inter'; */
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 30px;
+/* identical to box height, or 150% */
+
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.25px;
+
+/* Neutral/Neutral */
+
+color: #00164E;
+
+
+/* Inside auto layout */
+
+flex: none;
+flex-grow: 0;
+}
+
+.qr {
+position: absolute;
+width: 280px;
+height: 280px;
+left: 48px;
+top: 233px;
+margin: 1000px;
+
+}
+
+.date {
+    position: absolute;
+width: 111px;
+height: 24px;
+left: 133px;
+top: 177px;
+
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.25px;
+
+color: #00164E;
+}
+
+.roll {
+    
+position: absolute;
+width: 135px;
+height: 16px;
+left: 120px;
+top: 529px;
+
+/* font-family: 'Inter'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height, or 133% */
+
+display: flex;
+align-items: center;
+letter-spacing: 0.25px;
+
+color: #00164E;
+}
+
+.tag {
+    position: absolute;
+width: 184px;
+height: 16px;
+left: 96px;
+top: 569px;
+
+/* Label S Bold */
+
+/* font-family: 'Inter'; */
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height, or 133% */
+
+display: flex;
+align-items: center;
+letter-spacing: 0.25px;
+
+/* Neutral/Neutral */
+
+color: #00164E;
+}
