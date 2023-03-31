@@ -8,7 +8,7 @@ import useAuthContext from "../hooks/useAuthContext";
 // import MaterialButtonPrimary1 from "../components/MaterialButtonPrimary1";
 
 function ReviewScreen(props) {
-  const { user } = useAuthContext();
+  const { user, authToken } = useAuthContext();
   const [messageArray, setMessageArray] = useState([]);
   const [newReview, setNewReview] = useState("");
   const [mealType, setMealType] = useState("");
@@ -37,11 +37,20 @@ function ReviewScreen(props) {
       date,
       mealType,
     });
-    const response = await axios.post("/api/review", {
-      review: newReview,
-      date,
-      mealType,
-    });
+    const response = await axios.post(
+      "/api/review",
+      {
+        review: newReview,
+        date,
+        mealType,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+        },
+      }
+    );
     // setMessageArray((a) => [...a]);
   };
   let messageList = messageArray.map((message) => {

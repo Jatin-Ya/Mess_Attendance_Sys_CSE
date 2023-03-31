@@ -8,15 +8,21 @@ const {
   createReview,
   updateAReview,
   deleteReview,
-  getSortedReview
+  getSortedReview,
 } = require("./../controllers/reviewController");
+const authController = require("./../controllers/authController");
 
 router.get("/", getAllReviews);
 router.get("/meal", getReviewsOfAMeal);
 
 router.get("/:reviewId", getAReview);
 router.get("/:mealType/:date", getSortedReview);
-router.post("/", createReview);
+router.post(
+  "/",
+  authController.verifyJwtToken,
+  authController.loggedInUser,
+  createReview
+);
 router.patch("/:reviewId", updateAReview);
 router.delete("/:reviewId", deleteReview);
 
