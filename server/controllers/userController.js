@@ -84,49 +84,128 @@ exports.addMessBalance = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
-  worksheet.columns = [
+const getColumns = (year, month, endDate) => {
+  let columns = [
+    { header: "S.no", key: "serial" },
     { header: "Name", key: "name" },
+    { header: "Roll Number", key: "rollno" },
     { header: "Email", key: "email" },
-    { header: "Hostel", key: "hostel" },
-    { header: "balance", key: "balance" },
+    { header: "Hostel", key: "hostel" }
   ];
 
-  // Add rows
-  const dummyData = [
-    {
-      name: "John",
-      email: "abc@iitbbs.ac.in",
-      hostel: "BHR",
-      balance: 100,
-    },
-    {
-      name: "John1",
-      email: "abc1@iitbbs.ac.in",
-      hostel: "MHR",
-      balance: 1000,
-    },
-    {
-      name: "John2",
-      email: "abc2@iitbbs.ac.in",
-      hostel: "BHR",
-      balance: 200,
-    },
-  ];
-  dummyData.forEach((user) => {
-    worksheet.addRow(user);
-  });
-  workbook.xlsx
-    .writeFile("excel/mess-attendance.xlsx")
-    .then(() => {
-      console.log("Excel file generated successfully!");
-    })
-    .catch((err) => {
-      return next(new AppError("Error in generating excel", 401));
+  for(let i = 1; i<=endDate.getDate(); i++) {
+    columns.push({
+      header : `${i} - breakfast`,
+      key :  `${i}_breakfast`
     });
-  res.status(201).json({
-    status: "success",
-  });
+    columns.push({
+      header : `${i} - lunch`,
+      key :  `${i}_lunch`
+    });
+    columns.push({
+      header : `${i} - snacks`,
+      key :  `${i}_snacks`
+    });
+    columns.push({
+      header : `${i} - dinner`,
+      key :  `${i}_dinner`
+    });
+  }
+
+  columns.push({
+    header: "balance",
+    key : "balance"
+  })
+
+  return columns;
+}
+
+const getDefaultRow = (user, serial, endDate) => {
+  let name = user.name;
+  let email = user.email;
+  let serial = serial;
+  let rollno = user.rollNumber;
+  let hostel = user.hostel;
+
+  let row = {name, email, serial, rollno, hostel};
+}
+exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
+  //get month and year
+  //month is 0,1,...11
+  // const {month, year} = req.body;
+  const month = 3;
+  const year  = 2023;
+
+  const startDate = new Date(year, month, 1);
+  const endDate = new Date(year, month,0);
+
+  startDate.setHours(0,0,0,0);
+  endDate.setHours(0,0,0,0);
+
+  const users = await User.find().populate("mealsAvailed");
+  console.log(users);
+  // console.log(endDate.getDate())
+  
+  const columns = getColumns(year, month, endDate);
+  console.log(columns);
+
+  worksheet.columns = columns;
+
+  let i = 1;
+  for(user in users) {
+    const mealsAvailed = user.mealsAvailed;
+    const row = {name : user.name, email: user.email, serial:i, rollno : user.rollNumber, hostel: user.hostel}
+
+    
+    i++;
+  }
+  // worksheet.columns = [
+  //   { header: "S.no", key: "serial" },
+  //   { header: "Name", key: "name" },
+  //   { header: "Roll Number", key: "rollno" },
+  //   { header: "Email", key: "email" },
+  //   { header: "Hostel", key: "hostel" },
+  //   { header: "balance", key: "balance" },
+  // ];
+
+  // // Add rows
+  // const dummyData = [
+  //   {
+  //     name: "John",
+  //     email: "abc@iitbbs.ac.in",
+  //     hostel: "BHR",
+  //     balance: 100,
+  //   },
+  //   {
+  //     name: "John1",
+  //     email: "abc1@iitbbs.ac.in",
+  //     hostel: "MHR",
+  //     balance: 1000,
+  //   },
+  //   {
+  //     name: "John2",
+  //     email: "abc2@iitbbs.ac.in",
+  //     hostel: "BHR",
+  //     balance: 200,
+  //   },
+  // ];
+  // dummyData.forEach((user) => {
+  //   worksheet.addRow(user);
+  // });
+  // workbook.xlsx
+  //   .writeFile("excel/mess-attendance.xlsx")
+  //   .then(() => {
+  //     console.log("Excel file generated successfully!");
+  //   })
+  //   .catch((err) => {
+  //     return next(new AppError("Error in generating excel", 401));
+  //   });
+  // res.status(201).json({
+  //   status: "success",
+  // });
+
+
+  //S.no, Name, Roll No, 1, 2,3,4,.....30, Total days, total cost
 });
 
 exports.addMealToUser = catchAsync(async (req, res, next) => {
@@ -209,7 +288,7 @@ const formatAttendance = (mealsAvailed) => {
 exports.getAttendanceSelf = catchAsync(async(req,res,next) => {
   const id = req.user._id;
   // const id = "6425de2989d7180f6c218c69";
-  const {startDate, endDate} = req.query;
+  // const {startDate, endDate} = req.query;
 
   const user = await User.findById(id).populate("mealsAvailed").sort("date");
 
