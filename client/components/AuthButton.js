@@ -53,7 +53,7 @@ export default function AuthButton() {
       // const user = await res.json();
       // console.log({ user });
       setUserInfo(res.data);
-      login(res.data);
+      login(res.data); // here a call to backend is required to get hotel related details and then add it to res.data object and then send to login function.
     } catch (error) {
       console.log(error);
       // Add your own error handler here

@@ -5,7 +5,7 @@ import DisplayToken from './components/DisplayToken';
 import LogutButton from './components/LogoutButton';
 import { AuthContextProvider } from './contexts/AuthContext';
 import AppNavigator from './navigation';
-
+import { Provider as PaperProvider } from 'react-native-paper';
 
 export default function App() {
   return (
@@ -18,7 +18,9 @@ export default function App() {
         <StatusBar style='auto' />
       </View> */}
       <SafeAreaView style={styles.container}>
+        <PaperProvider>
           <AppNavigator />
+          </PaperProvider>
       </SafeAreaView>
     </AuthContextProvider>
   );
