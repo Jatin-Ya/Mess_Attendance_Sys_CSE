@@ -8,6 +8,7 @@ const worksheet = workbook.addWorksheet("Mess Attendance");
 
 const User = require("./../models/userModel");
 const Meal = require("./../models/mealModel");
+const paidItemModel = require("../models/paidItemModel");
 
 const mealPriceMap = {
   breakfast: 30,
@@ -15,74 +16,6 @@ const mealPriceMap = {
   snacks: 20,
   dinner: 60,
 };
-
-exports.addMessBalance = catchAsync(async (req, res, next) => {
-  const { email, price, meal } = req.body;
-
-  const currUser = await User.findOne({ email });
-
-  if (!currUser) {
-    return next(new AppError("User not found", 401));
-  }
-
-  //Checking of user already taken a meal or not
-
-  if (price < 0) {
-    if (meal === "breakfast") price = 30;
-    else if (meal === "lunch" || meal === "dinner") price = 60;
-    else if (meal === "snacks") price = 20;
-
-    // const now = new Date();
-    // const hours = now.getHours();
-    // const minutes = now.getMinutes();
-    // const dayOfWeek = [
-    //   "Sunday",
-    //   "Monday",
-    //   "Tuesday",
-    //   "Wednesday",
-    //   "Thursday",
-    //   "Friday",
-    //   "Saturday",
-    // ][now.getDay()];
-
-    // //Breakfast
-    // if (
-    //   (dayOfWeek === "Sunday" || dayOfWeek === "Saturday") &&
-    //   hours >= 8 &&
-    //   minutes >= 0 &&
-    //   hours < 10 &&
-    //   minutes <= 30
-    // ) {
-    //   price = 30;
-    // } else if (
-    //   dayOfWeek !== "Sunday" &&
-    //   dayOfWeek !== "Saturday" &&
-    //   hours >= 7 &&
-    //   minutes >= 15 &&
-    //   hours < 10
-    // ) {
-    //   price = 30;
-    // } else if (
-    //   (hours === 12 && minutes >= 30 && hours < 2) ||
-    //   (hours === 20 && minutes >= 15 && hours < 22 && minutes < 30)
-    // ) {
-    //   //lunch and dinner
-    //   price = 60;
-    // } else if (hours === 17 && minutes >= 30 && hours < 18 && minutes < 30) {
-    //   //snacks
-    //   price = 20;
-    // } else {
-    //   return next(new AppError("Invalid time", 401));
-    // }
-  }
-
-  currUser.messBalance += price;
-  await currUser.save();
-
-  res.status(201).json({
-    status: "success",
-  });
-});
 
 const getColumns = (year, month, endDate) => {
   let columns = [
@@ -151,58 +84,58 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   startDate.setHours(0, 0, 0, 0);
   endDate.setHours(0, 0, 0, 0);
 
-  // const users = await User.find().populate("mealsAvailed");
+  const users = await User.find().populate("mealsAvailed");
   //Dummy data
 
-  const users = [
-    {
-      email: "user1@example.com",
-      name: "User 1",
-      hostel: "MHR",
-      rollNumber: "111",
-      messBalance: 500,
-      roomNumber: "A101",
-      img: "https://example.com/user1.jpg",
-      mealsAvailed: [],
-    },
-    {
-      email: "user2@example.com",
-      name: "User 2",
-      hostel: "BHR",
-      rollNumber: "222",
-      messBalance: 500,
-      roomNumber: "B202",
-      img: "https://example.com/user2.jpg",
-      mealsAvailed: [],
-    },
-  ];
+  // const users = [
+  //   {
+  //     email: "user1@example.com",
+  //     name: "User 1",
+  //     hostel: "MHR",
+  //     rollNumber: "111",
+  //     messBalance: 500,
+  //     roomNumber: "A101",
+  //     img: "https://example.com/user1.jpg",
+  //     mealsAvailed: [],
+  //   },
+  //   {
+  //     email: "user2@example.com",
+  //     name: "User 2",
+  //     hostel: "BHR",
+  //     rollNumber: "222",
+  //     messBalance: 500,
+  //     roomNumber: "B202",
+  //     img: "https://example.com/user2.jpg",
+  //     mealsAvailed: [],
+  //   },
+  // ];
 
-  // Add meals to each user's mealsAvailed array
-  for (const user of users) {
-    for (let i = 1; i <= 31; i++) {
-      const breakfast = new Meal({
-        date: new Date(`2023-03-${i}`),
-        type: "breakfast",
-        quantity: 1,
-      });
-      const lunch = new Meal({
-        date: new Date(`2023-03-${i}`),
-        type: "lunch",
-        quantity: 1,
-      });
-      const snacks = new Meal({
-        date: new Date(`2023-03-${i}`),
-        type: "snacks",
-        quantity: 1,
-      });
-      const dinner = new Meal({
-        date: new Date(`2023-03-${i}`),
-        type: "dinner",
-        quantity: 1,
-      });
-      user.mealsAvailed.push(breakfast, lunch, snacks, dinner);
-    }
-  }
+  // // Add meals to each user's mealsAvailed array
+  // for (const user of users) {
+  //   for (let i = 1; i <= 31; i++) {
+  //     const breakfast = new Meal({
+  //       date: new Date(`2023-03-${i}`),
+  //       type: "breakfast",
+  //       quantity: 1,
+  //     });
+  //     const lunch = new Meal({
+  //       date: new Date(`2023-03-${i}`),
+  //       type: "lunch",
+  //       quantity: 1,
+  //     });
+  //     const snacks = new Meal({
+  //       date: new Date(`2023-03-${i}`),
+  //       type: "snacks",
+  //       quantity: 1,
+  //     });
+  //     const dinner = new Meal({
+  //       date: new Date(`2023-03-${i}`),
+  //       type: "dinner",
+  //       quantity: 1,
+  //     });
+  //     user.mealsAvailed.push(breakfast, lunch, snacks, dinner);
+  //   }
+  // }
 
   // console.log(users);
   // console.log(endDate.getDate())
@@ -288,27 +221,35 @@ exports.addMealToUser = catchAsync(async (req, res, next) => {
 });
 
 exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
-  const { encryptedString, scanningHostel, quantity, price } = req.body;
+  const { encryptedString, scanningHostel, quantity, price, item } = req.body;
 
-  if (!encryptedString || !scanningHostel || !quantity || !price) {
-    return next(new AppError("Invalid Request", 400));
-  }
+  // if (!encryptedString || !scanningHostel || !quantity || !price || !item) {
+  //   return next(new AppError("Invalid Request", 400));
+  // }
 
-  const decryptedData = encryptionController.decryptData(encryptedString);
+  // const decryptedData = encryptionController.decryptData(encryptedString);
 
-  //TODO: Include time
-  const { userId, hostel } = decryptedData;
+  // //TODO: Include time
+  // const { userId, hostel } = decryptedData;
 
-  if (!userId || !hostel) {
-    return next(new AppError("Invalid Data", 403));
-  }
+  // if (!userId || !hostel) {
+  //   return next(new AppError("Invalid Data", 403));
+  // }
+  const { ObjectId } = require('mongodb');
 
+  let userId =  new ObjectId("6425de2989d7180f6c218c55");
   const user = await User.findById(userId);
+  console.log("user", user);
 
   if (!user) {
     return next(new AppError("Student not found", 404));
   }
 
+  const tempDate = new Date();
+  const date = tempDate.setHours(0, 0, 0, 0);
+
+  const newItem = await paidItemModel.create({ userId: userId, item, quantity, price, date });
+  console.log("newItem", newItem);
   user.messBalance += price * quantity;
   await user.save();
 
@@ -358,7 +299,7 @@ exports.getAttendanceSelf = catchAsync(async (req, res, next) => {
   }
 
   let mealsAvailed = user.mealsAvailed;
-  
+
   const attendance = formatAttendance(mealsAvailed);
 
   // console.log(attendance)
