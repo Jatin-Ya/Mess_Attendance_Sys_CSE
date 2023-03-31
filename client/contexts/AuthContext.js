@@ -1,5 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import { View, Image, StyleSheet, Alert, ActivityIndicator } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import {
   getItemAsync,
   setItemAsync,
@@ -13,11 +19,14 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [authToken, setAuthToken] = useState("");
 
-  const login = async (newUser) => {
+  const login = async (newUser, token) => {
     try {
       setItemAsync("user", JSON.stringify(newUser));
+      setItemAsync("authToken", token);
       setUser(newUser);
+      setAuthToken(token);
     } catch (error) {
       Alert.alert("Error", "Failed to store rider credentials on your device");
       setUser(null);
@@ -28,6 +37,7 @@ export const AuthContextProvider = ({ children }) => {
   const logout = async () => {
     try {
       await deleteItemAsync("user");
+      await deleteItemAsync("authToken");
       setUser(null);
     } catch (error) {
       Alert.alert(
@@ -51,10 +61,7 @@ export const AuthContextProvider = ({ children }) => {
         }
         setLoading(false);
       } catch (error) {
-        Alert.alert(
-          "Login Required",
-          error.status
-        );
+        Alert.alert("Login Required", error.status);
         console.log(error);
       }
     };
@@ -68,6 +75,7 @@ export const AuthContextProvider = ({ children }) => {
         user,
         login,
         logout,
+        authToken,
       }}
     >
       {loading && (
