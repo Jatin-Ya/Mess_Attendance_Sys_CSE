@@ -23,8 +23,10 @@ app.use(requestLogger);
 
 app.use(cookieParser());
 app.use(mongoSanitize());
+
 app.enable("trust proxy");
 
+app.use(express.static("excel"));
 app.get("/api/health", (req, res, next) => {
   res.send("Health Check is working fine!");
 });

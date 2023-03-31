@@ -9,7 +9,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 export default function AuthButton() {
   const [token, setToken] = useState("");
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
   const { login } = useAuthContext();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -31,60 +31,59 @@ export default function AuthButton() {
     try {
       const loginResponse = await axios.post("/api/auth/login", { token });
       const data = loginResponse.data.user;
-      console.log({ data });
+      const authToken = loginResponse.data.jwt;
 
-      setUserInfo(data);
-      login(data);
+      login(data, authToken);
     } catch (error) {
       console.log(error);
       // Add your own error handler here
     }
   };
 
-  const getUserInfo = async (token) => {
-    try {
-      // console.log('getting data');
-      // const res = await axios.post("http://10.10.28.209:3000/api/auth/login", {
-      //   token,
-      // });
-      const res = await axios.get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      );
-      console.log(res.data);
-      // .then((res) => {
-      //   setUserInfo(res.data);
-      // })
-      // .catch((err) => console.log(err));
-      // console.log('Got response');
-      // console.log({ res });
-      // const user = await res.json();
-      // console.log({ user });
-      setUserInfo(res.data);
-      login(res.data); // here a call to backend is required to get hotel related details and then add it to res.data object and then send to login function.
-    } catch (error) {
-      console.log(error);
-      // Add your own error handler here
-    }
-  };
+  // const getUserInfo = async (token) => {
+  //   try {
+  //     // console.log('getting data');
+  //     // const res = await axios.post("http://10.10.28.209:3000/api/auth/login", {
+  //     //   token,
+  //     // });
+  //     const res = await axios.get(
+  //       `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           Accept: "application/json",
+  //         },
+  //       }
+  //     );
+  //     console.log(res.data);
+  //     // .then((res) => {
+  //     //   setUserInfo(res.data);
+  //     // })
+  //     // .catch((err) => console.log(err));
+  //     // console.log('Got response');
+  //     // console.log({ res });
+  //     // const user = await res.json();
+  //     // console.log({ user });
+  //     setUserInfo(res.data);
+  //     login(res.data); // here a call to backend is required to get hotel related details and then add it to res.data object and then send to login function.
+  //   } catch (error) {
+  //     console.log(error);
+  //     // Add your own error handler here
+  //   }
+  // };
 
-  const setDummyData = () => {
-    const data = {
-      email: "dsp13@iitbbs.ac.in",
-      _id: "6425de2989d7180f6c218c69",
-      name: "Shrirang Deshmukh",
-      hostel: "MHR",
-      roomNumber: "A-622",
-      rollNumber: "19CS01065",
-    };
+  // const setDummyData = () => {
+  //   const data = {
+  //     email: "dsp13@iitbbs.ac.in",
+  //     _id: "6425de2989d7180f6c218c69",
+  //     name: "Shrirang Deshmukh",
+  //     hostel: "MHR",
+  //     roomNumber: "A-622",
+  //     rollNumber: "19CS01065",
+  //   };
 
-    login(data);
-  };
+  //   login(data, "123456789");
+  // };
 
   return (
     <View>

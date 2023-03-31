@@ -26,3 +26,18 @@ exports.createMeal = catchAsync(async (req, res, next) => {
     newMeal,
   });
 });
+
+exports.getMealStatsOfDay = catchAsync(async(req,res,next) => {
+  const date = new Date();
+  date.setHours(0,0,0,0);
+  const meals = await Meal.find({date});
+
+  console.log(date);
+  console.log(meals);
+  let response = {date : date, breakfast : 0, lunch : 0, snacks : 0, dinner : 0};
+  for(let i = 0; i<meals.length; i++) {
+    response[meals[i].type] = meals[i].quantity;
+  }
+
+  res.status(200).json(response);
+})

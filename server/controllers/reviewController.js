@@ -35,7 +35,7 @@ exports.createReview = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
-  const reviews = await Review.find();
+  const reviews = await Review.find().populate("user").populate("meal");
 
   res.status(200).json({
     status: "success",
@@ -44,7 +44,7 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
 });
 
 exports.getAReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findById(req.params.reviewId);
+  const review = await Review.findById(req.params.reviewId).populate("user").populate("meal");
   res.status(200).json({
     status: "success",
     review,
@@ -55,7 +55,7 @@ exports.getReviewsOfAMeal = catchAsync(async (req, res, next) => {
   const meal = req.body.meal;   
   const mealId = await Meal.findOne({ date: meal.date, type: meal.type });
 
-  const reviews = await Review.find({ meal: mealId });
+  const reviews = await Review.find({ meal: mealId }).populate("user").populate("meal");
 
   res.status(200).json({
     status: "success",
