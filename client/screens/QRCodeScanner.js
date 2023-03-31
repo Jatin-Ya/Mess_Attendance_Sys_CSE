@@ -1,0 +1,78 @@
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet, Button, Alert } from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import axios from "../utils/axios";
+
+export default function QRCodeScanner() {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+
+  useEffect(() => {
+    const getBarCodeScannerPermissions = async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    };
+
+    getBarCodeScannerPermissions();
+  }, []);
+
+  const chargeUserForMeal = async (encryptedString) => {
+    try {
+      const mealId = "642691dc08b00fad3c1b90a6";
+      const scanningHostel = "MHR";
+
+      const body = {
+        encryptedString,
+        mealId,
+        scanningHostel,
+      };
+
+      const res = await axios.post("/api/user/demo", body);
+      console.log({ res });
+      if (res.status === 201) {
+        Alert.alert("Success!");
+      }
+    } catch (err) {
+      console.error(err);
+      console.log(err.response?.data?.message);
+      Alert.alert("Error in scanning", err.response.data.message);
+    }
+  };
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    console.log(
+      `Bar code with type ${type} and data ${data} has been scanned!`
+    );
+    chargeUserForMeal(data);
+  };
+
+  if (hasPermission === null) {
+    // Alert.alert("Requesting for camera permission");
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasPermission === false) {
+    // Alert.alert("No camera permission");
+    return <Text>No access to camera</Text>;
+  }
+
+  return (
+    <View style={styles.container}>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={StyleSheet.absoluteFillObject}
+      />
+      {scanned && (
+        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+});
