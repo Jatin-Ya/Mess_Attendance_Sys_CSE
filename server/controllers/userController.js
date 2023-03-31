@@ -10,7 +10,6 @@ const User = require("./../models/userModel");
 const Meal = require("./../models/mealModel");
 const paidItemModel = require("../models/paidItemModel");
 const path = require("path");
-
 const fs = require("fs");
 
 const admin = ["20cs01029@iitbbs.ac.in", "21cs02007@iitbbs.ac.in","20CS01029@iitbbs.ac.in", "21CS02007@iitbbs.ac.in"];
@@ -213,7 +212,7 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
       return next(new AppError("Error in generating excel", 401));
     });
 
-  const filePath = path.join(__dirname, "..", "excel", "mess-attendance.xlsx")
+  const filePath = path.join(__dirname, "..", "excel", "mess-attendance.xlsx");
   const fileName = "attendance.xlsx";
   // console.log(file);
 
@@ -222,7 +221,7 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   // })
   res.status(201).json({
     status: "success",
-  })
+  });
 
   // res.download(filePath, (err) => {
   //   if(err) {
@@ -236,17 +235,16 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   //   console.error(err);
   //   res.status(500).send('Server Error');
   // });
-  
+
   // res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
   // res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-  
+
   // file.pipe(res);
-  
+
   // res.on('abort', () => {
   //   console.log('Request aborted by client');
   // });
 
-  
   // res.status(200)
 
   //S.no, Name, Roll No, 1, 2,3,4,.....30, Total days, total cost
@@ -407,8 +405,8 @@ const formatAttendance = (mealsAvailed) => {
   return attendance;
 };
 exports.getAttendanceSelf = catchAsync(async (req, res, next) => {
-  const id = req.user._id;
-  // const id = "6425de2989d7180f6c218c69";
+  // const id = req.user._id;
+  const id = "6425de2989d7180f6c218c69";
   // const {startDate, endDate} = req.query;
 
   const user = await User.findById(id).populate("mealsAvailed").sort("date");
