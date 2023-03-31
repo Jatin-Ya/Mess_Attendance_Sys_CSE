@@ -13,6 +13,7 @@ import {
   QRCodeGenerate,
   QRCodeScanner,
   Dashboard,
+  ReviewScreen,
 } from "../screens";
 
 export default function AppNavigator() {
@@ -58,6 +59,13 @@ export default function AppNavigator() {
           headerRight: LogoutButton,
         }}
       >
+        <AuthStack.Screen
+          name="Review"
+          component={ReviewScreen}
+          options={{
+            title: "Reviews",
+          }}
+        />
         <AuthStack.Screen
           name="Dashboard"
           component={Dashboard}
