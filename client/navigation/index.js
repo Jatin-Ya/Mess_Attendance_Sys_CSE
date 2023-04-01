@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
 import axios from "../utils/axios";
 
 import useAuthContext from "../hooks/useAuthContext";
@@ -189,18 +189,13 @@ export default function AppNavigator() {
         />
 
         <MainAdminTabs.Screen
-          name="Menu"
-          component={Menu}
-          options={{
-            title: "Menu",
-          }}
-        />
-
-        <MainAdminTabs.Screen
           name="Paid Item"
           component={PaidItemQRCodeGenerate}
           options={{
             title: "Paid Item",
+            tabBarIcon: () => (
+              <Ionicons name="fast-food-outline" size={24} color="black" />
+            ),
           }}
         />
 
