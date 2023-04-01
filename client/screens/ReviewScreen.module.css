@@ -1,6 +1,7 @@
 .ReviewContainer{
-  /* flex: 1; */
-  background: #E5E5E5; 
+  flex: 1;
+  align-items: center;
+  background: #FFFFFF; 
 }
 .complaintsHeading{
   position: absolute;
@@ -35,4 +36,5 @@ position: absolute;
 width: 320.11px;
 left: 28px;
 top: 118px;
+z-index: 1000;
 }

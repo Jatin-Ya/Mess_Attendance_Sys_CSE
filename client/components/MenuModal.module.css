@@ -43,7 +43,7 @@
 
 .heading {
 
-    font-family: 'Maven Pro';
+    /* font-family: 'Maven Pro'; */
     font-style: normal;
     font-weight: 800;
     font-size: 20px;
@@ -60,10 +60,10 @@
 
     /* Inside auto layout */
     flex: none;
-    order: 0;
+    /* order: 0; */
     flex-grow: 0;
 
-    float : left;
+    /* float : left; */
 }
 
 .cancel_button {

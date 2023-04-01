@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Button, Alert, Text, Image } from "react-native";
+import { View, Button, Alert, Text, Image, Pressable } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import axios from "../utils/axios";
 import useAuthContext from "../hooks/useAuthContext";
@@ -98,6 +98,10 @@ const QRCodeGenerate = () => {
     getCurrentMeal();
   }, []);
 
+  // const extraStyles = {
+  //   marginTop: 400,
+  // };
+
   return (
     <View
       style={{
@@ -120,7 +124,7 @@ const QRCodeGenerate = () => {
       />
       <Text style={[styles.meal, { marginBottom: 10 }]}>{currentMeal}</Text>
       <Text style={[styles.date, { marginBottom: 10 }]}> {formatDate()}</Text>
-      {QRCodeString != "" ? (
+      {QRCodeString !== "" ? (
         <QRCode
           value={QRCodeString}
           size={200}
@@ -130,13 +134,13 @@ const QRCodeGenerate = () => {
       ) : null}
       <Text style={styles.roll}>Student ID: {user.rollNumber}</Text>
       <Text style={styles.tag}>Show this code for mess entry</Text>
-      <View style={{ marginTop: 30 }}>
-        <Button
-          onPress={generateQRString}
-          title="Generate New QR Code"
-          color="black"
-        />
-      </View>
+      <Pressable onPress={generateQRString} style={[styles.button]}>
+        <View>
+          <Text style={styles.buttonText}>
+            Generate {QRCodeString === "" ? "" : "New"} QR Code
+          </Text>
+        </View>
+      </Pressable>
     </View>
   );
 };
