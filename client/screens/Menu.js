@@ -6,6 +6,8 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  Pressable,
+  SafeAreaView,
 } from "react-native";
 
 import axios from "../utils/axios";
@@ -16,7 +18,7 @@ import MenuModal from "../components/MenuModal";
 
 import FeedbackLastMeal from "../components/FeedbackLastMeal";
 
-function Menu() {
+const Menu = ({ navigation }) => {
   const { user } = useAuthContext();
 
   const [menu, setMenu] = useState([]);
@@ -30,7 +32,6 @@ function Menu() {
     axios
       .get("/api/menu/getMenu")
       .then((response) => {
-        console.log(response.data);
         setMenu(response.data.menu);
       })
       .catch((err) => console.log(err));
@@ -63,8 +64,8 @@ function Menu() {
 
     const d = new Date();
     //TODO: ADD items in DB
-    // let day = weekday[d.getDay()];
-    let day = "Monday";
+    let day = weekday[d.getDay()];
+    // let day = "Monday";
     return day;
   };
 
@@ -72,13 +73,14 @@ function Menu() {
     const d = new Date();
     const hour = d.getHours();
     let res = "breakfast";
+    setMealTypeImage(require(`./../assets/Breakfast.png`));
     if (hour > 10 && hour < 14) {
       res = "lunch";
       setMealTypeImage(require(`./../assets/Lunch.png`));
     } else if (hour >= 14 && hour < 19) {
       res = "snacks";
       setMealTypeImage(require(`./../assets/Snacks.png`));
-    } else if (hour >= 19) {
+    } else if (hour >= 19 && hour < 23) {
       setMealTypeImage(require(`./../assets/Dinner.png`));
       res = "dinner";
     }
@@ -104,11 +106,21 @@ function Menu() {
         background: "#E5E5E5",
       }}
     >
-
-    {displayModel ? <MenuModal setDisplayModal = {setDisplayModal} menu = {todaysMenu} />  : <View></View>}
+      {displayModel ? (
+        <MenuModal setDisplayModal={setDisplayModal} menu={todaysMenu} />
+      ) : (
+        <View></View>
+      )}
 
       <Text style={styles.welcome}>Welcome {getName()} !</Text>
-      
+      <Image
+        source={{ uri: user.picture }}
+        style={styles.avatar}
+        onPress={() => {
+          navigation.navigate("profile");
+        }}
+      />
+
       <View style={styles.rect}>
         <Text style={styles.upcoming}> Upcoming Meal </Text>
         <Image source={mealTypeImage} style={styles.vec} />
@@ -121,7 +133,7 @@ function Menu() {
         <Text
           onPress={() => {
             console.log("Display full menu....");
-            setDisplayModal(true)
+            setDisplayModal(true);
           }}
           style={styles.fullMenu}
         >
@@ -137,37 +149,54 @@ function Menu() {
       </View>
       <View>
         <View>
-          <View style={styles.optionBox}>
-            <Image
-              source={require("../assets/QR.png")}
-              style={[styles.optionImage]}
-            />
-            <Text style={styles.optionName}>Generate QR</Text>
-          </View>
+          <SafeAreaView>
+            <Pressable
+              onPress={() => {
+                console.log("Rkessed");
+                navigation.navigate("qr");
+              }}
+            >
+              <View style={styles.optionBox}>
+                <Image
+                  source={require("../assets/QR.png")}
+                  style={[styles.optionImage]}
+                />
+                <Text style={styles.optionName}>Generate QR</Text>
+              </View>
+            </Pressable>
+          </SafeAreaView>
+
           <View style={styles.optionBox2}>
             <Image
               source={require("../assets/Khata.png")}
               style={[styles.optionImage, { left: "25%" }]}
+              onPress={() => {
+                console.log("Rkessed");
+                navigation.navigate("khata");
+              }}
             />
             <Text style={styles.optionName}>Khata</Text>
           </View>
+
           <View style={styles.optionBox3}>
             <Image
               source={require("../assets/complain.png")}
               style={[styles.optionImage, { left: "25%" }]}
+              onPress={() => {
+                console.log("pRessed");
+                navigation.navigate("add-review");
+              }}
             />
             <Text style={styles.optionName}>Complain</Text>
           </View>
         </View>
-
       </View>
 
-      <View style = {styles.feedbackForm} >
+      <View style={styles.feedbackForm}>
         <FeedbackLastMeal />
       </View>
-
     </View>
   );
-}
+};
 
 export default Menu;
