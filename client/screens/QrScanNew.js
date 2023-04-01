@@ -131,7 +131,7 @@ export default function QRCodeScanner() {
       </Text>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={{ width: "80%", height: "80%" }}
+        style={{ width: "100%", height: "60%" }}
       />
       {scanned && (
         <Pressable onPress={() => setScanned(false)} style={[styles.button]}>
