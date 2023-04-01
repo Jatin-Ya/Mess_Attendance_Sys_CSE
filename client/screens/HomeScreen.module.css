@@ -1,0 +1,167 @@
+.heading{
+  position: absolute;
+width: 142px;
+height: 24px;
+left: 117px;
+top: 14px;
+
+font-family: 'Maven Pro';
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 24px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+
+/* Black */
+
+color: #000000;
+
+}
+.profileName{
+  position: absolute;
+width: 113px;
+height: 21px;
+left: 131px;
+top: 161px;
+
+/* Text Big */
+
+font-family: 'Maven Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 21px;
+display: flex;
+align-items: center;
+
+/* Black */
+
+color: #000000;
+}
+.details{
+  position: absolute;
+width: 275px;
+height: 42px;
+left: 50px;
+top: 190px;
+
+/* Body */
+
+font-family: 'Maven Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+
+color: #A1A1A1;
+
+}
+.profileImage{
+  position: absolute;
+width: 80px;
+height: 80px;
+left: 147.94px;
+top: 65px;
+border-radius: 40px;
+  /* box-sizing: border-box;
+
+position: absolute;
+height: 80;
+width: 80;
+left: 39.45%;
+right: 39.27%;
+top: 14.16%;
+bottom: 75.99%;
+
+background: #D8D8D8;
+border: 1px solid #979797;
+}
+.profileImageContainer{
+  position: absolute;
+left: 26.8%;
+right: 26.93%;
+top: 44.16%;
+bottom: 68.7%; */
+
+/* background: url(.jpg); */
+}
+.messDueContainer{
+  position: absolute;
+width: 100px;
+height: 120px;
+left: 139px;
+top: 246px;
+}
+.messDueCard{
+  position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+background: #FFFFFF;
+box-shadow: 0px 10px 25px rgba(107, 119, 154, 0.05);
+border-radius: 21px;
+}
+.logoContainer{
+  position: absolute;
+width: 44.55px;
+height: 58.15px;
+left: 28.18px;
+top: 0px;
+}
+.rect{
+  position: absolute;
+left: 10%;
+right: 10%;
+top: 0%;
+bottom: 20%;
+
+background: #F2F2F2;
+border-radius: 0px 0px 15px 15px;
+}
+.amount{
+  position: absolute;
+height: 14px;
+left: 9%;
+right: 9%;
+top: 50%;
+
+/* Link */
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+
+/* Black */
+
+color: #000000;
+}
+.messDueTxt{
+
+position: absolute;
+height: 11px;
+left: 20.91%;
+right: 20.91%;
+top: 70%;
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 400;
+font-size: 9px;
+line-height: 11px;
+/* identical to box height */
+
+text-align: center;
+letter-spacing: 0.365217px;
+
+color: #6B779A;
+
+}
