@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Button, Alert, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Button, Alert, Text, Image } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import axios from "../utils/axios";
 import useAuthContext from "../hooks/useAuthContext";
@@ -8,6 +8,7 @@ import styles from "./QRCodeGenerate.module.css";
 const QRCodeGenerate = () => {
   const { user } = useAuthContext();
   const [QRCodeString, setQRCodeString] = useState("");
+  const [currentMeal, setCurrentMeal] = useState("Breakfast");
 
   const generateQRString = async () => {
     try {
@@ -31,6 +32,20 @@ const QRCodeGenerate = () => {
     }
   };
 
+  const formatDate = () => {
+    const date = new Date();
+
+    const formattedDate = date
+      .toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+      .replace(/ /g, "-");
+
+    return formattedDate;
+  };
+
   const getCurrentMeal = () => {
     const d = new Date();
     const hour = d.getHours();
@@ -42,8 +57,15 @@ const QRCodeGenerate = () => {
     } else if (hour >= 19) {
       res = "Dinner";
     }
+
+    setCurrentMeal(res);
+
     return res;
   };
+
+  useEffect(() => {
+    getCurrentMeal();
+  }, []);
 
   return (
     <View
@@ -56,10 +78,12 @@ const QRCodeGenerate = () => {
       }}
     >
       <Text style={[styles.name, { marginBottom: 10 }]}>{user.name}</Text>
-      <Text style={[styles.meal, { marginBottom: 30 }]}>
-        {getCurrentMeal()}
-      </Text>
-
+      <Image
+        style={[styles.icon, { marginLeft: 90, marginBottom: 10 }]}
+        source={require(`./../assets/Lunch.png`)}
+      />
+      <Text style={[styles.meal, { marginBottom: 10 }]}>{currentMeal}</Text>
+      <Text style={[styles.date, { marginBottom: 10 }]}> {formatDate()}</Text>
       {QRCodeString != "" ? (
         <QRCode
           value={QRCodeString}

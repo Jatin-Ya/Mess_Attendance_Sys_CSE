@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     bottom: "0%",
   },
   link: {
-    fontFamily: "'Maven Pro'",
+    // fontFamily: "'Maven Pro'",
     fontStyle: "normal",
     fontWeight: "500",
     fontSize: "12px",

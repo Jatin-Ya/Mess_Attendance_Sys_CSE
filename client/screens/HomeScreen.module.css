@@ -5,7 +5,7 @@ height: 24px;
 left: 117px;
 top: 14px;
 
-font-family: 'Maven Pro';
+/* font-family: 'Maven Pro'; */
 font-style: normal;
 font-weight: 600;
 font-size: 20px;
@@ -29,7 +29,7 @@ top: 161px;
 
 /* Text Big */
 
-font-family: 'Maven Pro';
+/* font-family: 'Maven Pro'; */
 font-style: normal;
 font-weight: 400;
 font-size: 18px;
@@ -50,7 +50,7 @@ top: 190px;
 
 /* Body */
 
-font-family: 'Maven Pro';
+/* font-family: 'Maven Pro'; */
 font-style: normal;
 font-weight: 400;
 font-size: 12px;
@@ -124,6 +124,17 @@ bottom: 20%;
 background: #F2F2F2;
 border-radius: 0px 0px 15px 15px;
 }
+
+.vect {
+  position: absolute;
+left: 25%;
+right: 25%;
+top: 12.5%;
+bottom: 12.5%;
+
+border: 2px solid #000000;
+}
+
 .amount{
   position: absolute;
 height: 14px;
@@ -164,4 +175,79 @@ letter-spacing: 0.365217px;
 
 color: #6B779A;
 
+}
+
+
+.box1{
+  box-sizing: border-box;
+
+position: absolute;
+width: 326px;
+height: 41px;
+
+background: #FFFFFF;
+border-radius: 12px;
+}
+
+.icon1{ 
+  position: absolute;
+left: 8.33%;
+right: 8.33%;
+top: 8.35%;
+bottom: 8.32%;
+
+background: #000000;
+}
+
+.text1 {
+  position: absolute;
+width: 83px;
+height: 14px;
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+display: flex;
+align-items: center;
+
+color: #000000;
+}
+
+.box2{
+  box-sizing: border-box;
+
+position: absolute;
+width: 326px;
+height: 41px;
+
+background: #FFFFFF;
+border-radius: 12px;
+}
+
+.icon2{
+  position: absolute;
+left: 20.83%;
+right: 20.83%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* border: 1.5px solid #000000; */
+}
+
+.text2{
+  position: absolute;
+width: 45px;
+height: 14px;
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+display: flex;
+align-items: center;
+
+color: #000000;
 }

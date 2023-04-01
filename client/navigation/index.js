@@ -23,31 +23,30 @@ import { useEffect, useState } from "react";
 
 export default function AppNavigator() {
   const { user } = useAuthContext();
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
-  const [role,setRole] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState("");
 
-  useEffect(()=>{
-    if (user){
+  useEffect(() => {
+    if (user) {
       setIsLoggedIn(true);
-    }
-    else{
+    } else {
       setIsLoggedIn(false);
     }
-  },[user])
+  }, [user]);
 
-  useEffect(()=>{
-    const getRole = async ()=> {
-      console.log("user data",user.email);
-      const res = await axios.post('/api/user/getRole',{
-        email : user.email
+  useEffect(() => {
+    const getRole = async () => {
+      console.log("user data", user.email);
+      const res = await axios.post("/api/user/getRole", {
+        email: user.email,
       });
-      setRole(res.data.role)
-      console.log(res.data.role)
+      setRole(res.data.role);
+      console.log(res.data.role);
+    };
+    if (isLoggedIn) {
+      getRole();
     }
-    if (isLoggedIn){
-      getRole()
-    }
-  },[isLoggedIn]);
+  }, [isLoggedIn]);
 
   const AuthStack = createNativeStackNavigator();
   const AuthStackNavigator = () => {
@@ -84,12 +83,11 @@ export default function AppNavigator() {
     return (
       <MainTabs.Navigator
         sceneContainerStyle={{ backgroundColor: "white" }}
-        screenOptions={{
-          // tabBarActiveTintColor: COLORS.blue,
-          headerRight: LogoutButton,
-        }}
+        // screenOptions={{
+        //   // tabBarActiveTintColor: COLORS.blue,
+        //   headerRight: LogoutButton,
+        // }}
       >
-        
         <AuthStack.Screen
           name="Review"
           component={ReviewScreen}
@@ -97,12 +95,12 @@ export default function AppNavigator() {
             title: "Reviews",
           }}
         />
-        
+
         <AuthStack.Screen
           name="Home"
           component={HomeScreen}
           options={{
-            title: "Home Screen",
+            title: "",
           }}
         />
         <AuthStack.Screen
@@ -112,7 +110,6 @@ export default function AppNavigator() {
             title: "My QR Code",
           }}
         />
-        
       </MainTabs.Navigator>
     );
   };
@@ -133,7 +130,7 @@ export default function AppNavigator() {
             title: "Reviews",
           }}
         />
-        
+
         <AuthStack.Screen
           name="Dashboard"
           component={Dashboard}
@@ -141,7 +138,7 @@ export default function AppNavigator() {
             title: "Dashboard",
           }}
         />
-        
+
         <AuthStack.Screen
           name="My QR Scanner"
           component={QRCodeScanner}
@@ -170,10 +167,8 @@ export default function AppNavigator() {
 
   let content = <AuthStackNavigator />;
   if (isLoggedIn) {
-    if (role === "admin")
-    content = <MainAdminTabsNavigator />;
-    else
-    content = <MainUserTabsNavigator />
+    if (role === "admin") content = <MainAdminTabsNavigator />;
+    else content = <MainUserTabsNavigator />;
   }
   // else
   return <NavigationContainer>{content}</NavigationContainer>;
