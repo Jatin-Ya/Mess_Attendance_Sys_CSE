@@ -8,7 +8,10 @@ import styles from "./QRCodeGenerate.module.css";
 const QRCodeGenerate = () => {
   const { user } = useAuthContext();
   const [QRCodeString, setQRCodeString] = useState("");
-  const [currentMeal, setCurrentMeal] = useState("Breakfast");
+  const [currentMeal, setCurrentMeal] = useState(
+    require(`./../assets/Breakfast.png`)
+  );
+  const [mealTypeImage, setMealTypeImage] = useState("");
 
   const generateQRString = async () => {
     try {
@@ -63,9 +66,12 @@ const QRCodeGenerate = () => {
     let res = "Breakfast";
     if (hour > 10 && hour < 16) {
       res = "Lunch";
+      setMealTypeImage(require(`./../assets/Lunch.png`));
     } else if (hour >= 16 && hour < 19) {
       res = "Snacks";
+      setMealTypeImage(require(`./../assets/Snacks.png`));
     } else if (hour >= 19) {
+      setMealTypeImage(require(`./../assets/Dinner.png`));
       res = "Dinner";
     }
 
@@ -93,7 +99,7 @@ const QRCodeGenerate = () => {
       </Text>
       <Image
         style={[styles.icon, { marginLeft: 90, marginBottom: 10 }]}
-        source={require(`./../assets/Lunch.png`)}
+        source={mealTypeImage}
       />
       <Text style={[styles.meal, { marginBottom: 10 }]}>{currentMeal}</Text>
       <Text style={[styles.date, { marginBottom: 10 }]}> {formatDate()}</Text>

@@ -24,20 +24,25 @@ function ReviewScreenAdmin(props) {
       // console.log("Reviews", response.data.reviews);
       setMessageArray(response.data.reviews);
     };
+    set
     getReviews();
   }, []);
-  const messageList = messageArray.map((message) => {
-    return (
-      <Message
-        text={message.review}
-        user={message.user.name}
-        mealType={message.meal.type}
-        mealHostel={message.meal.hostel}
-        time={message.createdAt}
-        isMyMessage={user.email === message.user.email}
-      ></Message>
-    );
-  });
+  const messageList =
+    (messageArray.length === 0 && <Text>No Review to Show</Text>) ||
+    messageArray.map((message) => {
+      return (
+        message && (
+          <Message
+            text={message.review}
+            user={message.user.name}
+            mealType={message.meal.type}
+            mealHostel={message.meal.hostel}
+            time={message.createdAt}
+            isMyMessage={user.email === message.user.email}
+          ></Message>
+        )
+      );
+    });
   const mealTypes = [
     { label: "Breakfast", value: "breakfast" },
     { label: "Lunch", value: "lunch" },
@@ -45,25 +50,25 @@ function ReviewScreenAdmin(props) {
     { label: "Dinner", value: "dinner" },
   ];
 
-  const changeMealHandler = async () => {
-    const response = await axios.get("/api/review/:mealType/:date");
-    // console.log("Reviews", response.data.reviews);
+  const changeMealHandler = async (value) => {
+    setMealtype(value);
+    const response = await axios.get(`/api/review/${value}/${date}`);
+    console.log("Reviews", response.data.reviews);
     setMessageArray(response.data.reviews);
   };
 
   return (
     <View style={styles.ReviewContainer}>
       <View style={styles.selectorContainer}>
-        
-      <DatePicker date={date} setDate={onChangeDate}></DatePicker>
-      <Text>Select Meal</Text>
-      <View style={styles.selectorinput}>
+        <DatePicker date={date} setDate={onChangeDate}></DatePicker>
+        <Text>Select Meal</Text>
+        <View style={styles.selectorinput}>
           <DropDown
             label={"Select"}
             mode={"outlined"}
             value={mealType}
-            setValue={setMealtype}
-            onChange={changeMealHandler}
+            setValue={changeMealHandler}
+            onChangeText={changeMealHandler}
             list={mealTypes}
             visible={showDropDown}
             showDropDown={() => setShowDropDown(true)}
