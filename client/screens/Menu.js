@@ -139,7 +139,8 @@ const Menu = ({ navigation }) => {
         <Text
           onPress={() => {
             console.log("Display full menu....");
-            setDisplayModal(true);
+            // setDisplayModal(true);
+            navigation.navigate("weekly-menu")
           }}
           style={styles.fullMenu}
         >

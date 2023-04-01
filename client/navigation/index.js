@@ -16,6 +16,7 @@ import {
   Menu,
   Khata,
   RegisterComplaint,
+  WeeklyMenu,
   ExportFromExcel,
 } from "../screens";
 import { useEffect, useState } from "react";
@@ -118,6 +119,14 @@ export default function AppNavigator() {
           component={ReviewScreen}
           options={{
             title: "Reviews",
+          }}
+        />
+
+        <MainTabs.Screen
+          name="weekly-menu"
+          component={WeeklyMenu}
+          options={{
+            title: "Weekly Menu",
           }}
         />
 
