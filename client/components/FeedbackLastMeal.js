@@ -12,21 +12,31 @@ import {
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./FeedbackLastMeal.module.css";
 import axios from "./../utils/axios";
+import useAuthContext from "../hooks/useAuthContext";
 
 const FeedbackLastMeal = () => {
+  const { authToken } = useAuthContext();
   const [review, setReview] = useState("");
 
   const [lastMeal, setLastMeal] = useState({ date: "", meal: "" });
   const handleSubmit = () => {
     const comment = review;
-    // const comment = review.current.value;
     console.log(comment);
     axios
-      .post("/api/review", {
-        mealType: lastMeal.meal,
-        date: lastMeal.date,
-        review: comment,
-      })
+      .post(
+        "/api/review",
+        {
+          mealType: lastMeal.meal,
+          date: lastMeal.date,
+          review: comment,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            Accept: "application/json",
+          },
+        }
+      )
       .then((response) => {
         console.log(response);
         console.log("successfully created review");
