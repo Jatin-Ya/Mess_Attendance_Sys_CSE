@@ -8,6 +8,7 @@ import CalenderScreen from "./Agenda";
 import ReviewScreenAdmin from "./ReviewScreenAdmin";
 import RegisterComplaint from "./RegisterComplaint";
 import Menu from "./Menu";
+import WeeklyMenu from "./WeeklyMenu";
 
 export {
   HomeScreen,
@@ -20,4 +21,5 @@ export {
   ReviewScreenAdmin,
   Menu,
   RegisterComplaint,
+  WeeklyMenu
 };

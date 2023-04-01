@@ -1,6 +1,6 @@
 import { View,Text, Image, Modal, TouchableWithoutFeedback, StyleSheet, Pressable } from "react-native";
 import React, { useState } from 'react';
-import styles from "./MenuModal.module.css";
+import styles from "./MenuCard.module.css";
 
 
 const MenuCard = (props) => {
@@ -12,13 +12,14 @@ const MenuCard = (props) => {
         props.setDisplayModal(false);
     };
 
-    
+    // return (<Text>Hi</Text>)
 
+    // console.log(props.isToday);
     return (
-        <View style={styles1.container}>
-                <View style = {styles.outer_box}>
+        // <View style={styles1.container}>
+                <View style = { props.isToday ? styles.outer_box_today : styles.outer_box}>
                         <View style = {styles.header} >
-                            <Text style={styles.heading}>Today's Menu</Text>
+                            <Text style={styles.heading}>{`${props.menu.day}'s Menu`}</Text>
                         </View>
                     
             
@@ -41,7 +42,7 @@ const MenuCard = (props) => {
                         </View>
                     </View>
                 </View>
-        </View>
+        // </View>
         
     )
 }

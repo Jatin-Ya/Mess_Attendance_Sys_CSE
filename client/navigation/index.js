@@ -129,6 +129,15 @@ export default function AppNavigator() {
             title: "Reviews",
           }}
         />
+
+        <AuthStack.Screen
+          name="Weekly Menu"
+          component={WeeklyMenu}
+          options={{
+            title: "Weekly Menu",
+          }}
+        />
+
       </MainTabs.Navigator>
     );
   };

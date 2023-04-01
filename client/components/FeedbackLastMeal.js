@@ -33,9 +33,9 @@ const FeedbackLastMeal = () => {
             date = new Date(date.getTime() - (24 * 60 * 60 * 1000));
         } else if(hours >= 7 && hours < 12) {
             lastMeal = "breakfast";
-        } else if(hours >= 12 && hours < 5) {
+        } else if(hours >= 12 && hours < 17) {
             lastMeal = "lunch"
-        } else if(hours > 5 && hours <= 8) {
+        } else if(hours > 17 && hours <= 20) {
             lastMeal = "snacks";
         } 
 
