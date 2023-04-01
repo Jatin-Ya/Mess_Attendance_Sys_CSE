@@ -1,0 +1,279 @@
+.title {
+    position: absolute;
+    width: 95px;
+    height: 24px;
+    left: 163px;
+    top: 14px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    /* Black */
+    color: #000000;
+}
+
+.arrow {
+    position: absolute;
+    left: 93.75%;
+    right: -81.25%;
+    top: 18.75%;
+    bottom: 18.75%;
+
+    background: #00164E;
+    /* transform: matrix(-1, 0, 0, 1, 0, 0); */
+}
+
+.date {
+    position: absolute;
+    height: 19px;
+    left: 4.27%;
+    right: 72.8%;
+    top: 70px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* identical to box height */
+    letter-spacing: 0.300349px;
+
+    color: #222B45;
+}
+
+.dateGroup {
+    position: absolute;
+    left: 115px;
+    right: 207px;
+    top: 54px;
+    /* bottom: ; */
+    /* background-color: #000000; */
+}
+
+.dateRectange {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    height: 52px;
+    width: 52px;
+
+    background: #282828;
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
+    border-radius: 13px;
+}
+
+.selectMeal {
+    position: absolute;
+    height: 19px;
+    left: 4.27%;
+    right: 72.8%;
+    top: 150px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* identical to box height */
+    letter-spacing: 0.300349px;
+
+    color: #222B45;
+}
+
+/* .dateText {
+    position: absolute;
+    height: 21px;
+    left: 33.33%;
+    right: 34.92%;
+    /* top: 50%; */
+
+/* font-family: 'Maven Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    letter-spacing: 0.400465px;
+
+    color: #FFFFFF;
+
+
+} */
+
+.breakfastGroup {
+    position: absolute;
+    left: 20px;
+    right: 255px;
+    top: 200px;
+    /* bottom: ; */
+    /* background-color: #000000; */
+}
+
+.breakfastRectange {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    height: 52px;
+    width: 102px;
+
+    /* background: #282828; */
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
+    border-radius: 13px;
+    border: #000000 solid 2px;
+}
+
+.breakfastText {
+    position: absolute;
+    height: 16px;
+    left: 1.5%;
+    right: 23.5%;
+    top: 17px;
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.233605px;
+    color: #282828;
+}
+
+.mealButton {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    gap: 12px;
+    position: absolute;
+    width: 90%;
+    height: 58px;
+    left: 20px;
+    /* right: 255px; */
+    top: 180px;
+}
+
+.buttonGroup {
+    /* position: absolute; */
+
+    /* bottom: ; */
+    /* background-color: #000000; */
+}
+
+.buttonRectange {
+    /* position: absolute; */
+    /* left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%; */
+    height: 52px;
+    width: 82px;
+
+    /* background: #282828; */
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
+    border-radius: 13px;
+    border: #000000 solid 2px;
+}
+
+.buttonText {
+    /* position: absolute; */
+    height: 16px;
+    left: 1.5%;
+    right: 23.5%;
+    top: 34px;
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.233605px;
+    /* color: #282828; */
+    z-index: 1000;
+}
+
+.reviewDesp {
+    position: absolute;
+    height: 19px;
+    left: 5.87%;
+    right: 61.33%;
+    top: 280px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* identical to box height */
+    letter-spacing: 0.300349px;
+
+    color: #222B45;
+}
+
+.inputReviewDesp {
+    box-sizing: border-box;
+    border: #000000 2px solid;
+    top: 320px;
+    left: 30px;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+
+    width: 321px;
+    height: 50px;
+
+    /* Neutral/Neutral 100 */
+    background: #FFFFFF;
+
+    /* Neutral/Neutral 500 */
+    border: 1px solid #D0D4DF;
+    border-radius: 4px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.submitText {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+
+    /* Link */
+    font-family: 'Maven Pro';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    /* White */
+    color: #FFFFFF;
+}
+.submitButton{
+
+}

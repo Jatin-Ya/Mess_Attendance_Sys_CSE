@@ -1,0 +1,38 @@
+.ReviewContainer{
+  /* flex: 1; */
+  background: #E5E5E5; 
+}
+.complaintsHeading{
+  position: absolute;
+width: 140px;
+height: 24px;
+left: 118px;
+top: 54px;
+
+font-family: 'MavenPro-VariableFont_wght';
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 24px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* Black */
+
+color: #000000;
+}
+.MessageContainer{
+  display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 8px;
+
+position: absolute;
+width: 320.11px;
+left: 28px;
+top: 118px;
+}
