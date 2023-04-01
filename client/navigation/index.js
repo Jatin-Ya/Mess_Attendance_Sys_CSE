@@ -206,7 +206,7 @@ export default function AppNavigator() {
   };
 
   let content = <AuthStackNavigator />;
-  if (isLoggedIn) {
+  if (user && isLoggedIn) {
     if (role === "admin")
       content = (
         <MealContextProvider>

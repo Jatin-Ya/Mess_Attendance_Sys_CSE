@@ -119,7 +119,7 @@ const QRCodeGenerate = () => {
         </Text>
       )}
       <Image
-        style={[styles.icon, { marginLeft: 90, marginBottom: 10 }]}
+        style={[styles.icon, { marginLeft: 100, marginBottom: 10 }]}
         source={mealTypeImage}
       />
       <Text style={[styles.meal, { marginBottom: 10 }]}>{currentMeal}</Text>
