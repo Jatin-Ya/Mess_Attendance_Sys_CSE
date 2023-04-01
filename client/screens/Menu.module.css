@@ -1,204 +1,177 @@
 .welcome {
     /* Welcome Shri */
-
-
-position: absolute;
-width: 200px;
-height: 24px;
-left: 18px;
-top: 10px;
-
-/* font-family: 'Maven Pro'; */
-font-style: normal;
-font-weight: 600;
-font-size: 20px;
-line-height: 24px;
-/* identical to box height */
-
-display: flex;
-align-items: center;
-
-/* Black */
-
-color: #000000;
+     position: absolute;
+     width: 200px;
+     height: 24px;
+     left: 18px;
+     top: 10px;
+    /* font-family: 'Maven Pro';
+     */
+     font-style: normal;
+     font-weight: 600;
+     font-size: 20px;
+     line-height: 24px;
+    /* identical to box height */
+     display: flex;
+     align-items: center;
+    /* Black */
+     color: #000000;
 }
-
-.rect {
-    box-sizing: border-box;
-
-position: absolute;
-width: 324px;
-height: 210px;
-left: 22px;
-top: 50px;
-
-background: #FFFFFF;
-border-radius: 12px;
-border: 1px solid #000;
+ .rect {
+     box-sizing: border-box;
+     position: absolute;
+     width: 324px;
+     height: 210px;
+     left: 22px;
+     top: 50px;
+     background: #FFFFFF;
+     border-radius: 12px;
+     border: 1px solid #000;
 }
-
-.upcoming {
+ .upcoming {
     /* Upcoming Meal */
-
-
-position: relative;
-width: 40%;
-height: 20px;
-left: 5%;
-top: 10%;
-margin-bottom: 2%;
-
-/* font-family: 'Maven Pro'; */
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 20px;
-/* identical to box height, or 143% */
-
-
-color: #1C1C1C;
+     position: relative;
+     width: 40%;
+     height: 20px;
+     left: 5%;
+     top: 10%;
+     margin-bottom: 2%;
+    /* font-family: 'Maven Pro';
+     */
+     font-style: normal;
+     font-weight: 600;
+     font-size: 14px;
+     line-height: 20px;
+    /* identical to box height, or 143% */
+     color: #1C1C1C;
 }
-
-.vec {
-    position: relative;
-left: 8.33%;
-right: 8.33%;
-top: 15%;
-bottom: 8.33%;
-
-/* background: #000000; */
+ .vec {
+     position: relative;
+     left: 8.33%;
+     right: 8.33%;
+     top: 15%;
+     bottom: 8.33%;
+    /* background: #000000;
+     */
 }
-
-.items {
-position: relative;
-    width: 161px;
-height: 28px;
-left: 20%;
-margin-top: 2%;
-
-
-/* font-family: 'Maven Pro'; */
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 14px;
-letter-spacing: 0.300349px;
-
-color: #000000;
-flex:none;
+ .items {
+     position: relative;
+     width: 161px;
+     height: 28px;
+     left: 20%;
+     margin-top: 2%;
+    /* font-family: 'Maven Pro';
+     */
+     font-style: normal;
+     font-weight: 400;
+     font-size: 12px;
+     line-height: 14px;
+     letter-spacing: 0.300349px;
+     color: #000000;
+     flex:none;
 }
-
-.khana {
-    position: relative;
-width: 224px;
-height: 95px;
-left: 30%;
-
-
-
-/* transform: matrix(-1, 0, 0, 1, 0, 0); */
+ .khana {
+     position: relative;
+     width: 224px;
+     height: 95px;
+     left: 30%;
+    /* transform: matrix(-1, 0, 0, 1, 0, 0);
+     */
 }
-
-.fullMenu {
-    position: relative;
-    width: 100px;
-height: 18px;
-top:-5%;
-left:10%;
-/* font-family: 'Poppins'; */
-font-style: normal;
-font-weight: 600;
-font-size: 13px;
-line-height: 18px;
-/* identical to box height */
-
-display: flex;
-align-items: center;
-
-color: #000000;
+ .fullMenu {
+     position: relative;
+     width: 100px;
+     height: 18px;
+     top:-5%;
+     left:10%;
+    /* font-family: 'Poppins';
+     */
+     font-style: normal;
+     font-weight: 600;
+     font-size: 13px;
+     line-height: 18px;
+    /* identical to box height */
+     display: flex;
+     align-items: center;
+     color: #000000;
 }
-
-.optionBox {
-    position: absolute;
-width: 96px;
-height: 96px;
-left: 22px;
-top:290px;
-
-/* Neutral/Neutral 100 */
-
-background: #FFFFFF;
-border: 1px solid #000;
-/* Shadow 0-8-24 */
-align-items: center;
-
-box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
-border-radius: 8px;
+ .optionBox {
+     position: absolute;
+     width: 96px;
+     height: 96px;
+     left: 22px;
+     top:250px;
+    /* Neutral/Neutral 100 */
+     background: #FFFFFF;
+     border: 1px solid #000;
+    /* Shadow 0-8-24 */
+     align-items: center;
+     box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
+     border-radius: 8px;
 }
-
-.optionName {
-    position: relative;
-height: 14px;
-top: 30%;
-/* top: calc(50% - 14px/2 + 3px); */
-
-/* font-family: 'Maven Pro'; */
-font-style: normal;
-font-weight: 600;
-font-size: 12px;
-line-height: 14px;
-text-align: center;
-letter-spacing: 0.266977px;
-
-color: #222B45;
-
+ .optionName {
+     position: relative;
+     height: 14px;
+     top: 30%;
+    /* top: calc(50% - 14px/2 + 3px);
+     */
+    /* font-family: 'Maven Pro';
+     */
+     font-style: normal;
+     font-weight: 600;
+     font-size: 12px;
+     line-height: 14px;
+     text-align: center;
+     letter-spacing: 0.266977px;
+     color: #222B45;
 }
-
-.optionImage {
-    position: relative;
-width: 50px;
-height: 50px;
-top:15%;
+ .optionImage {
+     position: relative;
+     width: 50px;
+     height: 50px;
+     top:15%;
 }
-
-.arrow {
-    position: relative;
-    top: -15%;
-    left: 40%;
+ .arrow {
+     position: relative;
+     top: -15%;
+     left: 40%;
 }
-
-.optionBox2 {
-    position: absolute;
-width: 96px;
-height: 96px;
-left: 136px;
-top:290px;
-background: #FFFFFF;
-border: 1px solid #000;
-/* Shadow 0-8-24 */
-
-box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
-border-radius: 8px;
+ .optionBox2 {
+     position: absolute;
+     width: 96px;
+     height: 96px;
+     left: 136px;
+     top:250px;
+     background: #FFFFFF;
+     border: 1px solid #000;
+    /* Shadow 0-8-24 */
+     box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
+     border-radius: 8px;
 }
-
-.optionBox3 {
-    position: absolute;
-width: 96px;
-height: 96px;
-left: 250px;
-top:290px;
-background: #FFFFFF;
-border: 1px solid #000;
-/* Shadow 0-8-24 */
-
-box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
-border-radius: 8px; 
+ .optionBox3 {
+     position: absolute;
+     width: 96px;
+     height: 96px;
+     left: 250px;
+     top:250px;
+     background: #FFFFFF;
+     border: 1px solid #000;
+    /* Shadow 0-8-24 */
+     box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
+     border-radius: 8px;
 }
-
-.feedbackForm {
-    position: absolute;
-    top: 400px;
-    width: 100%;
-    box-sizing: border-box;
-    left: 22px;
+ .feedbackForm {
+     position: absolute;
+     top: 400px;
+     width: 100%;
+     box-sizing: border-box;
+     left: 22px;
+}
+ .avatar {
+     position: relative;
+     width: 30px;
+     height: 30px;
+     left: 85%;
+     top: 45%;
+     border-radius: 50px;
 }

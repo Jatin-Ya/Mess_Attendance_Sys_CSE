@@ -1,144 +1,179 @@
 .name {
     width: 250px;
     height: 30px;
-
-
+    
+    
     font-family: 'Courgette-Regular';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 30px;
     /* identical to box height, or 125% */
-
+    
     display: flex;
     align-items: center;
     text-align: center;
     letter-spacing: 0.25px;
-
+    
     /* Neutral/Neutral */
-
+    
     color: #00164E;
-
-
+    
+    
     /* Inside auto layout */
-
+    
     flex: none;
     flex-grow: 0;
-}
-
-.meal {
-    /* Breakfast */
-    width: 105px;
+    }
+    
+    .meal {
+        /* Breakfast */
+    width: 95px;
     height: 30px;
-
-
+    
+    
     /* font-family: 'Inter'; */
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 30px;
     /* identical to box height, or 150% */
-
+    
     display: flex;
     align-items: center;
     text-align: center;
     letter-spacing: 0.25px;
-
+    
     /* Neutral/Neutral */
-
+    
     color: #00164E;
-
-
+    
+    
     /* Inside auto layout */
-
+    
     flex: none;
     flex-grow: 0;
-}
-
-.qr {
+    }
+    
+    .qr {
     position: absolute;
     width: 280px;
     height: 280px;
     left: 48px;
     top: 233px;
     margin: 1000px;
-
-}
-
-.date {
-    /* position: absolute;
-width: 111px;
-height: 24px;
-left: 20px;
-top: 10px; */
-
+    
+    }
+    
+    .date {
+        /* position: absolute;
+    width: 111px;
+    height: 24px;
+    left: 20px;
+    top: 10px; */
+    
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     /* identical to box height, or 150% */
-
+    
     /* display: flex;
-align-items: center;
-text-align: center;
-letter-spacing: 0.25px; */
-
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.25px; */
+    
     color: #00164E;
-}
-
-.roll {
-
+    }
+    
+    .roll {
+        
     position: absolute;
     width: 135px;
     height: 16px;
     left: 120px;
     top: 430px;
-
+    
     /* font-family: 'Inter'; */
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
     /* identical to box height, or 133% */
-
+    
     display: flex;
     align-items: center;
     letter-spacing: 0.25px;
-
+    
     color: #00164E;
-}
-
-.tag {
-    position: absolute;
+    }
+    
+    .tag {
+        position: absolute;
     width: 184px;
     height: 16px;
     left: 96px;
     top: 450px;
-
+    
     /* Label S Bold */
-
+    
     /* font-family: 'Inter'; */
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
     /* identical to box height, or 133% */
-
+    
     display: flex;
     align-items: center;
     letter-spacing: 0.25px;
-
+    
     /* Neutral/Neutral */
-
+    
     color: #00164E;
-}
-
-.icon {
-    position: absolute;
+    }
+    
+    .icon {
+        position: absolute;
     left: 8.33%;
     right: 7.87%;
     top: 12.5%;
     bottom: 8.33%;
-
+    
     /* background: #000000; */
-}
+    }
+    
+    .button {
+        /* position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%; */
+    
+    /* Black */
+    
+    background: #000000;
+    border-radius: 10px;
+    width:335px;
+    height: 40px;
+    align-items: center;
+    margin-top: 30;
+    }
+    
+    .buttonText {
+        /* Link */
+    position: relative;
+    top:100%;
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    /* White */
+    
+    color: #FFFFFF;
+    }

@@ -1,13 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { Icon } from '@rneui/base';
 import axios from "../utils/axios";
 
 import useAuthContext from "../hooks/useAuthContext";
-// import Wrapper from "../utils/Wrapper";
-// import COLORS from "../assets/colors/colors";
-import LogoutButton from "../components/LogoutButton";
+import { MealContextProvider } from "../contexts/MealContext";
 import {
   LoginScreen,
   HomeScreen,
@@ -15,8 +12,9 @@ import {
   QRCodeScanner,
   Dashboard,
   ReviewScreen,
-  CalenderScreen,
   ReviewScreenAdmin,
+  Menu,
+  Khata,
   RegisterComplaint,
   Menu,
   ExportFromExcel,
@@ -43,7 +41,6 @@ export default function AppNavigator() {
         email: user.email,
       });
       setRole(res.data.role);
-      console.log(res.data.role);
     };
     if (isLoggedIn) {
       getRole();
@@ -69,113 +66,107 @@ export default function AppNavigator() {
             title: "Login Screen",
           }}
         />
-        {/* <AuthStack.Screen
-          name="Home"
-          component={QRCodeGenerate}
-          options={{
-            title: "Login Screen",
-          }}
-        /> */}
       </AuthStack.Navigator>
     );
   };
 
-  const MainTabs = createBottomTabNavigator();
+  const MainTabs = createNativeStackNavigator();
   const MainUserTabsNavigator = () => {
     return (
       <MainTabs.Navigator
         sceneContainerStyle={{ backgroundColor: "white" }}
         screenOptions={{
-          // tabBarActiveTintColor: COLORS.blue,
-          headerRight: LogoutButton,
+          // headerShown: false,
+          animation: "none",
+          contentStyle: {
+            backgroundColor: "white",
+          },
         }}
       >
-        <AuthStack.Screen
-          name="Home"
+        <MainTabs.Screen
+          name="homepage"
+          component={Menu}
+          options={{
+            title: "Home",
+          }}
+        />
+
+        <MainTabs.Screen
+          name="profile"
           component={HomeScreen}
           options={{
             title: "User Profile",
           }}
         />
-        <AuthStack.Screen
-          name="test"
-          component={test}
-          options={{
-            title: "Test",
-          }}
-        />
-        <AuthStack.Screen
-          name="Register Complaint"
-          component={RegisterComplaint}
-          options={{
-            title: "Register Complaint",
-          }}
-        />
 
-        <AuthStack.Screen
-          name="My QR"
+        <MainTabs.Screen
+          name="qr"
           component={QRCodeGenerate}
           options={{
             title: "My QR Code",
           }}
         />
 
-        <AuthStack.Screen
-          name="Menu"
-          component={Menu}
+        <MainTabs.Screen
+          name="khata"
+          component={Khata}
           options={{
-            title: "Menu",
+            title: "Khata",
           }}
         />
 
-        <AuthStack.Screen
-          name="Review"
+        <MainTabs.Screen
+          name="reviews"
           component={ReviewScreen}
           options={{
             title: "Reviews",
+          }}
+        />
+
+        <MainTabs.Screen
+          name="add-review"
+          component={RegisterComplaint}
+          options={{
+            title: "Add Review",
           }}
         />
       </MainTabs.Navigator>
     );
   };
 
+  const MainAdminTabs = createBottomTabNavigator();
   const MainAdminTabsNavigator = () => {
     return (
-      <MainTabs.Navigator
+      <MainAdminTabs.Navigator
         sceneContainerStyle={{ backgroundColor: "white" }}
-        // screenOptions={{
-        //   // tabBarActiveTintColor: COLORS.blue,
-        //   headerRight: LogoutButton,
-        // }}
+        screenOptions={{
+          // headerShown: false,
+          animation: "none",
+          contentStyle: {
+            backgroundColor: "white",
+          },
+        }}
       >
-        <AuthStack.Screen
-          name="AdminReview"
-          component={ReviewScreenAdmin}
-          options={{
-            title: "Reviews",
-          }}
-        />
-
-        <AuthStack.Screen
-          name="Dashboard"
+        <MainAdminTabs.Screen
+          name="dashboard"
           component={Dashboard}
           options={{
             title: "Dashboard",
           }}
         />
 
-        <AuthStack.Screen
-          name="My QR Scanner"
+        <MainAdminTabs.Screen
+          name="qr-scanner"
           component={QRCodeScanner}
           options={{
             title: "My QR Code Scanner",
           }}
         />
-        <AuthStack.Screen
-          name="Calender Screen"
-          component={CalenderScreen}
+        <MainAdminTabs.Screen
+          name="admin-review"
+          component={ReviewScreenAdmin}
           options={{
-            title: "Calender Screen",
+            title: "Reviews",
           }}
         />
 
@@ -194,15 +185,20 @@ export default function AppNavigator() {
             title: "Add a User",
           }}
         />
-      </MainTabs.Navigator>
+      </MainAdminTabs.Navigator>
     );
   };
 
   let content = <AuthStackNavigator />;
   if (isLoggedIn) {
-    if (role === "admin") content = <MainAdminTabsNavigator />;
+    if (role === "admin")
+      content = (
+        <MealContextProvider>
+          <MainAdminTabsNavigator />
+        </MealContextProvider>
+      );
     else content = <MainUserTabsNavigator />;
   }
-  // else
+
   return <NavigationContainer>{content}</NavigationContainer>;
 }

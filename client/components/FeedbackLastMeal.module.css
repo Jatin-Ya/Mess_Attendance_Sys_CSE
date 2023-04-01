@@ -2,7 +2,7 @@
     border-radius: 12px;
     border: 1px solid black;
     background-color: #FFFFFF;
-    width: 80%;
+    width: 88%;
     /* position: absolute;
     top : 60% */
     padding: 20px;
@@ -25,4 +25,39 @@
 .buttonBox {
     width: 50%;
     float: right;
+}
+
+.button {
+    /* position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%; */
+
+/* Black */
+
+background: #000000;
+border-radius: 10px;
+width:100%;
+height: 40px;
+align-items: center;
+margin-top: 30;
+}
+
+.buttonText {
+    /* Link */
+position: relative;
+top:100%;
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* White */
+
+color: #FFFFFF;
 }
