@@ -18,6 +18,7 @@ import {
   CalenderScreen,
   ReviewScreenAdmin,
   Menu,
+  test
 } from "../screens";
 import { useEffect, useState } from "react";
 
@@ -95,7 +96,13 @@ export default function AppNavigator() {
             title: "User Profile",
           }}
         />
-
+        <AuthStack.Screen
+          name="test"
+          component={test}
+          options={{
+            title: "Test",
+          }}
+        />
         <AuthStack.Screen
           name="My QR"
           component={QRCodeGenerate}

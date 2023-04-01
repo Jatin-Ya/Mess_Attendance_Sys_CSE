@@ -24,7 +24,6 @@ function ReviewScreenAdmin(props) {
       // console.log("Reviews", response.data.reviews);
       setMessageArray(response.data.reviews);
     };
-    set
     getReviews();
   }, []);
   const messageList =

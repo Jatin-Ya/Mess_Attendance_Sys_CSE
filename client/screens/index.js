@@ -17,5 +17,5 @@ export {
   ReviewScreen,
   CalenderScreen,
   ReviewScreenAdmin,
-  Menu,
+  Menu
 };

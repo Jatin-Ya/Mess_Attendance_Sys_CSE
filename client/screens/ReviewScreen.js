@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
-import { Button, FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, TextInput, View, SafeAreaView } from "react-native";
 import Message from "../components/Message";
 import DatePicker from "../components/DatePicker";
 import DropDown from "react-native-paper-dropdown";
@@ -80,10 +80,35 @@ function ReviewScreen(props) {
   return (
     <View style={styles.ReviewContainer}>
       {fontsLoaded&&<Text style={styles.complaintsHeading}>My Complaints</Text>}
-      <View style={styles.MessageContainer}>
-      {<FlatList data={messageArray} renderItem={messageList} keyExtractor={item=>item._id}></FlatList>}
-      </View>
-    
+      {/* <View style={styles.MessageContainer}> */}
+      <SafeAreaView style={styles1.container}>
+      <FlatList scrollEnabled={true} data={messageArray} renderItem={messageList} keyExtractor={item=>item._id}></FlatList>
+      </SafeAreaView>
+      
+      {/* </View> */}
+      <View style={styles.inputContainer}>
+  {/* <TextInput
+    multiline={true}
+    style={styles.inputReview}
+    value={newReview}
+    onChangeText={setNewReview}
+  ></TextInput> */}
+</View>
+{/* <DatePicker date={date} setDate={onChangeDate}></DatePicker>
+<View style={styles.selectorinput}>
+  <DropDown
+    label={"Select"}
+    mode={"outlined"}
+    value={mealType}
+    setValue={setMealType}
+    list={mealTypes}
+    visible={showDropDown}
+    showDropDown={() => setShowDropDown(true)}
+    onDismiss={() => setShowDropDown(false)}
+  />
+</View>
+<Button title="Post Review" onPress={onPostReview}></Button> */}
+
       
     </View>
   );
@@ -94,29 +119,7 @@ function ReviewScreen(props) {
 // </View>
 // <View style={styles.newReviewContainer}>
 // {/* <View style={styles.rect}></View> */}
-// <View style={styles.inputContainer}>
-//   <TextInput
-//     multiline={true}
-//     style={styles.inputReview}
-//     value={newReview}
-//     onChangeText={setNewReview}
-//   ></TextInput>
-// </View>
-// <DatePicker date={date} setDate={onChangeDate}></DatePicker>
-// <View style={styles.selectorinput}>
-//   <DropDown
-//     label={"Select"}
-//     mode={"outlined"}
-//     value={mealType}
-//     setValue={setMealType}
-//     list={mealTypes}
-//     visible={showDropDown}
-//     showDropDown={() => setShowDropDown(true)}
-//     onDismiss={() => setShowDropDown(false)}
-//   />
-// </View>
-// <Button title="Post Review" onPress={onPostReview}></Button>
-// </View>
+
 
 // const styles = StyleSheet.create({
 //   ReviewContainer: {
@@ -158,5 +161,22 @@ function ReviewScreen(props) {
 //     marginLeft: 25,
 //   },
 // });
+
+const styles1 = StyleSheet.create({
+  container: {
+    // flex: 1,
+    paddingTop: 100,
+    // alignContent: "center",
+    // backgroundColor: 'pink',
+    // zIndex : 2000
+  },
+  scrollView: {
+    // backgroundColor: 'pink',
+    marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 42,
+  },
+});
 
 export default ReviewScreen;
