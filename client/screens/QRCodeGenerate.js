@@ -78,10 +78,10 @@ const QRCodeGenerate = () => {
     const d = new Date();
     const hour = d.getHours();
     let res = "Breakfast";
-    if (hour > 10 && hour < 16) {
+    if (hour > 10 && hour < 14) {
       res = "Lunch";
       setMealTypeImage(require(`./../assets/Lunch.png`));
-    } else if (hour >= 16 && hour < 19) {
+    } else if (hour >= 14 && hour < 19) {
       res = "Snacks";
       setMealTypeImage(require(`./../assets/Snacks.png`));
     } else if (hour >= 19) {
