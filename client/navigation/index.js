@@ -19,6 +19,7 @@ import {
   ReviewScreenAdmin,
   RegisterComplaint,
   Menu,
+  WeeklyMenu
 } from "../screens";
 import { useEffect, useState } from "react";
 
@@ -177,6 +178,14 @@ export default function AppNavigator() {
           component={Menu}
           options={{
             title: "Menu",
+          }}
+        />
+
+        <AuthStack.Screen
+          name="Weekly Menu"
+          component={WeeklyMenu}
+          options={{
+            title: "Weekly Menu",
           }}
         />
       </MainTabs.Navigator>

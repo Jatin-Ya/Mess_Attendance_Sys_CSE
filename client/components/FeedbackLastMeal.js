@@ -7,17 +7,20 @@ const FeedbackLastMeal = () => {
     const [review,setReview] = useState("");
 
     const [lastMeal, setLastMeal] = useState({date : "", meal : ""});
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const comment = review;
         // const comment = review.current.value;
         console.log(comment);
-        axios
-        .post("/api/review", {mealType:lastMeal.meal, date:lastMeal.date,review:comment})
-        .then(response => {
-            console.log(response);
-            console.log("successfully created review");
-        })
-        .catch(err => console.log(err));
+        try {
+            const review = await axios.post("/api/review", {mealType:lastMeal.meal, date:lastMeal.date,review:comment})
+            if(review) {
+                Alert.alert("Success", "Review successfully posted");
+            }
+        } catch(err) {
+            console.log(err);
+            Alert.alert("Error", "Unable to post review");
+        }
+        
     }
 
     const getLastMeal = () => {
