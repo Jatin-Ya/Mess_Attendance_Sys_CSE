@@ -89,25 +89,34 @@ export default function AppNavigator() {
         }}
       >
         <AuthStack.Screen
-          name="Review"
-          component={ReviewScreen}
-          options={{
-            title: "Reviews",
-          }}
-        />
-
-        <AuthStack.Screen
           name="Home"
           component={HomeScreen}
           options={{
-            title: "",
+            title: "User Profile",
           }}
         />
+
         <AuthStack.Screen
           name="My QR"
           component={QRCodeGenerate}
           options={{
             title: "My QR Code",
+          }}
+        />
+
+        <AuthStack.Screen
+          name="Menu"
+          component={Menu}
+          options={{
+            title: "Menu",
+          }}
+        />
+
+        <AuthStack.Screen
+          name="Review"
+          component={ReviewScreen}
+          options={{
+            title: "Reviews",
           }}
         />
       </MainTabs.Navigator>
