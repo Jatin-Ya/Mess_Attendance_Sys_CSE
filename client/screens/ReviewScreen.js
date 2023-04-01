@@ -13,6 +13,7 @@ function ReviewScreen(props) {
   const [newReview, setNewReview] = useState("");
   const [mealType, setMealType] = useState("");
   const [date, setDate] = useState(new Date());
+  const [reload, setReload] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
   const mealTypes = [
     { label: "Breakfast", value: "breakfast" },
@@ -27,16 +28,16 @@ function ReviewScreen(props) {
       setMessageArray(response.data.reviews);
     };
     getReviews();
-  }, []);
+  }, [reload]);
   const onChangeDate = (currDate) => {
     setDate(currDate);
   };
   const onPostReview = async () => {
-    console.log({
-      review: newReview,
-      date,
-      mealType,
-    });
+    // console.log({
+    //   review: newReview,
+    //   date,
+    //   mealType,
+    // });
     const response = await axios.post(
       "/api/review",
       {
@@ -51,7 +52,9 @@ function ReviewScreen(props) {
         },
       }
     );
-    // setMessageArray((a) => [...a]);
+    setReload((r) => !r);
+    setMessageArray((a) => [...a, response.data.review]);
+    setNewReview("");
   };
   let messageList = messageArray.map((message) => {
     return (

@@ -83,10 +83,10 @@ export default function AppNavigator() {
     return (
       <MainTabs.Navigator
         sceneContainerStyle={{ backgroundColor: "white" }}
-        // screenOptions={{
-        //   // tabBarActiveTintColor: COLORS.blue,
-        //   headerRight: LogoutButton,
-        // }}
+        screenOptions={{
+          // tabBarActiveTintColor: COLORS.blue,
+          headerRight: LogoutButton,
+        }}
       >
         <AuthStack.Screen
           name="Review"
