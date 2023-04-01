@@ -4,9 +4,10 @@ import LoginScreen from "./LoginScreen";
 import QRCodeGenerate from "./QRCodeGenerate";
 import QRCodeScanner from "./QRCodeScanner";
 import ReviewScreen from "./ReviewScreen";
-import CalenderScreen from "./Agenda";
+import CalenderScreen from "./Calender";
 import ReviewScreenAdmin from "./ReviewScreenAdmin";
 import Menu from "./Menu";
+import Khata from "./Khata";
 
 export {
   HomeScreen,
@@ -18,4 +19,5 @@ export {
   CalenderScreen,
   ReviewScreenAdmin,
   Menu,
+  Khata,
 };

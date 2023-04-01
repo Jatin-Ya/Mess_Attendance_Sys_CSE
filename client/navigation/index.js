@@ -18,6 +18,7 @@ import {
   CalenderScreen,
   ReviewScreenAdmin,
   Menu,
+  Khata,
 } from "../screens";
 import { useEffect, useState } from "react";
 
@@ -83,10 +84,10 @@ export default function AppNavigator() {
     return (
       <MainTabs.Navigator
         sceneContainerStyle={{ backgroundColor: "white" }}
-        screenOptions={{
-          // tabBarActiveTintColor: COLORS.blue,
-          headerRight: LogoutButton,
-        }}
+        // screenOptions={{
+        //   // tabBarActiveTintColor: COLORS.blue,
+        //   headerRight: LogoutButton,
+        // }}
       >
         <AuthStack.Screen
           name="Home"
@@ -113,10 +114,25 @@ export default function AppNavigator() {
         />
 
         <AuthStack.Screen
+          name="Khata"
+          component={Khata}
+          options={{
+            title: "Khata",
+          }}
+        />
+
+        <AuthStack.Screen
           name="Review"
           component={ReviewScreen}
           options={{
             title: "Reviews",
+          }}
+        />
+        <AuthStack.Screen
+          name="Calender Screen"
+          component={CalenderScreen}
+          options={{
+            title: "Calender Screen",
           }}
         />
       </MainTabs.Navigator>

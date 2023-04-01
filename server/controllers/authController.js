@@ -40,6 +40,11 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("User not found", 401));
   }
 
+  if (currUser.picture !== picture) {
+    currUser.picture = picture;
+    await currUser.save();
+  }
+
   const userInfo = {
     name,
     email,
