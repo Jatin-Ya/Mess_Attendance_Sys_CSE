@@ -4,8 +4,22 @@ import QRCode from "react-native-qrcode-svg";
 import axios from "../utils/axios";
 import useAuthContext from "../hooks/useAuthContext";
 import styles from "./QRCodeGenerate.module.css";
+import { StyleSheet } from "react-native";
+import { useFonts } from "expo-font";
+const stylesl = StyleSheet.create({
+  customFont: {
+    fontFamily: "Courgette-Regular",
+    fontSize: 16,
+    // fontWeight: "bold",
+  },
+});
 
 const QRCodeGenerate = () => {
+  let [fontsLoaded] = useFonts({
+    "NotoSerifTC-Bold": require("../assets/fonts/NotoSerifTC-Bold.otf"),
+    "PressStart2P-Regular": require("../assets/fonts/PressStart2P-Regular.ttf"),
+    "Courgette-Regular": require("../assets/fonts/Courgette-Regular.ttf"),
+  });
   const { user } = useAuthContext();
   const [QRCodeString, setQRCodeString] = useState("");
   const [currentMeal, setCurrentMeal] = useState(
@@ -83,7 +97,10 @@ const QRCodeGenerate = () => {
         paddingTop: 30,
       }}
     >
-      <Text style={[styles.name, { marginBottom: 10 }]}>{user.name}</Text>
+      {fontsLoaded && <Text style={stylesl.customFont}>Hello, world!</Text>}
+      {fontsLoaded && (
+        <Text style={[styles.name, { marginBottom: 10 }]}>{user.name}</Text>
+      )}
       <Image
         style={[styles.icon, { marginLeft: 90, marginBottom: 10 }]}
         source={mealTypeImage}
