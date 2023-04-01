@@ -1,0 +1,44 @@
+.buttonContainer{
+  position: absolute;
+width: 335px;
+height: 40px;
+left: 21px;
+top: 658px;
+}
+.buttonInner{
+  /* position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%; */
+justify-content: center;
+height: 40px;
+
+/* Black */
+
+background: #000000;
+border-radius: 10px;
+  
+}
+.buttonText{
+  /* position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%; */
+
+/* Link */
+
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* White */
+
+color: #FFFFFF;
+}

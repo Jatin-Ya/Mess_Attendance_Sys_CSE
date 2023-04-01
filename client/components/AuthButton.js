@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Pressable } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import axios from "../utils/axios";
 import useAuthContext from "../hooks/useAuthContext";
+import styles from "./AuthButton.module.css"
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -30,6 +31,7 @@ export default function AuthButton({ style }) {
   const getUserInformation = async (token) => {
     try {
       const loginResponse = await axios.post("/api/auth/login", { token });
+      console.log(loginResponse.data.user);
       const data = loginResponse.data.user;
       const authToken = loginResponse.data.jwt;
 
@@ -86,46 +88,52 @@ export default function AuthButton({ style }) {
   // };
 
   return (
-    <View>
-      <Button
-        style={style}
-        title="Sign in with Google"
-        disabled={!request}
-        onPress={() => {
-          promptAsync();
-        }}
-      />
-    </View>
+    <View >
+      <Pressable disabled={!request} onPress={()=>{promptAsync()}}>
+        <View style={styles.buttonInner}>
+          <Text style={styles.buttonText}>Sign in with Google</Text>
+        </View>
+      </Pressable>
+      </View>
+      
   );
 }
+// {/* <Button
+//         style={style}
+//         title="Sign in with Google"
+//         disabled={!request}
+//         onPress={() => {
+//           promptAsync();
+//         }}
+//       /> */}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  button: {
-    position: "absolute",
-    left: "0%",
-    right: "0%",
-    top: "0%",
-    bottom: "0%",
-  },
-  link: {
-    // fontFamily: "'Maven Pro'",
-    fontStyle: "normal",
-    fontWeight: "500",
-    fontSize: "12px",
-    lineHeight: "14px",
-    display: "flex",
-    alignItems: "center",
-    textAlign: "center",
-    color: "#FFFFFF",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   text: {
+//     fontSize: 20,
+//     fontWeight: "bold",
+//   },
+//   button: {
+//     position: "absolute",
+//     left: "0%",
+//     right: "0%",
+//     top: "0%",
+//     bottom: "0%",
+//   },
+//   link: {
+//     // fontFamily: "'Maven Pro'",
+//     fontStyle: "normal",
+//     fontWeight: "500",
+//     fontSize: "12px",
+//     lineHeight: "14px",
+//     display: "flex",
+//     alignItems: "center",
+//     textAlign: "center",
+//     color: "#FFFFFF",
+//   },
+// });
