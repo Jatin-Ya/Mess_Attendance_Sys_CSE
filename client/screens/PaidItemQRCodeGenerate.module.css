@@ -1,0 +1,321 @@
+.title {
+    position: absolute;
+    width: 195px;
+    height: 24px;
+    left: 83px;
+    top: 14px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    /* Black */
+    color: #000000;
+}
+
+.date {
+    position: absolute;
+    height: 19px;
+    left: 4.27%;
+    right: 72.8%;
+    top: 70px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* identical to box height */
+    letter-spacing: 0.300349px;
+
+    color: #222B45;
+}
+
+.dateGroup {
+    position: absolute;
+    left: 115px;
+    right: 207px;
+    top: 54px;
+    /* bottom: ; */
+    /* background-color: #000000; */
+}
+
+.dateRectange {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    height: 52px;
+    width: 52px;
+
+    background: #282828;
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
+    border-radius: 13px;
+}
+
+.selectMeal {
+    position: absolute;
+    height: 19px;
+    left: 4.27%;
+    right: 62.8%;
+    top: 165px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* identical to box height */
+    letter-spacing: 0.300349px;
+
+    color: #222B45;
+}
+
+.reviewDesp {
+    position: absolute;
+    height: 19px;
+    left: 3.47%;
+    right: 61.33%;
+    top: 260px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* identical to box height */
+    letter-spacing: 0.300349px;
+
+    color: #222B45;
+}
+
+.selectHostel {
+    position: absolute;
+    height: 19px;
+    left: 3.47%;
+    right: 61.33%;
+    top: 445px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* identical to box height */
+    letter-spacing: 0.300349px;
+
+    color: #222B45;
+}
+
+.inputUserEmail {
+    box-sizing: border-box;
+    border: #000000 2px solid;
+    top: 100px;
+    left: 30px;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+
+    width: 321px;
+    height: 50px;
+
+    /* Neutral/Neutral 100 */
+    background: #FFFFFF;
+
+    /* Neutral/Neutral 500 */
+    border: 1px solid #D0D4DF;
+    border-radius: 4px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.inputStartDate {
+    box-sizing: border-box;
+    border: #000000 2px solid;
+    top: 145px;
+    left: 30px;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+
+    width: 321px;
+    height: 50px;
+
+    /* Neutral/Neutral 100 */
+    background: #FFFFFF;
+
+    /* Neutral/Neutral 500 */
+    border: 1px solid #D0D4DF;
+    border-radius: 4px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.inputReviewDesp {
+    box-sizing: border-box;
+    border: #000000 2px solid;
+    top: 190px;
+    left: 30px;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+
+    width: 321px;
+    height: 50px;
+
+    /* Neutral/Neutral 100 */
+    background: #FFFFFF;
+
+    /* Neutral/Neutral 500 */
+    border: 1px solid #D0D4DF;
+    border-radius: 4px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.selectorinput {
+    /* border: #000000 2px solid; */
+    top: 330px;
+    left: 30px;
+
+    /* Auto layout */
+    /* display: flex;
+    flex-direction: row;
+    align-items: center;  */
+    /* padding: 8px 16px; */
+    gap: 8px;
+
+    width: 321px;
+    height: 50px;
+
+    /* Neutral/Neutral 100 */
+    background: #FFFFFF;
+
+    /* Neutral/Neutral 500 */
+    /* border: 1px solid #D0D4DF; */
+    border-radius: 4px;
+
+    /* Inside auto layout */
+    /* flex: none; */
+    /* order: 0; */
+    /* align-self: stretch; */
+    /* flex-grow: 0; */
+}
+
+.buttonContainer {
+    position: absolute;
+    width: 335px;
+    height: 40px;
+    left: 21px;
+    top: 218px;
+}
+
+.buttonInner {
+    /* position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;*/
+    /* bottom: 0%; */
+    justify-content: center;
+    height: 50px;
+
+    /* Black */
+
+    background: #000000;
+    border-radius: 10px;
+
+}
+
+.buttonText1 {
+    /* position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%; */
+
+    /* Link */
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 500;
+    /* font-size: 20px; */
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    /* White */
+
+    color: #FFFFFF;
+}
+
+.button {
+    /* position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%; */
+
+    /* Black */
+
+    background: #000000;
+    border-radius: 10px;
+    width: 335px;
+    height: 40px;
+    align-items: center;
+    margin-top: 30;
+}
+
+.buttonText {
+    /* Link */
+    position: relative;
+    top: 100%;
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    /* White */
+
+    color: #FFFFFF;
+}

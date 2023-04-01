@@ -19,6 +19,7 @@ import {
   RegisterComplaint,
   WeeklyMenu,
   ExportFromExcel,
+  PaidItemQRCodeGenerate,
 } from "../screens";
 import { useEffect, useState } from "react";
 
@@ -188,7 +189,23 @@ export default function AppNavigator() {
         />
 
         <MainAdminTabs.Screen
-          name="excel"
+          name="Menu"
+          component={Menu}
+          options={{
+            title: "Menu",
+          }}
+        />
+
+        <MainAdminTabs.Screen
+          name="Paid Item"
+          component={PaidItemQRCodeGenerate}
+          options={{
+            title: "Paid Item",
+          }}
+        />
+
+        <MainAdminTabs.Screen
+          name="Add a User"
           component={ExportFromExcel}
           options={{
             title: "Report",
