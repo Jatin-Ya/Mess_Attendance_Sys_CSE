@@ -17,6 +17,7 @@ import {
   ReviewScreen,
   CalenderScreen,
   ReviewScreenAdmin,
+  RegisterComplaint,
   Menu,
   test
 } from "../screens";
@@ -103,6 +104,14 @@ export default function AppNavigator() {
             title: "Test",
           }}
         />
+        <AuthStack.Screen
+          name="Register Complaint"
+          component={RegisterComplaint}
+          options={{
+            title: "Register Complaint",
+          }}
+        />
+
         <AuthStack.Screen
           name="My QR"
           component={QRCodeGenerate}

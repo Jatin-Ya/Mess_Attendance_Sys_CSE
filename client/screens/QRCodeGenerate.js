@@ -108,7 +108,12 @@ const QRCodeGenerate = () => {
         paddingTop: 30,
       }}
     >
-      <Text style={[styles.name, { marginBottom: 10 }]}> {formatName(user.name)}</Text>
+      {fontsLoaded && (
+        <Text style={[styles.name, { marginBottom: 10 }]}>
+          {" "}
+          {formatName(user.name)}
+        </Text>
+      )}
       <Image
         style={[styles.icon, { marginLeft: 90, marginBottom: 10 }]}
         source={mealTypeImage}
