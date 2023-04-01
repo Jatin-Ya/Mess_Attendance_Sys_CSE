@@ -16,12 +16,11 @@ import axios from "../utils/axios";
 const Khata = () => {
   const { user, authToken } = useAuthContext();
   const [selectedDay, setSelectedDay] = useState(null);
-
-  const timeToString = (time) => {
-    const date = new Date(time);
-    return date.toISOString().split("T")[0];
-  };
-
+  const [extraItems, setExtraItems] = useState([]);
+  const [extraItemValues, setExtraItemValues] = useState([
+    { name: "Panner", cost: 30 },
+    { name: "Chicken", cost: 50 },
+  ]);
   const [attendance, setAttendance] = useState([]);
   const [values, setValues] = useState({
     breakfast: false,
@@ -29,6 +28,11 @@ const Khata = () => {
     snacks: false,
     lunch: false,
   });
+
+  const timeToString = (time) => {
+    const date = new Date(time);
+    return date.toISOString().split("T")[0];
+  };
 
   const getSelfAttendance = async () => {
     try {
@@ -47,16 +51,32 @@ const Khata = () => {
     }
   };
 
+  const getSelfExtraItems = async () => {
+    try {
+      const response = await axios.get("/api/user/extra-items", {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+        },
+      });
+
+      setExtraItems(response.data.extraItems);
+    } catch (err) {
+      console.log(err.stack);
+      Alert.alert(err.message);
+    }
+  };
+
   useEffect(() => {
     getSelfAttendance();
   }, []);
 
-  handleButtonClick = () => {
+  handleButtonClick = (dateString) => {
     if (attendance.length > 0) {
       console.log({ selectedDay });
 
       const instance = attendance.find(
-        (d) => timeToString(d.date) === selectedDay.dateString
+        (d) => timeToString(d.date) === dateString
       );
 
       console.log({ instance });
@@ -85,6 +105,15 @@ const Khata = () => {
         snacks: false,
         lunch: false,
       });
+    }
+
+    if (extraItems.length > 0) {
+      const items = extraItems.filter(
+        (item) => timeToString(item.date) === dateString
+      );
+      setExtraItemValues(items);
+    } else {
+      setExtraItemValues([]);
     }
   };
 
@@ -119,7 +148,7 @@ const Khata = () => {
             maxDate={timeToString(Date.now())}
             onDayPress={(day) => {
               setSelectedDay(day);
-              handleButtonClick();
+              handleButtonClick(day.dateString);
               console.log("selected day", day);
             }}
             onDayLongPress={(day) => {
@@ -133,24 +162,42 @@ const Khata = () => {
         </View>
 
         {selectedDay ? (
-          <View style={styles.breakup}>
-            <Text style={styles.datestring}>
-              Breakdown for {selectedDay.dateString}
-            </Text>
+          <>
+            <View style={styles.breakup}>
+              <Text style={styles.datestring}>
+                Breakdown for {selectedDay.dateString}
+              </Text>
 
-            <Text style={styles.mealType}>
-              Breakfast: {values.breakfast ? "Yes" : "No"}
-            </Text>
-            <Text style={styles.mealType}>
-              Lunch: {values.lunch ? "Yes" : "No"}
-            </Text>
-            <Text style={styles.mealType}>
-              Snacks: {values.snacks ? "Yes" : "No"}
-            </Text>
-            <Text style={styles.mealType}>
-              Dinner: {values.dinner ? "Yes" : "No"}
-            </Text>
-          </View>
+              <Text style={styles.mealType}>
+                Breakfast: {values.breakfast ? "Yes" : "No"}
+              </Text>
+              <Text style={styles.mealType}>
+                Lunch: {values.lunch ? "Yes" : "No"}
+              </Text>
+              <Text style={styles.mealType}>
+                Snacks: {values.snacks ? "Yes" : "No"}
+              </Text>
+              <Text style={styles.mealType}>
+                Dinner: {values.dinner ? "Yes" : "No"}
+              </Text>
+            </View>
+
+            {extraItemValues.length > 0 && (
+              <View style={styles.breakup2}>
+                <Text style={styles.datestring}>
+                  Extra Items for {selectedDay.dateString}
+                </Text>
+
+                {extraItemValues.map((item, i) => {
+                  return (
+                    <Text key={i} style={styles.mealType}>
+                      {item.name}: ₹{item.cost}
+                    </Text>
+                  );
+                })}
+              </View>
+            )}
+          </>
         ) : null}
       </View>
     </SafeAreaView>
