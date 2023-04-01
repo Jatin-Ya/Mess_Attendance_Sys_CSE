@@ -4,12 +4,16 @@
   flex-direction: row;
   align-items: flex-start;
   padding: 0px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
   
   /* position: absolute; */
-  width: 320px;
-  height: 250.52px;
+  width: 350px;
+  /* height: 150.52px; */
   left: 0px;
   top: 0.48px;
+  border: #282828;
+  border-radius: 15px;
   /* background-color: black; */
 }
 .leftCont{
@@ -19,9 +23,9 @@ align-items: center;
 padding: 0px 16px;
 gap: 10px;
 
-width: 62px;
+width: 65px;
 height: 68px;
-background-color: black;
+/* background-color: black; */
 
 
 /* Inside auto layout */
@@ -42,16 +46,16 @@ order: 0;
 flex-grow: 0;
 }
 .rightCont{
-  width: 258px;
+  width: 250px;
 height: 68px;
-
+padding: 2px;
 
 /* Inside auto layout */
 
 flex: none;
 order: 1;
 flex-grow: 0;
-background-color: azure;
+/* background-color: azure; */
 }
 .rightFrame{
   display: flex;
@@ -62,21 +66,21 @@ padding: 0px;
 gap: 2px;
 
 position: absolute;
-width: 241px;
+width: 235px;
 height: 44px;
 left: -0.04px;
 top: 17px;
-background-color: antiquewhite;
+/* background-color: antiquewhite; */
 }
 .rightHeading{
 
-width: 129px;
+width: 229px;
 height: 15px;
 
 font-family: 'Maven Pro';
 font-style: normal;
 font-weight: 600;
-font-size: 12px;
+font-size: 14px;
 line-height: 14px;
 /* identical to box height */
 
@@ -92,7 +96,7 @@ flex-grow: 0;
 }
 .date{
   width: 69px;
-height: 27px;
+height: 13px;
 
 font-family: 'Maven Pro';
 font-style: normal;

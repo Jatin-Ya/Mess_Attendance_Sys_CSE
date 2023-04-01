@@ -14,6 +14,8 @@ import styles from "./Menu.module.css";
 
 import MenuModal from "../components/MenuModal";
 
+import FeedbackLastMeal from "../components/FeedbackLastMeal";
+
 function Menu() {
   const { user } = useAuthContext();
 
@@ -106,6 +108,7 @@ function Menu() {
     {displayModel ? <MenuModal setDisplayModal = {setDisplayModal} menu = {todaysMenu} />  : <View></View>}
 
       <Text style={styles.welcome}>Welcome {getName()} !</Text>
+      
       <View style={styles.rect}>
         <Text style={styles.upcoming}> Upcoming Meal </Text>
         <Image source={mealTypeImage} style={styles.vec} />
@@ -156,7 +159,13 @@ function Menu() {
             <Text style={styles.optionName}>Complain</Text>
           </View>
         </View>
+
       </View>
+
+      <View style = {styles.feedbackForm} >
+        <FeedbackLastMeal />
+      </View>
+
     </View>
   );
 }
