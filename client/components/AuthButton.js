@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Button, Pressable } from "react-native";
+import { StyleSheet, Text, View, Button, Pressable, Alert } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import axios from "../utils/axios";
@@ -37,7 +37,7 @@ export default function AuthButton({ style }) {
 
       login(data, authToken);
     } catch (error) {
-      console.log(error);
+      Alert.alert(e.response.data.message);
       // Add your own error handler here
     }
   };

@@ -6,6 +6,7 @@ import QRCodeScanner from "./QrScanNew";
 import ReviewScreen from "./ReviewScreen";
 import ReviewScreenAdmin from "./ReviewScreenAdmin";
 import RegisterComplaint from "./RegisterComplaint";
+import ExportFromExcel from "./ExportFromExcel";
 import Menu from "./Menu";
 import Khata from "./Khata";
 
@@ -20,4 +21,5 @@ export {
   Menu,
   Khata,
   RegisterComplaint,
+  ExportFromExcel,
 };
