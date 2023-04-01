@@ -7,8 +7,8 @@ const Router = express.Router();
 Router.post("/addPaidMessBalance", userController.addPaidMealToUser);
 Router.get(
   "/attendance-self",
-  //   authController.verifyJwtToken,
-  //   authController.loggedInUser,
+  authController.verifyJwtToken,
+  authController.loggedInUser,
   userController.getAttendanceSelf
 );
 Router.get("/getAttendance", userController.generateMessAttendanceExcel);

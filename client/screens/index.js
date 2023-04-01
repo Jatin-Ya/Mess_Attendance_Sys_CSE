@@ -6,6 +6,7 @@ import QRCodeScanner from "./QRCodeScanner";
 import ReviewScreen from "./ReviewScreen";
 import CalenderScreen from "./Agenda";
 import ReviewScreenAdmin from "./ReviewScreenAdmin";
+import Menu from "./Menu";
 
 export {
   HomeScreen,
@@ -16,4 +17,5 @@ export {
   ReviewScreen,
   CalenderScreen,
   ReviewScreenAdmin,
+  Menu,
 };

@@ -1,27 +1,56 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Button, StyleSheet, TextInput, View, Text } from "react-native";
 import Message from "../components/Message";
 import DatePicker from "../components/DatePicker";
 import DropDown from "react-native-paper-dropdown";
+import axios from "../utils/axios";
+import useAuthContext from "../hooks/useAuthContext";
 // import MaterialButtonPrimary1 from "../components/MaterialButtonPrimary1";
 
 function ReviewScreenAdmin(props) {
-  const [messageArray, setMessageArray] = useState(["abs","gf"]);
-  const [newReview,setNewReview] = useState("");
+  const { user } = useAuthContext();
+  const [messageArray, setMessageArray] = useState([]);
+  const [newReview, setNewReview] = useState("");
   const [date, setDate] = useState(new Date());
+  const [mealType, setMealtype] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
-
-  const onPostReview = () => {
-    setMessageArray((a)=>[...a,newReview]);
-  }
 
   const onChangeDate = (currDate) => {
     setDate(currDate);
-  }
-  console.log(date);
-  const messageList = messageArray.map((msgTxt)=>{return <Message text={msgTxt} isMyMessage={false}></Message>})
-  const [mealtype, setMealtype] = useState("");
-  const mealtypes = [{label:"Breakfast",value:"Breakfast"},{label:"Lunch",value:"Lunch"},{label:"Snacks",value:"Snacks"},{label:"Dinner",value:"Dinner"}];
+  };
+  useEffect(() => {
+    const getReviews = async () => {
+      const response = await axios.get("/api/review");
+      // console.log("Reviews", response.data.reviews);
+      setMessageArray(response.data.reviews);
+    };
+    getReviews();
+  }, []);
+  const messageList = messageArray.map((message) => {
+    return (
+      <Message
+        text={message.review}
+        user={message.user.name}
+        mealType={message.meal.type}
+        mealHostel={message.meal.hostel}
+        time={message.createdAt}
+        isMyMessage={user.email === message.user.email}
+      ></Message>
+    );
+  });
+  const mealTypes = [
+    { label: "Breakfast", value: "breakfast" },
+    { label: "Lunch", value: "lunch" },
+    { label: "Snacks", value: "snacks" },
+    { label: "Dinner", value: "dinner" },
+  ];
+
+  const changeMealHandler = async () => {
+    const response = await axios.get("/api/review/:mealType/:date");
+    // console.log("Reviews", response.data.reviews);
+    setMessageArray(response.data.reviews);
+  };
+
   return (
     <View style={styles.ReviewContainer}>
       <View style={styles.selectorContainer}>
@@ -32,22 +61,20 @@ function ReviewScreenAdmin(props) {
           <DropDown
             label={"Select"}
             mode={"outlined"}
-            value={mealtype}
+            value={mealType}
             setValue={setMealtype}
-            list={mealtypes}
+            onChange={changeMealHandler}
+            list={mealTypes}
             visible={showDropDown}
             showDropDown={() => setShowDropDown(true)}
             onDismiss={() => setShowDropDown(false)}
           />
         </View>
       </View>
-      <View style={styles.msgContainer}>
-        {messageList}
-        <Message text="HI" isMyMessage={true}></Message>
-      </View>
+      <View style={styles.msgContainer}>{messageList}</View>
       {/* <View style={styles.newReviewContainer}> */}
-        {/* <View style={styles.rect}></View> */}
-        {/* <View style={styles.inputContainer}>
+      {/* <View style={styles.rect}></View> */}
+      {/* <View style={styles.inputContainer}>
           
         <TextInput multiline={true} style={styles.inputReview} value={newReview} onChangeText={setNewReview}></TextInput>
         </View>
@@ -56,20 +83,19 @@ function ReviewScreenAdmin(props) {
         onPress={onPostReview}
         ></Button>
         </View> */}
-      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   ReviewContainer: {
-    flex: 1
+    flex: 1,
   },
   selectorContainer: {
-    height: "30%"
+    height: "30%",
   },
-  msgContainer:{
-    height: "70%"
+  msgContainer: {
+    height: "70%",
   },
   selectorinput: {
     width: 300,
@@ -89,22 +115,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "space-around",
     alignContent: "center",
-    alignItems:"center"
+    alignItems: "center",
   },
   inputContainer: {
     height: 80,
     width: "80%",
-    justifyContent:"center",
+    justifyContent: "center",
     backgroundColor: "rgba(255,255,255,1)",
     alignItems: "center",
-    borderRadius: 10
+    borderRadius: 10,
   },
   inputReview: {
     width: "90%",
     height: 64,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 0,
-    
+
     // marginTop: "5%",
     // marginLeft: "20%"
   },
@@ -112,8 +138,8 @@ const styles = StyleSheet.create({
     height: 36,
     width: 323,
     marginTop: 13,
-    marginLeft: 25
-  }
+    marginLeft: 25,
+  },
 });
 
 export default ReviewScreenAdmin;

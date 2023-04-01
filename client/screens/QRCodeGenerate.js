@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Button, Alert } from "react-native";
+import { View, Button, Alert, Text } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import axios from "../utils/axios";
 import useAuthContext from "../hooks/useAuthContext";
+import styles from "./QRCodeGenerate.module.css";
 
 const QRCodeGenerate = () => {
   const { user } = useAuthContext();
@@ -30,12 +31,48 @@ const QRCodeGenerate = () => {
     }
   };
 
+  const getCurrentMeal = () => {
+    const d = new Date();
+    const hour = d.getHours();
+    let res = "Breakfast";
+    if (hour > 10 && hour < 16) {
+      res = "Lunch";
+    } else if (hour >= 16 && hour < 19) {
+      res = "Snacks";
+    } else if (hour >= 19) {
+      res = "Dinner";
+    }
+    return res;
+  };
+
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        background: "#E5E5E5",
+        position: "relative",
+        paddingTop: 30,
+      }}
+    >
+      <Text style={[styles.name, { marginBottom: 10 }]}>{user.name}</Text>
+      <Text style={[styles.meal, { marginBottom: 30 }]}>
+        {getCurrentMeal()}
+      </Text>
+
       {QRCodeString != "" ? (
-        <QRCode value={QRCodeString} size={200} backgroundColor="white" />
+        <QRCode
+          value={QRCodeString}
+          size={200}
+          backgroundColor="white"
+          style={styles.qr}
+        />
       ) : null}
-      <Button onPress={generateQRString} title="Generate QR Code" />
+      <Text style={styles.roll}>Student ID: {user.rollNumber}</Text>
+      <Text style={styles.tag}>Show this code for mess entry</Text>
+      <View style={{ marginTop: 30 }}>
+        <Button onPress={generateQRString} title="Generate New QR Code" />
+      </View>
     </View>
   );
 };
