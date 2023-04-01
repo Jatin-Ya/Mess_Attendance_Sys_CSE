@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import axios from "../utils/axios";
 
 import useAuthContext from "../hooks/useAuthContext";
@@ -160,6 +161,9 @@ export default function AppNavigator() {
           component={Dashboard}
           options={{
             title: "Dashboard",
+            tabBarIcon: () => (
+              <AntDesign name="dashboard" size={24} color="black" />
+            ),
           }}
         />
 
@@ -168,6 +172,9 @@ export default function AppNavigator() {
           component={QRCodeScanner}
           options={{
             title: "My QR Code Scanner",
+            tabBarIcon: () => (
+              <AntDesign name="qrcode" size={24} color="black" />
+            ),
           }}
         />
         <MainAdminTabs.Screen
@@ -175,6 +182,9 @@ export default function AppNavigator() {
           component={ReviewScreenAdmin}
           options={{
             title: "Reviews",
+            tabBarIcon: () => (
+              <AntDesign name="folderopen" size={24} color="black" />
+            ),
           }}
         />
 
@@ -199,6 +209,9 @@ export default function AppNavigator() {
           component={ExportFromExcel}
           options={{
             title: "Report",
+            tabBarIcon: () => (
+              <FontAwesome name="file-excel-o" size={24} color="black" />
+            ),
           }}
         />
       </MainAdminTabs.Navigator>
