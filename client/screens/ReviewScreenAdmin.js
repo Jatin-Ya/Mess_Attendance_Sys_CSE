@@ -24,7 +24,6 @@ function ReviewScreenAdmin(props) {
       // console.log("Reviews", response.data.reviews);
       setMessageArray(response.data.reviews);
     };
-    set
     getReviews();
   }, []);
   const messageList =
@@ -51,6 +50,7 @@ function ReviewScreenAdmin(props) {
   ];
 
   const changeMealHandler = async (value) => {
+    console.log("Hello");
     setMealtype(value);
     const response = await axios.get(`/api/review/${value}/${date}`);
     console.log("Reviews", response.data.reviews);
