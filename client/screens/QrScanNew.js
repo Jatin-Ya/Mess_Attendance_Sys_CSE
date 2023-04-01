@@ -14,7 +14,7 @@ import useMealContext from "../hooks/useMealContext";
 import styles from "./QRCodeGenerate.module.css";
 
 export default function QRCodeScanner() {
-  //   const { meal } = useMealContext();
+  const { meal } = useMealContext();
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -22,17 +22,17 @@ export default function QRCodeScanner() {
     require(`./../assets/Breakfast.png`)
   );
 
-  const meal = {
-    type: "dinner",
-    date: new Date(),
-    id: "dgfghjk",
-  };
+  // const meal = {
+  //   type: "dinner",
+  //   date: new Date(),
+  //   id: "dgfghjk",
+  // };
   const getCurrentMeal = () => {
-    if (meal.type === "lunch") {
+    if (meal?.type === "lunch") {
       setMealTypeImage(require(`./../assets/Lunch.png`));
-    } else if (meal.type === "snacks") {
+    } else if (meal?.type === "snacks") {
       setMealTypeImage(require(`./../assets/Snacks.png`));
-    } else if (meal.type === "dinner") {
+    } else if (meal?.type === "dinner") {
       setMealTypeImage(require(`./../assets/Dinner.png`));
     }
   };
@@ -49,7 +49,7 @@ export default function QRCodeScanner() {
 
   const chargeUserForMeal = async (encryptedString) => {
     try {
-      const mealId = "642691dc08b00fad3c1b90a6" || meal.id;
+      const mealId = meal?.id || "642691dc08b00fad3c1b90a6";
       const scanningHostel = "MHR";
 
       const body = {
@@ -131,7 +131,7 @@ export default function QRCodeScanner() {
       </Text>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={{ width: "80%", height: "80%" }}
+        style={{ width: "100%", height: "60%" }}
       />
       {scanned && (
         <Pressable onPress={() => setScanned(false)} style={[styles.button]}>
@@ -143,11 +143,3 @@ export default function QRCodeScanner() {
     </View>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     flexDirection: "column",
-//     justifyContent: "center",
-//   },
-// });

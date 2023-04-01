@@ -1,10 +1,21 @@
 import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, View, Text, Button, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  Alert,
+  Image,
+  Pressable,
+} from "react-native";
 import DropDown from "react-native-paper-dropdown";
 import axios from "./../utils/axios";
-// import MaterialButtonPrimary from "../components/MaterialButtonPrimary";
+import styles from "./Dashboard.module.css";
+import useMealContext from "../hooks/useMealContext";
 
 function Dashboard() {
+  const { updateMeal } = useMealContext();
+
   const [mealtype, setMealtype] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
   const [breakfastCount, setBreakfastCount] = useState(0);
@@ -18,29 +29,24 @@ function Dashboard() {
     { label: "Snacks", value: "snacks" },
     { label: "Dinner", value: "dinner" },
   ];
-  const onGenerateMeal = () => {
-    const meal = {
-      date: date,
-      type: mealtype,
-      quantity: 0,
-      hostel: "MHR",
-    };
+  const onGenerateMeal = async () => {
+    try {
+      const meal = {
+        date: date,
+        type: mealtype,
+        quantity: 0,
+        hostel: "MHR",
+      };
 
-    console.log(meal);
-    axios
-      .post("/api/meal", meal)
-      .then((response) => {
-        console.log("Meal created successfully");
-      })
-      .catch((e) => Alert.alert(e.response.data.message));
+      console.log(meal);
+      const response = await axios.post("/api/meal", meal);
+      const newMeal = response.data.newMeal;
+      updateMeal(newMeal._id, mealtype, date);
+      console.log("Meal created successfully");
+    } catch (e) {
+      Alert.alert(e.response.data.message);
+    }
   };
-  // const dummyData = {
-  //   breakfast : 20,
-  //   lunch : 40,
-  //   snacks : 30,
-  //   dinner : 50,
-  //   date: "31-03-23"
-  // }
 
   useEffect(() => {
     const currDate = new Date();
@@ -56,142 +62,44 @@ function Dashboard() {
       })
       .catch((err) => console.log(err));
   }, []);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.dashboard}>Dashboard</Text>
-      <View style={styles.detailscontainer}>
-        <Text style={styles.datetxt}>
-          Date :{" "}
+      <View style={styles.rect}>
+        <Text style={[styles.date, { marginTop: 10, marginLeft: 10 }]}>
+          Date :
           {`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`}
         </Text>
-        <Text style={styles.breakfasttxt}>
-          Breakfast : {breakfastCount} people
-        </Text>
-        <Text style={styles.lunchtxt}>Lunch : {lunchCount} people</Text>
-        <Text style={styles.snackstxt}>Snacks : {snacksCount} people</Text>
-        <Text style={styles.dinnertxt}>Dinner : {dinnerCount} people</Text>
-      </View>
-      <View style={styles.generatecontainer}>
-        <Text style={styles.generateANewMealtxt}>Generate a new meal</Text>
-        <Text style={styles.selectMealTypetxt}>Select meal type</Text>
-        <View style={styles.selectorinput}>
-          <DropDown
-            label={"Select"}
-            mode={"outlined"}
-            value={mealtype}
-            setValue={setMealtype}
-            list={mealtypes}
-            visible={showDropDown}
-            showDropDown={() => setShowDropDown(true)}
-            onDismiss={() => setShowDropDown(false)}
-          />
+        <View style={{ marginTop: 20, marginLeft: 10 }}>
+          <Text style={styles.txt}>Breakfast : {breakfastCount} people</Text>
+          <Text style={styles.txt}>Lunch : {lunchCount} people</Text>
+          <Text style={styles.txt}>Snacks : {snacksCount} people</Text>
+          <Text style={styles.txt}>Dinner : {dinnerCount} people</Text>
         </View>
-        {/* <View style={styles.rect3}></View> */}
-        {/* <MaterialButtonPrimary
-          style={styles.materialButtonPrimary}
-        ></MaterialButtonPrimary> */}
-        <Button title="Generate Meal" onPress={onGenerateMeal}></Button>
       </View>
+
+      <Text style={styles.selectHostel}>Select New Meal Type</Text>
+      <View style={styles.selectorinput}>
+        <DropDown
+          label={"Select"}
+          mode={"outlined"}
+          value={mealtype}
+          setValue={setMealtype}
+          list={mealtypes}
+          visible={showDropDown}
+          showDropDown={() => setShowDropDown(true)}
+          onDismiss={() => setShowDropDown(false)}
+        />
+      </View>
+
+      <Pressable onPress={onGenerateMeal}>
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonInner}>
+            <Text style={styles.buttonText1}>Generate New Meal</Text>
+          </View>
+        </View>
+      </Pressable>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignContent: "center",
-  },
-  dashboard: {
-    // fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 22,
-    // marginTop: 96,
-    // marginLeft: 16
-  },
-  generatecontainer: {
-    width: 341,
-    height: 212,
-    backgroundColor: "#E6E6E6",
-    borderRadius: 15,
-    marginTop: 20,
-    marginLeft: 16,
-  },
-  generateANewMealtxt: {
-    // fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 20,
-    marginTop: 24,
-    marginLeft: 26,
-  },
-  selectMealTypetxt: {
-    // fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 18,
-    borderRadius: 5,
-    marginTop: 19,
-    marginLeft: 44,
-  },
-  selectorinput: {
-    width: 300,
-    height: 60,
-    textAlign: "left",
-    borderBottomWidth: 0,
-    paddingHorizontal: 16,
-    marginBottom: 20,
-    fontSize: 18,
-    marginHorizontal: 5,
-    borderRadius: 10,
-  },
-
-  detailscontainer: {
-    width: 341,
-    height: 202,
-    backgroundColor: "#E6E6E6",
-    borderRadius: 15,
-    marginTop: 20,
-    marginLeft: 16,
-  },
-  datetxt: {
-    // fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 18,
-    marginTop: 15,
-    marginLeft: 17,
-  },
-  breakfasttxt: {
-    // fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 20,
-    marginTop: 12,
-    marginLeft: 44,
-  },
-  lunchtxt: {
-    // fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 20,
-    height: 24,
-    width: 270,
-    marginTop: 14,
-    marginLeft: 44,
-  },
-  snackstxt: {
-    // fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 20,
-    height: 24,
-    width: 270,
-    marginTop: 14,
-    marginLeft: 44,
-  },
-  dinnertxt: {
-    // fontFamily: "roboto-regular",
-    color: "#121212",
-    fontSize: 20,
-    width: 270,
-    height: 24,
-    marginTop: 14,
-    marginLeft: 44,
-  },
-});
-
 export default Dashboard;

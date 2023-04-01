@@ -8,7 +8,7 @@ import { StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
 const stylesl = StyleSheet.create({
   customFont: {
-    fontFamily: "Courgette-Regular",
+    // fontFamily: "Courgette-Regular",
     fontSize: 16,
     // fontWeight: "bold",
   },

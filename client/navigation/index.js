@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
 import axios from "../utils/axios";
 
 import useAuthContext from "../hooks/useAuthContext";
@@ -18,6 +19,7 @@ import {
   RegisterComplaint,
   WeeklyMenu,
   ExportFromExcel,
+  PaidItemQRCodeGenerate,
 } from "../screens";
 import { useEffect, useState } from "react";
 
@@ -159,6 +161,9 @@ export default function AppNavigator() {
           component={Dashboard}
           options={{
             title: "Dashboard",
+            tabBarIcon: () => (
+              <AntDesign name="dashboard" size={24} color="black" />
+            ),
           }}
         />
 
@@ -167,6 +172,9 @@ export default function AppNavigator() {
           component={QRCodeScanner}
           options={{
             title: "My QR Code Scanner",
+            tabBarIcon: () => (
+              <AntDesign name="qrcode" size={24} color="black" />
+            ),
           }}
         />
         <MainAdminTabs.Screen
@@ -174,14 +182,31 @@ export default function AppNavigator() {
           component={ReviewScreenAdmin}
           options={{
             title: "Reviews",
+            tabBarIcon: () => (
+              <AntDesign name="folderopen" size={24} color="black" />
+            ),
           }}
         />
 
         <MainAdminTabs.Screen
-          name="excel"
+          name="Paid Item"
+          component={PaidItemQRCodeGenerate}
+          options={{
+            title: "Paid Item",
+            tabBarIcon: () => (
+              <Ionicons name="fast-food-outline" size={24} color="black" />
+            ),
+          }}
+        />
+
+        <MainAdminTabs.Screen
+          name="Add a User"
           component={ExportFromExcel}
           options={{
             title: "Report",
+            tabBarIcon: () => (
+              <FontAwesome name="file-excel-o" size={24} color="black" />
+            ),
           }}
         />
       </MainAdminTabs.Navigator>
