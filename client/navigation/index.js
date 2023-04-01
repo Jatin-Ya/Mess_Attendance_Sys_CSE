@@ -98,7 +98,13 @@ export default function AppNavigator() {
             title: "User Profile",
           }}
         />
-
+        <AuthStack.Screen
+          name="test"
+          component={test}
+          options={{
+            title: "Test",
+          }}
+        />
         <AuthStack.Screen
           name="Register Complaint"
           component={RegisterComplaint}
