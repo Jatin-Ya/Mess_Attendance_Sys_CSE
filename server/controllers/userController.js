@@ -12,7 +12,11 @@ const paidItemModel = require("../models/paidItemModel");
 const path = require("path");
 const fs = require("fs");
 
-const admin = ["20cs01029@iitbbs.ac.in1", "20CS01029@iitbbs.ac.in1"];
+const admin = [
+  "20cs01029@iitbbs.ac.in1",
+  "20CS01029@iitbbs.ac.in1",
+  "dsp13@iitbbs.ac.in",
+];
 const mealPriceMap = {
   breakfast: 30,
   lunch: 60,
@@ -318,6 +322,9 @@ exports.addMealToUser = catchAsync(async (req, res, next) => {
   user.messBalance += price;
   user.mealsAvailed.push(mealId);
   await user.save();
+
+  meal.quantity = meal.quantity + 1;
+  await meal.save();
 
   res.status(201).json({
     message: "Student billed for this meal successfully",
