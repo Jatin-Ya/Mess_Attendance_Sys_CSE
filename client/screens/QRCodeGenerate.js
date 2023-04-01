@@ -8,7 +8,7 @@ import { StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
 const stylesl = StyleSheet.create({
   customFont: {
-    fontFamily: "Courgette-Regular",
+    // fontFamily: "Courgette-Regular",
     fontSize: 16,
     // fontWeight: "bold",
   },
@@ -119,7 +119,7 @@ const QRCodeGenerate = () => {
         </Text>
       )}
       <Image
-        style={[styles.icon, { marginLeft: 90, marginBottom: 10 }]}
+        style={[styles.icon, { marginLeft: 100, marginBottom: 10 }]}
         source={mealTypeImage}
       />
       <Text style={[styles.meal, { marginBottom: 10 }]}>{currentMeal}</Text>

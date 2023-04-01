@@ -113,14 +113,20 @@ const Menu = ({ navigation }) => {
       )}
 
       <Text style={styles.welcome}>Welcome {getName()} !</Text>
-      <Image
-        source={{ uri: user.picture }}
-        style={styles.avatar}
+      <Pressable
         onPress={() => {
+          console.log("Rkessed");
           navigation.navigate("profile");
         }}
-      />
-
+      >
+        <Image
+          source={{ uri: user.picture }}
+          style={styles.avatar}
+          onPress={() => {
+            navigation.navigate("profile");
+          }}
+        />
+      </Pressable>
       <View style={styles.rect}>
         <Text style={styles.upcoming}> Upcoming Meal </Text>
         <Image source={mealTypeImage} style={styles.vec} />
@@ -133,7 +139,8 @@ const Menu = ({ navigation }) => {
         <Text
           onPress={() => {
             console.log("Display full menu....");
-            setDisplayModal(true);
+            // setDisplayModal(true);
+            navigation.navigate("weekly-menu")
           }}
           style={styles.fullMenu}
         >
@@ -150,43 +157,61 @@ const Menu = ({ navigation }) => {
       <View>
         <View>
           <SafeAreaView>
-            <Pressable
-              onPress={() => {
-                console.log("Rkessed");
-                navigation.navigate("qr");
-              }}
-            >
-              <View style={styles.optionBox}>
+            <View style={[{ zIndex: 1000 }, styles.optionBox]}>
+              <Pressable
+                onPress={() => {
+                  console.log("Rkessed");
+                  navigation.navigate("qr");
+                }}
+              >
                 <Image
                   source={require("../assets/QR.png")}
-                  style={[styles.optionImage]}
+                  style={[styles.optionImage, { zIndex: 20000 }]}
+                  onPress={() => {
+                    console.log("Rkessed");
+                    navigation.navigate("qr");
+                  }}
                 />
-                <Text style={styles.optionName}>Generate QR</Text>
-              </View>
-            </Pressable>
+              </Pressable>
+              <Text style={styles.optionName}>Generate QR</Text>
+            </View>
           </SafeAreaView>
 
           <View style={styles.optionBox2}>
-            <Image
-              source={require("../assets/Khata.png")}
-              style={[styles.optionImage, { left: "25%" }]}
+            <Pressable
               onPress={() => {
                 console.log("Rkessed");
                 navigation.navigate("khata");
               }}
-            />
+            >
+              <Image
+                source={require("../assets/Khata.png")}
+                style={[styles.optionImage, { left: "25%" }]}
+                onPress={() => {
+                  console.log("Rkessed");
+                  navigation.navigate("khata");
+                }}
+              />
+            </Pressable>
             <Text style={styles.optionName}>Khata</Text>
           </View>
 
           <View style={styles.optionBox3}>
-            <Image
-              source={require("../assets/complain.png")}
-              style={[styles.optionImage, { left: "25%" }]}
+            <Pressable
               onPress={() => {
-                console.log("pRessed");
+                console.log("Rkessed");
                 navigation.navigate("add-review");
               }}
-            />
+            >
+              <Image
+                source={require("../assets/complain.png")}
+                style={[styles.optionImage, { left: "25%" }]}
+                onPress={() => {
+                  console.log("pRessed");
+                  navigation.navigate("add-review");
+                }}
+              />
+            </Pressable>
             <Text style={styles.optionName}>Complain</Text>
           </View>
         </View>

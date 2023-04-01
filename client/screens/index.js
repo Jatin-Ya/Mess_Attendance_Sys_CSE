@@ -4,12 +4,12 @@ import LoginScreen from "./LoginScreen";
 import QRCodeGenerate from "./QRCodeGenerate";
 import QRCodeScanner from "./QrScanNew";
 import ReviewScreen from "./ReviewScreen";
-import CalenderScreen from "./Calender";
 import ReviewScreenAdmin from "./ReviewScreenAdmin";
 import RegisterComplaint from "./RegisterComplaint";
 import ExportFromExcel from "./ExportFromExcel";
 import PaidItemQRCodeGenerate from "./PaidItemQRCodeGenerate";
 import Menu from "./Menu";
+import WeeklyMenu from "./WeeklyMenu";
 import Khata from "./Khata";
 
 export {
@@ -19,11 +19,11 @@ export {
   QRCodeScanner,
   Dashboard,
   ReviewScreen,
-  CalenderScreen,
   ReviewScreenAdmin,
   Menu,
   Khata,
   RegisterComplaint,
+  WeeklyMenu,
   ExportFromExcel,
   PaidItemQRCodeGenerate
 };

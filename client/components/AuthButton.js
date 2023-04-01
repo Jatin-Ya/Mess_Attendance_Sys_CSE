@@ -4,7 +4,7 @@ import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import axios from "../utils/axios";
 import useAuthContext from "../hooks/useAuthContext";
-import styles from "./AuthButton.module.css"
+import styles from "./AuthButton.module.css";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -31,7 +31,7 @@ export default function AuthButton({ style }) {
   const getUserInformation = async (token) => {
     try {
       const loginResponse = await axios.post("/api/auth/login", { token });
-      console.log(loginResponse.data.user);
+      console.log(loginResponse.data.jwt);
       const data = loginResponse.data.user;
       const authToken = loginResponse.data.jwt;
 
@@ -88,14 +88,18 @@ export default function AuthButton({ style }) {
   // };
 
   return (
-    <View >
-      <Pressable disabled={!request} onPress={()=>{promptAsync()}}>
+    <View>
+      <Pressable
+        disabled={!request}
+        onPress={() => {
+          promptAsync();
+        }}
+      >
         <View style={styles.buttonInner}>
           <Text style={styles.buttonText}>Sign in with Google</Text>
         </View>
       </Pressable>
-      </View>
-      
+    </View>
   );
 }
 // {/* <Button

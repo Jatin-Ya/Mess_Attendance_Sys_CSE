@@ -16,6 +16,7 @@ import {
   Menu,
   Khata,
   RegisterComplaint,
+  WeeklyMenu,
   ExportFromExcel,
   PaidItemQRCodeGenerate,
 } from "../screens";
@@ -36,7 +37,6 @@ export default function AppNavigator() {
 
   useEffect(() => {
     const getRole = async () => {
-      // console.log("user data", user.email);
       const res = await axios.post("/api/user/getRole", {
         email: user.email,
       });
@@ -124,6 +124,14 @@ export default function AppNavigator() {
         />
 
         <MainTabs.Screen
+          name="weekly-menu"
+          component={WeeklyMenu}
+          options={{
+            title: "Weekly Menu",
+          }}
+        />
+
+        <MainTabs.Screen
           name="add-review"
           component={RegisterComplaint}
           options={{
@@ -170,7 +178,7 @@ export default function AppNavigator() {
           }}
         />
 
-        <AuthStack.Screen
+        <MainAdminTabs.Screen
           name="Menu"
           component={Menu}
           options={{
@@ -178,19 +186,19 @@ export default function AppNavigator() {
           }}
         />
 
-        <AuthStack.Screen
+        <MainAdminTabs.Screen
           name="Paid Item"
           component={PaidItemQRCodeGenerate}
           options={{
-            title: "Buy Paid Item",
+            title: "Paid Item",
           }}
         />
 
-        <AuthStack.Screen
+        <MainAdminTabs.Screen
           name="Add a User"
           component={ExportFromExcel}
           options={{
-            title: "Add a User",
+            title: "Report",
           }}
         />
       </MainAdminTabs.Navigator>
@@ -198,7 +206,7 @@ export default function AppNavigator() {
   };
 
   let content = <AuthStackNavigator />;
-  if (isLoggedIn) {
+  if (user && isLoggedIn) {
     if (role === "admin")
       content = (
         <MealContextProvider>

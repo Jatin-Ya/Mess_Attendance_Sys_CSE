@@ -5,7 +5,7 @@ const Menu = require("../models/menuModel");
 
 exports.getMenuDetails = catchAsync(async (req, res, next) => {
   //Return the menu details
-  const menu = await Menu.find();
+  const menu = await Menu.find().sort({order:1});
   if (!menu) {
     return next(new AppError("Menu not found", 401));
   }
