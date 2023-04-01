@@ -142,3 +142,38 @@ bottom: 8.33%;
 
 /* background: #000000; */
 }
+
+.button {
+    /* position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%; */
+
+/* Black */
+
+background: #000000;
+border-radius: 10px;
+width:335px;
+height: 40px;
+align-items: center;
+margin-top: 30;
+}
+
+.buttonText {
+    /* Link */
+position: relative;
+top:100%;
+/* font-family: 'Maven Pro'; */
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* White */
+
+color: #FFFFFF;
+}
