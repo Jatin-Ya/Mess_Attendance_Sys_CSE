@@ -1,8 +1,8 @@
 .title {
     position: absolute;
-    width: 95px;
+    width: 195px;
     height: 24px;
-    left: 163px;
+    left: 83px;
     top: 14px;
 
     /* font-family: 'Maven Pro'; */
@@ -66,9 +66,6 @@
     top: 0%;
     bottom: 0%;
     height: 52px;
-    display: flex;
-    justify-content: center;
-    padding-top: 17px;
     width: 52px;
 
     background: #282828;
@@ -76,24 +73,12 @@
     border-radius: 13px;
 }
 
-.showDate{
-    /* position: absolute; */
-    left: 120%;
-    right: 0%;
-    top: -25px;
-    font-weight: 800;
-    font-size: 17px;
-
-    bottom: 0%;
-    width: 150px;
-}
-
 .selectMeal {
     position: absolute;
     height: 19px;
     left: 4.27%;
-    right: 72.8%;
-    top: 150px;
+    right: 62.8%;
+    top: 200px;
 
     /* font-family: 'Maven Pro'; */
     font-style: normal;
@@ -223,9 +208,9 @@
 .reviewDesp {
     position: absolute;
     height: 19px;
-    left: 5.87%;
+    left: 3.47%;
     right: 61.33%;
-    top: 280px;
+    top: 325px;
 
     /* font-family: 'Maven Pro'; */
     font-style: normal;
@@ -239,10 +224,29 @@
     color: #222B45;
 }
 
-.inputReviewDesp {
+.selectHostel {
+    position: absolute;
+    height: 19px;
+    left: 3.47%;
+    right: 61.33%;
+    top: 445px;
+
+    /* font-family: 'Maven Pro'; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    /* identical to box height */
+    letter-spacing: 0.300349px;
+
+    color: #222B45;
+}
+
+.inputUserEmail {
     box-sizing: border-box;
     border: #000000 2px solid;
-    top: 320px;
+    top: 120px;
     left: 30px;
 
     /* Auto layout */
@@ -269,12 +273,101 @@
     flex-grow: 0;
 }
 
+.inputStartDate {
+    box-sizing: border-box;
+    border: #000000 2px solid;
+    top: 195px;
+    left: 30px;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+
+    width: 321px;
+    height: 50px;
+
+    /* Neutral/Neutral 100 */
+    background: #FFFFFF;
+
+    /* Neutral/Neutral 500 */
+    border: 1px solid #D0D4DF;
+    border-radius: 4px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.inputReviewDesp {
+    box-sizing: border-box;
+    border: #000000 2px solid;
+    top: 270px;
+    left: 30px;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+
+    width: 321px;
+    height: 50px;
+
+    /* Neutral/Neutral 100 */
+    background: #FFFFFF;
+
+    /* Neutral/Neutral 500 */
+    border: 1px solid #D0D4DF;
+    border-radius: 4px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.selectorinput {
+    /* border: #000000 2px solid; */
+    top: 330px;
+    left: 30px;
+
+    /* Auto layout */
+    /* display: flex;
+    flex-direction: row;
+    align-items: center;  */
+    /* padding: 8px 16px; */
+    gap: 8px;
+
+    width: 321px;
+    height: 50px;
+
+    /* Neutral/Neutral 100 */
+    background: #FFFFFF;
+
+    /* Neutral/Neutral 500 */
+    /* border: 1px solid #D0D4DF; */
+    border-radius: 4px;
+
+    /* Inside auto layout */
+    /* flex: none; */
+    /* order: 0; */
+    /* align-self: stretch; */
+    /* flex-grow: 0; */
+}
+
 .buttonContainer {
     position: absolute;
     width: 335px;
     height: 40px;
-    left: 35px;
-    top: 548px;
+    left: 41px;
+    top: 438px;
 }
 
 .buttonInner {
@@ -304,9 +397,9 @@
 
     /* font-family: 'Maven Pro'; */
     font-style: normal;
-    font-weight: 600;
-    font-size: 17px;
-    line-height: 17px;
+    font-weight: 500;
+    /* font-size: 20px; */
+    line-height: 14px;
     display: flex;
     align-items: center;
     text-align: center;

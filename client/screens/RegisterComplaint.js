@@ -1,18 +1,55 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  ViewBase,
+  Pressable,
+  Alert,
+} from "react-native";
 import { Button } from "react-native-paper";
-import DatePicker from "../components/DatePicker";
+import IconPicker from "../components/IconPicker";
 import MealButton from "../components/MealButton";
+import useAuthContext from "../hooks/useAuthContext";
+import axios from "../utils/axios";
 import styles from "./RegisterComplain.module.css";
 
 function RegisterComplaint() {
+  const { user, authToken } = useAuthContext();
   const [date, setDate] = useState(new Date());
   const [newReview, setNewReview] = useState("");
   const [currMeal, setCurrMeal] = useState("breakfast");
 
   const onPressHandler = (mealType) => {
-    console.log("Hello",mealType);
+    // console.log("Hello", mealType);
     setCurrMeal(mealType);
+  };
+
+  const submitReviewHandler = async () => {
+    console.log({
+      review: newReview,
+      date,
+      mealType: currMeal,
+    });
+    try {
+      await axios.post(
+        "/api/review",
+        {
+          review: newReview,
+          date,
+          mealType: currMeal,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            Accept: "application/json",
+          },
+        }
+      );
+    } catch (e) {
+      Alert.alert(e.response.data.message);
+    }
   };
 
   return (
@@ -22,7 +59,8 @@ function RegisterComplaint() {
       <View style={styles.dateGroup}>
         {/* <Text style={styles.dateText}>Pick a Date</Text> */}
         <View style={styles.dateRectange}>
-          <DatePicker date={date} setDate={setDate}></DatePicker>
+          <IconPicker date={date} setDate={setDate}/>
+          <Text style={styles.showDate}>{date.toLocaleDateString()}</Text>
         </View>
       </View>
       <Text style={styles.selectMeal}>Select Meal</Text>
@@ -69,6 +107,13 @@ function RegisterComplaint() {
         <Text style={styles.submitButton}>Submit</Text>
         <Button title="Post Review" />
       </View> */}
+      <Pressable onPress={submitReviewHandler}>
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonInner}>
+            <Text style={styles.buttonText1}>Post a Review</Text>
+          </View>
+        </View>
+      </Pressable>
     </View>
   );
 }

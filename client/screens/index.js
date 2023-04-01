@@ -7,6 +7,7 @@ import ReviewScreen from "./ReviewScreen";
 import CalenderScreen from "./Agenda";
 import ReviewScreenAdmin from "./ReviewScreenAdmin";
 import RegisterComplaint from "./RegisterComplaint";
+import ExportFromExcel from "./ExportFromExcel";
 import Menu from "./Menu";
 
 export {
@@ -20,4 +21,5 @@ export {
   ReviewScreenAdmin,
   Menu,
   RegisterComplaint,
+  ExportFromExcel,
 };

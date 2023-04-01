@@ -19,6 +19,7 @@ import {
   ReviewScreenAdmin,
   RegisterComplaint,
   Menu,
+  ExportFromExcel,
 } from "../screens";
 import { useEffect, useState } from "react";
 
@@ -37,7 +38,7 @@ export default function AppNavigator() {
 
   useEffect(() => {
     const getRole = async () => {
-      console.log("user data", user.email);
+      // console.log("user data", user.email);
       const res = await axios.post("/api/user/getRole", {
         email: user.email,
       });
@@ -177,6 +178,14 @@ export default function AppNavigator() {
           component={Menu}
           options={{
             title: "Menu",
+          }}
+        />
+
+        <AuthStack.Screen
+          name="Add a User"
+          component={ExportFromExcel}
+          options={{
+            title: "Add a User",
           }}
         />
       </MainTabs.Navigator>

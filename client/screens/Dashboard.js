@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, Alert } from "react-native";
 import DropDown from "react-native-paper-dropdown";
 import axios from "./../utils/axios";
 // import MaterialButtonPrimary from "../components/MaterialButtonPrimary";
@@ -25,14 +25,14 @@ function Dashboard() {
       quantity: 0,
       hostel: "MHR",
     };
-    
+
     console.log(meal);
     axios
       .post("/api/meal", meal)
       .then((response) => {
         console.log("Meal created successfully");
       })
-      .catch((err) => console.log(err));
+      .catch((e) => Alert.alert(e.response.data.message));
   };
   // const dummyData = {
   //   breakfast : 20,
