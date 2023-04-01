@@ -115,7 +115,7 @@ const Menu = ({ navigation }) => {
       <Text style={styles.welcome}>Welcome {getName()} !</Text>
       <Pressable
         onPress={() => {
-          console.log("Rkessed");
+          console.log("Pressed");
           navigation.navigate("profile");
         }}
       >
@@ -212,7 +212,7 @@ const Menu = ({ navigation }) => {
                 }}
               />
             </Pressable>
-            <Text style={styles.optionName}>Complain</Text>
+            <Text style={styles.optionName}>Review</Text>
           </View>
         </View>
       </View>

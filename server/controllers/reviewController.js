@@ -5,6 +5,9 @@ const User = require("./../models/userModel");
 const Meal = require("./../models/mealModel");
 const Review = require("./../models/reviewModel");
 
+const {getToxicityScore} = require("./../utils/helpers");
+
+
 exports.createReview = catchAsync(async (req, res, next) => {
   const { mealType, date, review } = req.body;
   // const userId = "6425de2989d7180f6c218c55";
@@ -142,3 +145,16 @@ exports.deleteReview = catchAsync(async (req, res, next) => {
     message: "deleted successfully",
   });
 });
+
+
+exports.getToxicityScore = catchAsync(async(req,res,next) => {
+  const review = req.body.review;
+
+  console.log("in toxicity")
+  const toxicityScore = await getToxicityScore(review);
+
+  console.log(toxicityScore);
+  res.status(200).json({
+    status : "success"
+  })
+})

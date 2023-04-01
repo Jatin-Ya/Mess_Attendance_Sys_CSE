@@ -24,6 +24,8 @@ let CLIENT_ID = process.env.CLIENT_ID;
 let SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 let ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
 
+let GOOGLE_APIKEY = process.env.GOOGLE_APIKEY;
+
 module.exports = {
   PORT,
   NODE_ENV,
@@ -38,4 +40,5 @@ module.exports = {
   CLIENT_ID,
   SPREADSHEET_ID,
   ENCRYPTION_KEY,
+  GOOGLE_APIKEY
 };

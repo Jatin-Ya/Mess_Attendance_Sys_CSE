@@ -79,7 +79,7 @@ function ReviewScreen(props) {
 
   return (
     <View style={styles.ReviewContainer}>
-      {fontsLoaded&&<Text style={styles.complaintsHeading}>My Complaints</Text>}
+      {fontsLoaded&&<Text style={styles.complaintsHeading}>All Reviews</Text>}
       {/* <View style={styles.MessageContainer}> */}
       <SafeAreaView style={styles1.container}>
       <FlatList scrollEnabled={true} data={messageArray} renderItem={messageList} keyExtractor={item=>item._id}></FlatList>

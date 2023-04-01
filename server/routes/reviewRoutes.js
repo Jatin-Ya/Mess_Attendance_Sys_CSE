@@ -9,8 +9,12 @@ const {
   updateAReview,
   deleteReview,
   getSortedReview,
+  getToxicityScore
 } = require("./../controllers/reviewController");
 const authController = require("./../controllers/authController");
+
+// optional route
+router.get("/toxicity-score", getToxicityScore);
 
 router.get("/", getAllReviews);
 router.get("/meal", getReviewsOfAMeal);
@@ -25,5 +29,6 @@ router.post(
 );
 router.patch("/:reviewId", updateAReview);
 router.delete("/:reviewId", deleteReview);
+
 
 module.exports = router;

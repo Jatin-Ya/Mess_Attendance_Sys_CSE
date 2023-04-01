@@ -1,10 +1,10 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import useAuthContext from "../hooks/useAuthContext";
 import styles from "./HomeScreen.module.css";
 
 //TODO: ADD Navigation
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const { user, logout } = useAuthContext();
 
   return (
@@ -43,18 +43,25 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <TouchableOpacity
-        style={styles.box1}
-        onPress={() => {
-          console.log("Pressed Complaints");
-        }}
-      >
-        <Image
-          style={styles.icon1}
-          source={require("./../assets/complainEmoji.png")}
-        />
-        <Text style={styles.text1}>My Complaints</Text>
-      </TouchableOpacity>
+      {/* <Pressable onPress = {() => {
+        console.log("pressed reviews")
+        navigation.navigate("reviews")
+        }} > */}
+        <TouchableOpacity
+          style={styles.box1}
+          onPress={() => {
+            console.log("Pressed Complaints");
+        navigation.navigate("reviews")
+          }}
+        >
+          <Image
+            style={styles.icon1}
+            source={require("./../assets/complainEmoji.png")}
+          />
+          <Text style={styles.text1}>All Reviews</Text>
+        </TouchableOpacity>
+      {/* </Pressable> */}
+      
 
       <TouchableOpacity style={styles.box2} onPress={logout}>
         <Image
