@@ -14,50 +14,33 @@ import {
 } from "expo-secure-store";
 import sleep from "../utils/sleep";
 
-export const AuthContext = createContext();
+export const MealContext = createContext();
 
-export const AuthContextProvider = ({ children }) => {
+export const MealContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const [authToken, setAuthToken] = useState("");
+  const [meal, setMeal] = useState(null);
 
-  const login = async (newUser, token) => {
+  const updateMeal = async (mealId, mealType, mealDate) => {
     try {
-      setItemAsync("user", JSON.stringify(newUser));
-      setItemAsync("authToken", token);
-      setUser(newUser);
-      setAuthToken(token);
+      const newMeal = { id: mealId, type: mealType, date: mealDate };
+      setItemAsync("meal", JSON.stringify(newMeal));
+      setMeal(newMeal);
     } catch (error) {
       Alert.alert("Error", "Failed to store rider credentials on your device");
-      setUser(null);
+      setMeal(null);
       throw new Error(error);
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await deleteItemAsync("user");
-      await deleteItemAsync("authToken");
-      setUser(null);
-    } catch (error) {
-      Alert.alert(
-        "Error",
-        "Failed to remove rider credentials from your device"
-      );
-      console.log(error);
-      console.log(error.stack);
     }
   };
 
   useEffect(() => {
     const getUserFromStorage = async () => {
-      await sleep(2000);
+      await sleep(500);
       try {
         const isSecureStoreAvailable = await isAvailableAsync();
         if (isSecureStoreAvailable) {
-          const storedUser = await getItemAsync("user");
+          const storedUser = await getItemAsync("meal");
           if (storedUser !== null) {
-            setUser(JSON.parse(storedUser));
+            setMeal(JSON.parse(storedUser));
           }
         }
         setLoading(false);
@@ -71,12 +54,10 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider
+    <MealContext.Provider
       value={{
-        user,
-        login,
-        logout,
-        authToken,
+        meal,
+        updateMeal,
       }}
     >
       {loading && (
@@ -85,7 +66,7 @@ export const AuthContextProvider = ({ children }) => {
         </View>
       )}
       {!loading && children}
-    </AuthContext.Provider>
+    </MealContext.Provider>
   );
 };
 

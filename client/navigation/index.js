@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import axios from "../utils/axios";
 
 import useAuthContext from "../hooks/useAuthContext";
+import { MealContextProvider } from "../contexts/MealContext";
 // import Wrapper from "../utils/Wrapper";
 // import COLORS from "../assets/colors/colors";
 import LogoutButton from "../components/LogoutButton";
@@ -192,7 +193,12 @@ export default function AppNavigator() {
 
   let content = <AuthStackNavigator />;
   if (isLoggedIn) {
-    if (role === "admin") content = <MainAdminTabsNavigator />;
+    if (role === "admin")
+      content = (
+        <MealContextProvider>
+          <MainAdminTabsNavigator />
+        </MealContextProvider>
+      );
     else content = <MainUserTabsNavigator />;
   }
   // else
