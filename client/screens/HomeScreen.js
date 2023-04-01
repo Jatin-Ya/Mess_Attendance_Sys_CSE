@@ -1,21 +1,23 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import useAuthContext from "../hooks/useAuthContext";
 import styles from "./HomeScreen.module.css";
 
+//TODO: ADD Navigation
+
 const HomeScreen = () => {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
 
   return (
     <View>
       <Text style={styles.heading}>Student Profile</Text>
       <Text style={styles.profileName}>{user.name}</Text>
-      <Text style={[styles.details, { marginBottom: 20 }]}>
+      <Text style={[styles.details, { marginBottom: 10 }]}>
         {user.email}
-        {"\n"}
+        {"\n\n"}
         {user.roomNumber}
         {","}
         {user.hostel}
-        {"\n"}
+        {"\n\n"}
         {user.email}
       </Text>
 
@@ -25,7 +27,7 @@ const HomeScreen = () => {
         }}
         style={styles.profileImage}
       />
-      <View style={[styles.messDueContainer, { marginTop: 40 }]}>
+      <View style={[styles.messDueContainer, { marginTop: 80 }]}>
         <View style={styles.messDueCard}>
           <View style={styles.logoContainer}>
             <View style={styles.rect}>
@@ -40,23 +42,26 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <View style={styles.box1}>
+      <TouchableOpacity
+        style={styles.box1}
+        onPress={() => {
+          console.log("Pressed Complaints");
+        }}
+      >
         <Image
           style={styles.icon1}
           source={require("./../assets/complainEmoji.png")}
         />
-        <Text style={styles.text1}> My Complaints</Text>
-      </View>
+        <Text style={styles.text1}>My Complaints</Text>
+      </TouchableOpacity>
 
-      <View style={styles.box2}>
+      <TouchableOpacity style={styles.box2} onPress={logout}>
         <Image
           style={styles.icon2}
           source={require("./../assets/Logout.png")}
         />
-        <Text style={styles.text2}> Logout</Text>
-      </View>
-
-      {/* <DisplayToken></DisplayToken> */}
+        <Text style={styles.text2}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
