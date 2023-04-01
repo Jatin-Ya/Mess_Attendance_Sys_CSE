@@ -28,11 +28,11 @@ export default function QRCodeScanner() {
   //   id: "dgfghjk",
   // };
   const getCurrentMeal = () => {
-    if (meal.type === "lunch") {
+    if (meal?.type === "lunch") {
       setMealTypeImage(require(`./../assets/Lunch.png`));
-    } else if (meal.type === "snacks") {
+    } else if (meal?.type === "snacks") {
       setMealTypeImage(require(`./../assets/Snacks.png`));
-    } else if (meal.type === "dinner") {
+    } else if (meal?.type === "dinner") {
       setMealTypeImage(require(`./../assets/Dinner.png`));
     }
   };
@@ -49,7 +49,7 @@ export default function QRCodeScanner() {
 
   const chargeUserForMeal = async (encryptedString) => {
     try {
-      const mealId = "642691dc08b00fad3c1b90a6" || meal.id;
+      const mealId = meal?.id || "642691dc08b00fad3c1b90a6";
       const scanningHostel = "MHR";
 
       const body = {
