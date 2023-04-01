@@ -46,6 +46,17 @@ const QRCodeGenerate = () => {
     return formattedDate;
   };
 
+  const formatName = (name) => {
+    const arr = name.split(" ");
+
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1).toLowerCase();
+    }
+
+    const res = arr.join(" ");
+    return res;
+  };
+
   const getCurrentMeal = () => {
     const d = new Date();
     const hour = d.getHours();
@@ -77,7 +88,9 @@ const QRCodeGenerate = () => {
         paddingTop: 30,
       }}
     >
-      <Text style={[styles.name, { marginBottom: 10 }]}>{user.name}</Text>
+      <Text style={[styles.name, { marginBottom: 10 }]}>
+        {formatName(user.name)}
+      </Text>
       <Image
         style={[styles.icon, { marginLeft: 90, marginBottom: 10 }]}
         source={require(`./../assets/Lunch.png`)}
@@ -95,7 +108,11 @@ const QRCodeGenerate = () => {
       <Text style={styles.roll}>Student ID: {user.rollNumber}</Text>
       <Text style={styles.tag}>Show this code for mess entry</Text>
       <View style={{ marginTop: 30 }}>
-        <Button onPress={generateQRString} title="Generate New QR Code" />
+        <Button
+          onPress={generateQRString}
+          title="Generate New QR Code"
+          color="black"
+        />
       </View>
     </View>
   );
