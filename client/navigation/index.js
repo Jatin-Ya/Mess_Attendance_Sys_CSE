@@ -18,6 +18,7 @@ import {
   ReviewScreen,
   CalenderScreen,
   ReviewScreenAdmin,
+  RegisterComplaint,
   Menu,
   Khata,
 } from "../screens";
@@ -95,6 +96,14 @@ export default function AppNavigator() {
           component={HomeScreen}
           options={{
             title: "User Profile",
+          }}
+        />
+
+        <AuthStack.Screen
+          name="Register Complaint"
+          component={RegisterComplaint}
+          options={{
+            title: "Register Complaint",
           }}
         />
 

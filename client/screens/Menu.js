@@ -12,10 +12,15 @@ import axios from "../utils/axios";
 import useAuthContext from "../hooks/useAuthContext";
 import styles from "./Menu.module.css";
 
+import MenuModal from "../components/MenuModal";
+
+import FeedbackLastMeal from "../components/FeedbackLastMeal";
+
 function Menu() {
   const { user } = useAuthContext();
 
   const [menu, setMenu] = useState([]);
+  const [todaysMenu, setTodaysMenu] = useState([]);
   const [nextMeal, setNextMeal] = useState("");
   const [mealTypeImage, setMealTypeImage] = useState(
     require(`./../assets/Breakfast.png`)
@@ -67,10 +72,10 @@ function Menu() {
     const d = new Date();
     const hour = d.getHours();
     let res = "breakfast";
-    if (hour > 10 && hour < 16) {
+    if (hour > 10 && hour < 14) {
       res = "lunch";
       setMealTypeImage(require(`./../assets/Lunch.png`));
-    } else if (hour >= 16 && hour < 19) {
+    } else if (hour >= 14 && hour < 19) {
       res = "snacks";
       setMealTypeImage(require(`./../assets/Snacks.png`));
     } else if (hour >= 19) {
@@ -88,16 +93,22 @@ function Menu() {
       const currentMealTime = getCurrentMeal();
       const newNextMeal = todaysMenu[currentMealTime];
       setNextMeal(newNextMeal);
+      setTodaysMenu(todaysMenu);
     }
   };
 
+  const [displayModel, setDisplayModal] = useState(false);
   return (
     <View
       style={{
         background: "#E5E5E5",
       }}
     >
+
+    {displayModel ? <MenuModal setDisplayModal = {setDisplayModal} menu = {todaysMenu} />  : <View></View>}
+
       <Text style={styles.welcome}>Welcome {getName()} !</Text>
+      
       <View style={styles.rect}>
         <Text style={styles.upcoming}> Upcoming Meal </Text>
         <Image source={mealTypeImage} style={styles.vec} />
@@ -110,6 +121,7 @@ function Menu() {
         <Text
           onPress={() => {
             console.log("Display full menu....");
+            setDisplayModal(true)
           }}
           style={styles.fullMenu}
         >
@@ -147,7 +159,13 @@ function Menu() {
             <Text style={styles.optionName}>Complain</Text>
           </View>
         </View>
+
       </View>
+
+      <View style = {styles.feedbackForm} >
+        <FeedbackLastMeal />
+      </View>
+
     </View>
   );
 }

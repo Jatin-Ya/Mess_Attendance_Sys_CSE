@@ -1,0 +1,28 @@
+.outside_box {
+    border-radius: 12px;
+    border: 1px solid black;
+    background-color: #FFFFFF;
+    width: 80%;
+    /* position: absolute;
+    top : 60% */
+    padding: 20px;
+}
+
+.heading {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #1c1c1c;
+}
+
+.inputBox {
+    border: 1px solid black;
+    margin: 4px;
+    border-radius: 4px;
+    height: 60px;
+}
+
+.buttonBox {
+    width: 50%;
+    float: right;
+}
