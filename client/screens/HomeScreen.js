@@ -9,6 +9,7 @@ const HomeScreen = () => {
 
   return (
     <View>
+
       <Text style={styles.heading}>Student Profile</Text>
       <Text style={styles.profileName}>{user.name}</Text>
       <Text style={[styles.details, { marginBottom: 10 }]}>
