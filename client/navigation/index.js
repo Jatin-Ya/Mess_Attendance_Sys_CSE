@@ -16,8 +16,8 @@ import {
   Menu,
   Khata,
   RegisterComplaint,
-  Menu,
   ExportFromExcel,
+  PaidItemQRCodeGenerate,
 } from "../screens";
 import { useEffect, useState } from "react";
 
@@ -175,6 +175,14 @@ export default function AppNavigator() {
           component={Menu}
           options={{
             title: "Menu",
+          }}
+        />
+
+        <AuthStack.Screen
+          name="Paid Item"
+          component={PaidItemQRCodeGenerate}
+          options={{
+            title: "Buy Paid Item",
           }}
         />
 

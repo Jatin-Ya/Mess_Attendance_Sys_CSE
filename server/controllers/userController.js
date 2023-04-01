@@ -12,7 +12,7 @@ const paidItemModel = require("../models/paidItemModel");
 const path = require("path");
 const fs = require("fs");
 
-const admin = ["20cs01029@iitbbs.ac.in1", "20CS01029@iitbbs.ac.in1"];
+const admin = ["20cs01029@iitbbs.ac.in1", "20CS01029@iitbbs.ac.in"];
 const mealPriceMap = {
   breakfast: 30,
   lunch: 60,
@@ -327,7 +327,7 @@ exports.addMealToUser = catchAsync(async (req, res, next) => {
 exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
   const { encryptedString, scanningHostel, items } = req.body;
 
-  if (!encryptedString || !scanningHostel || !items.length <= 0) {
+  if (!encryptedString || !scanningHostel || items.length <= 0) {
     return next(new AppError("Invalid Request", 400));
   }
 
@@ -342,9 +342,9 @@ exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
   // const { ObjectId } = require("mongodb");
   // let userId = new ObjectId("6425de2989d7180f6c218c4d");
 
-  if (!userId || !hostel) {
-    return next(new AppError("Invalid Data", 403));
-  }
+  // if (!userId || !hostel) {
+  //   return next(new AppError("Invalid Data", 403));
+  // }
 
   const user = await User.findById(userId);
   // console.log("user", user);
@@ -372,6 +372,22 @@ exports.addPaidMealToUser = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     message: "Student billed for this paid meal successfully",
+  });
+});
+
+exports.getPaidItemForUser = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+  // const userId = req.params.userId;
+
+  if (!userId) {
+    return next(new AppError("Invalid Request", 400));
+  }
+
+  const items = await paidItemModel.find({ userId: userId });
+
+  res.status(200).json({
+    status: "success",
+    items,
   });
 });
 

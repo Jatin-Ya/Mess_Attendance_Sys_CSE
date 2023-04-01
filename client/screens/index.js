@@ -8,6 +8,7 @@ import CalenderScreen from "./Calender";
 import ReviewScreenAdmin from "./ReviewScreenAdmin";
 import RegisterComplaint from "./RegisterComplaint";
 import ExportFromExcel from "./ExportFromExcel";
+import PaidItemQRCodeGenerate from "./PaidItemQRCodeGenerate";
 import Menu from "./Menu";
 import Khata from "./Khata";
 
@@ -24,4 +25,5 @@ export {
   Khata,
   RegisterComplaint,
   ExportFromExcel,
+  PaidItemQRCodeGenerate
 };
