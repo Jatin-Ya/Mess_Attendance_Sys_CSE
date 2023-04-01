@@ -8,10 +8,10 @@ import styles from "./QRCodeGenerate.module.css";
 const QRCodeGenerate = () => {
   const { user } = useAuthContext();
   const [QRCodeString, setQRCodeString] = useState("");
-  const [currentMeal, setCurrentMeal] = useState(
+  const [currentMeal, setCurrentMeal] = useState("");
+  const [mealTypeImage, setMealTypeImage] = useState(
     require(`./../assets/Breakfast.png`)
   );
-  const [mealTypeImage, setMealTypeImage] = useState("");
 
   const generateQRString = async () => {
     try {

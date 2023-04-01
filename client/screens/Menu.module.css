@@ -123,27 +123,28 @@ color: #000000;
 width: 96px;
 height: 96px;
 left: 22px;
-top: 328px;
+top:290px;
 
 /* Neutral/Neutral 100 */
 
 background: #FFFFFF;
+border: 1px solid #000;
 /* Shadow 0-8-24 */
+align-items: center;
 
 box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
 border-radius: 8px;
 }
 
 .optionName {
-    position: absolute;
+    position: relative;
 height: 14px;
-left: 8.8%;
-right: 71.2%;
+top: 30%;
 /* top: calc(50% - 14px/2 + 3px); */
 
 /* font-family: 'Maven Pro'; */
 font-style: normal;
-font-weight: 500;
+font-weight: 600;
 font-size: 12px;
 line-height: 14px;
 text-align: center;
@@ -154,15 +155,42 @@ color: #222B45;
 }
 
 .optionImage {
-    position: absolute;
-width: 64px;
-height: 65px;
-left: 38px;
-top: 333px;
+    position: relative;
+width: 50px;
+height: 50px;
+top:15%;
 }
 
 .arrow {
     position: relative;
     top: -15%;
     left: 40%;
+}
+
+.optionBox2 {
+    position: absolute;
+width: 96px;
+height: 96px;
+left: 136px;
+top:290px;
+background: #FFFFFF;
+border: 1px solid #000;
+/* Shadow 0-8-24 */
+
+box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
+border-radius: 8px;
+}
+
+.optionBox3 {
+    position: absolute;
+width: 96px;
+height: 96px;
+left: 250px;
+top:290px;
+background: #FFFFFF;
+border: 1px solid #000;
+/* Shadow 0-8-24 */
+
+box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
+border-radius: 8px; 
 }
