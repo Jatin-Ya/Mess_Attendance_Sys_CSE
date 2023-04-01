@@ -3,10 +3,10 @@
 
 
 position: absolute;
-width: 130px;
+width: 200px;
 height: 24px;
 left: 18px;
-top: 64px;
+top: 10px;
 
 /* font-family: 'Maven Pro'; */
 font-style: normal;
@@ -27,24 +27,26 @@ color: #000000;
     box-sizing: border-box;
 
 position: absolute;
-width: 332px;
-height: 190px;
+width: 324px;
+height: 210px;
 left: 22px;
-top: 106px;
+top: 50px;
 
 background: #FFFFFF;
 border-radius: 12px;
+border: 1px solid #000;
 }
 
 .upcoming {
     /* Upcoming Meal */
 
 
-position: absolute;
-width: 102px;
+position: relative;
+width: 40%;
 height: 20px;
-left: 46px;
-top: 122px;
+left: 5%;
+top: 10%;
+margin-bottom: 2%;
 
 /* font-family: 'Maven Pro'; */
 font-style: normal;
@@ -58,18 +60,22 @@ color: #1C1C1C;
 }
 
 .vec {
-    position: absolute;
+    position: relative;
 left: 8.33%;
 right: 8.33%;
-top: 8.33%;
+top: 15%;
 bottom: 8.33%;
 
 /* background: #000000; */
 }
 
 .items {
+position: relative;
     width: 161px;
 height: 28px;
+left: 20%;
+margin-top: 2%;
+
 
 /* font-family: 'Maven Pro'; */
 font-style: normal;
@@ -83,24 +89,26 @@ flex:none;
 }
 
 .khana {
-    position: absolute;
+    position: relative;
 width: 224px;
 height: 95px;
-left: 346px;
-top: 175px;
+left: 30%;
+
 
 
 /* transform: matrix(-1, 0, 0, 1, 0, 0); */
 }
 
 .fullMenu {
-    width: 89px;
+    position: relative;
+    width: 100px;
 height: 18px;
-
+top:-5%;
+left:10%;
 /* font-family: 'Poppins'; */
 font-style: normal;
-font-weight: 500;
-font-size: 12px;
+font-weight: 600;
+font-size: 13px;
 line-height: 18px;
 /* identical to box height */
 
@@ -115,27 +123,28 @@ color: #000000;
 width: 96px;
 height: 96px;
 left: 22px;
-top: 328px;
+top:290px;
 
 /* Neutral/Neutral 100 */
 
 background: #FFFFFF;
+border: 1px solid #000;
 /* Shadow 0-8-24 */
+align-items: center;
 
 box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
 border-radius: 8px;
 }
 
 .optionName {
-    position: absolute;
+    position: relative;
 height: 14px;
-left: 8.8%;
-right: 71.2%;
+top: 30%;
 /* top: calc(50% - 14px/2 + 3px); */
 
 /* font-family: 'Maven Pro'; */
 font-style: normal;
-font-weight: 500;
+font-weight: 600;
 font-size: 12px;
 line-height: 14px;
 text-align: center;
@@ -146,10 +155,42 @@ color: #222B45;
 }
 
 .optionImage {
-    position: absolute;
-width: 64px;
-height: 65px;
-left: 38px;
-top: 333px;
+    position: relative;
+width: 50px;
+height: 50px;
+top:15%;
 }
 
+.arrow {
+    position: relative;
+    top: -15%;
+    left: 40%;
+}
+
+.optionBox2 {
+    position: absolute;
+width: 96px;
+height: 96px;
+left: 136px;
+top:290px;
+background: #FFFFFF;
+border: 1px solid #000;
+/* Shadow 0-8-24 */
+
+box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
+border-radius: 8px;
+}
+
+.optionBox3 {
+    position: absolute;
+width: 96px;
+height: 96px;
+left: 250px;
+top:290px;
+background: #FFFFFF;
+border: 1px solid #000;
+/* Shadow 0-8-24 */
+
+box-shadow: 0px 8px 24px rgba(0, 22, 78, 0.15);
+border-radius: 8px; 
+}

@@ -1,12 +1,12 @@
 .name {
-width: 198px;
+width: 250px;
 height: 30px;
 
 
-/* font-family: 'Inter'; */
+font-family: 'Courgette-Regular';
 font-style: normal;
 font-weight: 600;
-font-size: 24px;
+font-size: 20px;
 line-height: 30px;
 /* identical to box height, or 125% */
 
@@ -92,7 +92,7 @@ position: absolute;
 width: 135px;
 height: 16px;
 left: 120px;
-top: 529px;
+top: 430px;
 
 /* font-family: 'Inter'; */
 font-style: normal;
@@ -113,7 +113,7 @@ color: #00164E;
 width: 184px;
 height: 16px;
 left: 96px;
-top: 569px;
+top: 450px;
 
 /* Label S Bold */
 

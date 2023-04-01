@@ -1,52 +1,51 @@
-import { View,Text, Image, Modal, TouchableWithoutFeedback, StyleSheet } from "react-native";
+import { View,Text, Image, Modal, TouchableWithoutFeedback, StyleSheet, Pressable } from "react-native";
 import React, { useState } from 'react';
 import styles from "./MenuModal.module.css";
 
 
-const MenuModal = () => {
+const MenuModal = (props) => {
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const handlePress = () => {
-        setModalVisible(true);
-    }
+    const [modalVisible, setModalVisible] = useState(true);
+    
     const handleBackdropPress = () => {
-        setModalVisible(false);
+        // setModalVisible(false);
+        props.setDisplayModal(false);
     };
+
+    
 
     return (
         <View style={styles1.container}>
-            <TouchableWithoutFeedback onPress={handlePress}>
-            <View style={styles1.button}>
-                <Text>Open Modal</Text>
-            </View>
-            </TouchableWithoutFeedback>
-            <Modal visible={modalVisible}>
+            <Modal visible={modalVisible} transparent={true}>
                 <TouchableWithoutFeedback onPress={handleBackdropPress}>
                     <View style={styles1.backdrop} />
                 </TouchableWithoutFeedback>
             
                 <View style = {styles.outer_box}>
-                    <View style = {styles.header}>
-                        <Text style={styles.heading}>Today's Menu</Text>
-                        <Text style = {styles.cancel_button}>X</Text>
-                    </View>
+                    <Pressable onPress={handleBackdropPress}>
+                        <View style = {styles.header} >
+                            <Text style={styles.heading}>Today's Menu</Text>
+                            <Text style = {styles.cancel_button}>X</Text>
+                        </View>
+                    </Pressable>
+                    
             
                     <View style = {styles.menu}>
                         <View style = {styles.menuItem}>
                             <Image source={require("./../assets/Breakfast.png")} style = {styles.menuIcon}/>
-                            <Text style = {styles.menuDescription}>Aloo Paratha, curd</Text>
+                            <Text style = {styles.menuDescription}>{props.menu.breakfast}</Text>
                         </View>
                         <View style = {styles.menuItem}>
                             <Image source={require("./../assets/Lunch.png")} style = {styles.menuIcon}/>
-                            <Text style = {styles.menuDescription}>Chicken Biryani, Raita, Veg pulav, Papad, Curry</Text>
+                            <Text style = {styles.menuDescription}>{props.menu.lunch}</Text>
                         </View>
                         <View style = {styles.menuItem}>
                             <Image source={require("./../assets/Snacks.png")} style = {styles.menuIcon}/>
-                            <Text style = {styles.menuDescription}>Tea/Coffee, Pasta</Text>
+                            <Text style = {styles.menuDescription}>{props.menu.snacks}</Text>
                         </View>
                         <View style = {styles.menuItem}>
                             <Image source={require("./../assets/Dinner.png")} style = {styles.menuIcon}/>
-                            <Text style = {styles.menuDescription}>Shahi panneer, Chicken biryani, raita, veg pulav, papad, curry</Text>
+                            <Text style = {styles.menuDescription}>{props.menu.dinner}</Text>
                         </View>
                     </View>
                 </View>

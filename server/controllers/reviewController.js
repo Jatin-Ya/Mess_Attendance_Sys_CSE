@@ -11,14 +11,14 @@ exports.createReview = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const newDate = new Date(date);
   newDate.setHours(0, 0, 0, 0);
-
+  console.log(newDate);
   const fetchedMeal = await Meal.findOne({ date: newDate, type: mealType });
 
   if (!fetchedMeal) {
     return next(new AppError("Meal not found", 400));
   }
 
-  const existingReview = await Review.findOne({
+  let existingReview = await Review.findOne({
     meal: fetchedMeal._id,
     user: userId,
   });
@@ -32,10 +32,14 @@ exports.createReview = catchAsync(async (req, res, next) => {
     review: review,
   });
 
+  existingReview = await Review.findById(newReview._id)
+    .populate("user")
+    .populate("meal");
+
   res.status(201).json({
     status: "success",
     // user: req.user,
-    newReview,
+    review: existingReview,
     // meal: fetchedMeal,
   });
 });
@@ -61,16 +65,17 @@ exports.getAReview = catchAsync(async (req, res, next) => {
 
 exports.getSortedReview = catchAsync(async (req, res, next) => {
   const { mealType, date } = req.params;
+  let newDate = new Date(date);
+  console.log("MealType and date", mealType, newDate);
   const reviews = await Review.find().populate("user").populate("meal");
-  const reviewsDetail = reviews.map((review) => {
-    if (
+  const reviewsDetail = reviews.filter(
+    (review) =>
       review.meal.type === mealType &&
-      review.createdAt.getMonth() === date.getMonth() &&
-      review.createdAt.getFullYear() === date.getFullYear() &&
-      review.createdAt.getDay() === date.getDay()
-    )
-      return review;
-  });
+      review.createdAt.getMonth() === newDate.getMonth() &&
+      review.createdAt.getFullYear() === newDate.getFullYear() &&
+      review.createdAt.getDay() === newDate.getDay()
+  );
+  console.log("Review", reviewsDetail);
   res.status(200).json({
     status: "success",
     reviews: reviewsDetail,

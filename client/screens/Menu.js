@@ -1,59 +1,160 @@
 import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, View, Text, Button, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 
 import axios from "../utils/axios";
 import useAuthContext from "../hooks/useAuthContext";
 import styles from "./Menu.module.css";
 
+import MenuModal from "../components/MenuModal";
+
 function Menu() {
   const { user } = useAuthContext();
 
   const [menu, setMenu] = useState([]);
+  const [todaysMenu, setTodaysMenu] = useState([]);
+  const [nextMeal, setNextMeal] = useState("");
+  const [mealTypeImage, setMealTypeImage] = useState(
+    require(`./../assets/Breakfast.png`)
+  );
+
   useEffect(() => {
     axios
       .get("/api/menu/getMenu")
       .then((response) => {
         console.log(response.data);
+        setMenu(response.data.menu);
       })
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    getTodaysMenu();
+  }, [menu]);
+
+  const getName = () => {
+    let ans = user.name;
+
+    ans =
+      user.name.charAt(0).toUpperCase() +
+      user.name.split(" ")[0].slice(1).toLowerCase();
+
+    return ans;
+  };
+
+  const weekDay = () => {
+    const weekday = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const d = new Date();
+    //TODO: ADD items in DB
+    // let day = weekday[d.getDay()];
+    let day = "Monday";
+    return day;
+  };
+
+  const getCurrentMeal = () => {
+    const d = new Date();
+    const hour = d.getHours();
+    let res = "breakfast";
+    if (hour > 10 && hour < 14) {
+      res = "lunch";
+      setMealTypeImage(require(`./../assets/Lunch.png`));
+    } else if (hour >= 14 && hour < 19) {
+      res = "snacks";
+      setMealTypeImage(require(`./../assets/Snacks.png`));
+    } else if (hour >= 19) {
+      setMealTypeImage(require(`./../assets/Dinner.png`));
+      res = "dinner";
+    }
+
+    return res;
+  };
+
+  const getTodaysMenu = () => {
+    const todaysDay = weekDay();
+    if (menu.length > 0) {
+      const todaysMenu = menu.find((d) => d.day === todaysDay);
+      const currentMealTime = getCurrentMeal();
+      const newNextMeal = todaysMenu[currentMealTime];
+      setNextMeal(newNextMeal);
+      setTodaysMenu(todaysMenu);
+    }
+  };
+
+  const [displayModel, setDisplayModal] = useState(false);
   return (
     <View
       style={{
         background: "#E5E5E5",
       }}
     >
-      <Text style={styles.welcome}> Welcome {user.name}</Text>
+
+    {displayModel ? <MenuModal setDisplayModal = {setDisplayModal} menu = {todaysMenu} />  : <View></View>}
+
+      <Text style={styles.welcome}>Welcome {getName()} !</Text>
       <View style={styles.rect}>
         <Text style={styles.upcoming}> Upcoming Meal </Text>
-        <Image source={require("../assets/meal.png")} style={styles.vec} />
-        <Text>Chicken Biryani, Raita, Veg Pulav, Papad, Curry</Text>
-        <Image source={require("../assets/Khana.png")} style={styles.khana} />
-        <Text style={styles.fullMenu}>View Full Menu</Text>
-      </View>
+        <Image source={mealTypeImage} style={styles.vec} />
+        <Text style={styles.items}>{nextMeal}</Text>
+        <Image
+          source={require("../assets/Khana.png")}
+          style={[styles.khana, { resizeMode: "contain" }]}
+        />
 
+        <Text
+          onPress={() => {
+            console.log("Display full menu....");
+            setDisplayModal(true)
+          }}
+          style={styles.fullMenu}
+        >
+          View Full Menu
+        </Text>
+        <Image
+          onPress={() => {
+            console.log("Display full menu icons....");
+          }}
+          source={require("../assets/arrow.png")}
+          style={styles.arrow}
+        />
+      </View>
       <View>
-        <View style={styles.optionBox}>
-          <Image
-            source={require("../assets/QR.png")}
-            style={styles.optionImage}
-          />
-          <Text style={styles.optionName}>Generate QR Code</Text>
-        </View>
-        <View style={styles.optionBox}>
-          <Image
-            source={require("../assets/Khata.png")}
-            style={styles.optionImage}
-          />
-          <Text style={styles.optionName}>Generate QR Code</Text>
-        </View>
-        <View style={styles.optionBox}>
-          <Image
-            source={require("../assets/complain.png")}
-            style={styles.optionImage}
-          />
-          <Text style={styles.optionName}>Generate QR Code</Text>
+        <View>
+          <View style={styles.optionBox}>
+            <Image
+              source={require("../assets/QR.png")}
+              style={[styles.optionImage]}
+            />
+            <Text style={styles.optionName}>Generate QR</Text>
+          </View>
+          <View style={styles.optionBox2}>
+            <Image
+              source={require("../assets/Khata.png")}
+              style={[styles.optionImage, { left: "25%" }]}
+            />
+            <Text style={styles.optionName}>Khata</Text>
+          </View>
+          <View style={styles.optionBox3}>
+            <Image
+              source={require("../assets/complain.png")}
+              style={[styles.optionImage, { left: "25%" }]}
+            />
+            <Text style={styles.optionName}>Complain</Text>
+          </View>
         </View>
       </View>
     </View>
