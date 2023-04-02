@@ -15,6 +15,7 @@ const fs = require("fs");
 const admin = [
   "20cs01029@iitbbs.ac.in",
   "20CS01029@iitbbs.ac.in",
+  "21cs02007@iitbbs.ac.in",
   "dsp13@iitbbs.ac.in",
 ];
 const mealPriceMap = {

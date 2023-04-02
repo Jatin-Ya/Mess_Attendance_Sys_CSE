@@ -408,3 +408,11 @@
 
     color: #FFFFFF;
 }
+
+.attendanceLink{
+    position: absolute;
+    width: 335px;
+    height: 40px;
+    left: 41px;
+    top: 358px;
+}
