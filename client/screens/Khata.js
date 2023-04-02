@@ -53,7 +53,7 @@ const Khata = () => {
 
   const getSelfExtraItems = async () => {
     try {
-      const response = await axios.get("/api/user/extra-items", {
+      const response = await axios.get("/api/user/getPaidItems", {
         headers: {
           Authorization: `Bearer ${authToken}`,
           Accept: "application/json",

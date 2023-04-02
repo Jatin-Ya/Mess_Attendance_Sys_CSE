@@ -138,60 +138,6 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   endDate.setHours(0, 0, 0, 0);
 
   const users = await User.find().populate("mealsAvailed");
-  //Dummy data
-
-  // const users = [
-  //   {
-  //     email: "user1@example.com",
-  //     name: "User 1",
-  //     hostel: "MHR",
-  //     rollNumber: "111",
-  //     messBalance: 500,
-  //     roomNumber: "A101",
-  //     img: "https://example.com/user1.jpg",
-  //     mealsAvailed: [],
-  //   },
-  //   {
-  //     email: "user2@example.com",
-  //     name: "User 2",
-  //     hostel: "BHR",
-  //     rollNumber: "222",
-  //     messBalance: 500,
-  //     roomNumber: "B202",
-  //     img: "https://example.com/user2.jpg",
-  //     mealsAvailed: [],
-  //   },
-  // ];
-
-  // // Add meals to each user's mealsAvailed array
-  // for (const user of users) {
-  //   for (let i = 1; i <= 31; i++) {
-  //     const breakfast = new Meal({
-  //       date: new Date(`2023-03-${i}`),
-  //       type: "breakfast",
-  //       quantity: 1,
-  //     });
-  //     const lunch = new Meal({
-  //       date: new Date(`2023-03-${i}`),
-  //       type: "lunch",
-  //       quantity: 1,
-  //     });
-  //     const snacks = new Meal({
-  //       date: new Date(`2023-03-${i}`),
-  //       type: "snacks",
-  //       quantity: 1,
-  //     });
-  //     const dinner = new Meal({
-  //       date: new Date(`2023-03-${i}`),
-  //       type: "dinner",
-  //       quantity: 1,
-  //     });
-  //     user.mealsAvailed.push(breakfast, lunch, snacks, dinner);
-  //   }
-  // }
-
-  // console.log(users);
-  // console.log(endDate.getDate())
 
   const columns = getColumns(year, month, endDate);
   // console.log(columns);
@@ -225,6 +171,7 @@ exports.generateMessAttendanceExcel = catchAsync(async (req, res, next) => {
   // })
   res.status(201).json({
     status: "success",
+    link: "https://docs.google.com/spreadsheets/d/1uZ8KXyjC_kmbIcp-TmNf6yNoog8sXWvj/edit?usp=sharing&ouid=102795312776152309797&rtpof=true&sd=true",
   });
 
   // res.download(filePath, (err) => {
@@ -428,8 +375,8 @@ const formatAttendance = (mealsAvailed) => {
   return attendance;
 };
 exports.getAttendanceSelf = catchAsync(async (req, res, next) => {
-  // const id = req.user._id;
-  const id = "6425de2989d7180f6c218c69";
+  const id = req.user._id;
+  // const id = "6425de2989d7180f6c218c69";
   // const {startDate, endDate} = req.query;
 
   const user = await User.findById(id).populate("mealsAvailed").sort("date");
